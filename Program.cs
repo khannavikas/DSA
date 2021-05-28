@@ -12,11 +12,11 @@ namespace CCIFinal
     {
         static void Main(string[] args)
         {
-            LRU lru = new LRU(2);
+            LRUCache lru = new LRUCache(2);
 
-            lru.Add("vk", 1);
-            lru.Add("mk", 2);
-            lru.Add("ak", 3);
+            lru.set(1, 1);
+            lru.set(2, 2);
+            lru.set(3, 3);
 
 
             int[] a = new int[] { 6, 1, 4, 2, 7, 3, 8, 99, 39, 57, 43 }; ;
