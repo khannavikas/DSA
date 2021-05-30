@@ -1,4 +1,5 @@
 ﻿using CCIFinal.Array;
+using CCIFinalLL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,13 +13,18 @@ namespace CCIFinal
     {
         static void Main(string[] args)
         {
-            LRUCache lru = new LRUCache(2);
+            //LinkListFunctions();
 
-            lru.set(1, 1);
-            lru.set(2, 2);
-            lru.set(3, 3);
+            //LRUFunction();
 
+            //HeapFunctions();
 
+            ArrayFunctions();
+
+        }
+
+        private static void ArrayFunctions()
+        {
             int[] a = new int[] { 6, 1, 4, 2, 7, 3, 8, 99, 39, 57, 43 }; ;
             int d = 2;
             int n = a.Length;
@@ -26,7 +32,7 @@ namespace CCIFinal
             ArrayFunc.QuickSort(a, 0, a.Length - 1);
             //  int pi = ArrayFunc.PivotIndex(a, 0, a.Length-1);
 
-         //   ArrayFunc.SortHash(0, 1);
+            //   ArrayFunc.SortHash(0, 1);
 
             ArrayFunc.Shuffle(a, 0, n);
 
@@ -36,11 +42,11 @@ namespace CCIFinal
             ArrayFunc.RotateNew(a, 4);
             //   ArrayFunc.RotateMatrixElementClock(d2);
             // ArrayFunc.RowsTocolums(ref d2);
-         //   ArrayFunc.Print2DArray(d2);
+            //   ArrayFunc.Print2DArray(d2);
 
-            int max = ArrayFunc.MaxCountInSorted(a);
+            int max = ArrayFunc.MaxCountInSorted(new int[] {1,1,2,3,3,3,4 });
 
-            findMinSum(a, 6);
+            ArrayFunc.findMinSum(a, 6);
 
             //  int p = ArrayFunc.COUN(a, 4);
 
@@ -51,32 +57,7 @@ namespace CCIFinal
 
             ArrayFunc.KsortedArray(a, 3);
 
-            Heap h1 = new Heap(1);
-            h1.InsertInHeap(2);
-            h1.InsertInHeap(1);
-            h1.RemoveFromHeap();
-            h1.InsertInHeap(1);
-            h1.InsertInHeap(8);
-            h1.InsertInHeap(6);
-            h1.InsertInHeap(5);
-            h1.InsertInHeap(10);
-            h1.InsertInHeap(1);
 
-            NewHeap h = new NewHeap(1);
-            h.Push(2);
-                      h.Push(1);
-            h.Pop();
-            h.Push(1);
-            h.Push(8);
-            h.Push(6);
-            h.Push(5);
-            h.Push(10);
-            h.Push(1);
-
-            while (h._size > 0)
-            {
-                Console.WriteLine(h.Pop());
-            }
 
             int[] swapsR = ArrayFunc.RearrangeEvenGreaterThanOdd(a);
             //
@@ -109,52 +90,60 @@ namespace CCIFinal
             Console.Read();
         }
 
-        public static int[] RearrangeArray(int[] a)
-
+        private static void HeapFunctions()
         {
-            //  HashSet<int> hs = new HashSet<int>();
+            Heap h1 = new Heap(1);
+            h1.InsertInHeap(2);
+            h1.InsertInHeap(1);
+            h1.RemoveFromHeap();
+            h1.InsertInHeap(1);
+            h1.InsertInHeap(8);
+            h1.InsertInHeap(6);
+            h1.InsertInHeap(5);
+            h1.InsertInHeap(10);
+            h1.InsertInHeap(1);
 
-            Dictionary<int, int> dic = new Dictionary<int, int>();
+            NewHeap h = new NewHeap(1);
+            h.Push(2);
+            h.Push(1);
+            h.Pop();
+            h.Push(1);
+            h.Push(8);
+            h.Push(6);
+            h.Push(5);
+            h.Push(10);
+            h.Push(1);
 
-            for (int i = 0; i < a.Length; i++)
+            while (h._size > 0)
             {
-                if (!dic.ContainsKey(a[i]))
-                {
-                    dic.Add(a[i], a[i]);
-                }
+                Console.WriteLine(h.Pop());
             }
-
-            for (int x = 0; x < a.Length; x++)
-            {
-                if (dic.ContainsKey(x))
-                {
-                    a[x] = dic[x];
-                }
-                else
-                {
-                    a[x] = -1;
-                }
-            }
-
-            return a;
         }
 
-        static void findMinSum(int[] arr, int n)
+        private static void LRUFunction()
         {
-            for (int i = 1; i < n; i++)
-            {
-                if (!(Math.Abs(arr[i - 1]) <
-                      Math.Abs(arr[i])))
-                {
-                    int temp = arr[i - 1];
-                    arr[i - 1] = arr[i];
-                    arr[i] = temp;
-                }
-            }
+            LRUCache lru = new LRUCache(2);
 
+            lru.set(1, 1);
+            lru.set(2, 2);
+            lru.set(3, 3);
         }
 
 
+        private static void LinkListFunctions()
+        {
+            LinkList ll = new LinkList();
+            ll.AddNode(1);
+            ll.AddNode(2);
+            ll.AddNode(5);
+            ll.AddNode(5);
+            ll.AddNode(2);
+          //  ll.Print();
+            ll.RemoveDuplicateNonewList();
+            ll.Print();
+            ll.ReverseList();
+            ll.Print();
+        }
 
     }
 }

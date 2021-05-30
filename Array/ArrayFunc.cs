@@ -1,17 +1,13 @@
 ﻿using System;
-using System.CodeDom.Compiler;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Net.NetworkInformation;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Security.Cryptography;
-using System.Xml.Serialization;
 
 namespace CCIFinal.Array
 {
     public class ArrayFunc
     {
+    
+        //TO DO: Minimun swap required for sorting 
 
         public static int[] ReverseArray(int[] a)
         {
@@ -276,6 +272,8 @@ namespace CCIFinal.Array
             Console.WriteLine(sm2);
         }
 
+        #region Quick Sort
+
         public static void QucikSort(int[] a, int i, int j)
 
         {
@@ -323,6 +321,8 @@ namespace CCIFinal.Array
 
 
         }
+
+        #endregion
 
         private static void swap(int[] a, int l, int j)
 
@@ -397,6 +397,7 @@ namespace CCIFinal.Array
                     maxelem = a[i];
                 }
 
+                //Restart count if next element is different
                 if (a[i] != a[i - 1])
 
                 {
@@ -517,7 +518,6 @@ namespace CCIFinal.Array
             a[1, columns - 1] = rowLastColVal;
 
         }
-
 
         public static void RotateNew(int[] a, int k)
         {
@@ -730,7 +730,6 @@ namespace CCIFinal.Array
             return mid;
         }
 
-
         public static void QuickSort(int[] a, int l, int h)
         {
             //  { 6, 1, 4, 2,7,3,8}
@@ -773,6 +772,109 @@ namespace CCIFinal.Array
             a[i] = a[j];
             a[j] = temp;
         }
+
+
+        public static int[] RearrangeArray(int[] a)
+
+        {
+            //  HashSet<int> hs = new HashSet<int>();
+
+            Dictionary<int, int> dic = new Dictionary<int, int>();
+
+            for (int i = 0; i < a.Length; i++)
+            {
+                if (!dic.ContainsKey(a[i]))
+                {
+                    dic.Add(a[i], a[i]);
+                }
+            }
+
+            for (int x = 0; x < a.Length; x++)
+            {
+                if (dic.ContainsKey(x))
+                {
+                    a[x] = dic[x];
+                }
+                else
+                {
+                    a[x] = -1;
+                }
+            }
+
+            return a;
+        }
+
+        public static void findMinSum(int[] arr, int n)
+        {
+            for (int i = 1; i < n; i++)
+            {
+                if (!(Math.Abs(arr[i - 1]) <
+                      Math.Abs(arr[i])))
+                {
+                    int temp = arr[i - 1];
+                    arr[i - 1] = arr[i];
+                    arr[i] = temp;
+                }
+            }
+
+        }
+
+
+       // C# Program for finding out majority element in an array
+    
+        #region Majority Element
+        /* Function to print Majority Element */
+        public static void printMajority(int[] a, int size)
+        {
+            /* Find the candidate for Majority*/
+            int cand = findCandidate(a, size);
+
+            /* Print the candidate if it is Majority*/
+            if (isMajority(a, size, cand))
+                Console.Write(" " + cand + " ");
+            else
+                Console.Write("No Majority Element");
+        }
+
+        /* Function to find the candidate for Majority */
+        private static int findCandidate(int[] a, int size)
+        {
+            int maj_index = 0, count = 1;
+            int i;
+            for (i = 1; i < size; i++)
+            {
+                if (a[maj_index] == a[i])
+                    count++;
+                else
+                    count--;
+
+                if (count == 0)
+                {
+                    maj_index = i;
+                    count = 1;
+                }
+            }
+            return a[maj_index];
+        }
+
+        // Function to check if the candidate
+        // occurs more than n/2 times
+        private static bool isMajority(int[] a, int size, int cand)
+        {
+            int i, count = 0;
+            for (i = 0; i < size; i++)
+            {
+                if (a[i] == cand)
+                    count++;
+            }
+            if (count > size / 2)
+                return true;
+            else
+                return false;
+        }
+
+        #endregion  
+
 
     }
 
