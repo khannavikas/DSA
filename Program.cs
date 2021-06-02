@@ -19,8 +19,30 @@ namespace CCIFinal
 
             //HeapFunctions();
 
-            ArrayFunctions();
+            //  ArrayFunctions();
 
+            MyQueueFunctions();
+
+        }
+
+        private static void MyQueueFunctions()
+        {
+            MyQueue mq = new MyQueue();
+            mq.enQueue(3);
+            mq.enQueue(2);
+            mq.enQueue(4);
+
+            mq.Sort();
+            mq.Print();
+
+          //  mq.Reverse();
+            //mq.enQueue(4);
+          //  mq.Print();
+            //Console.WriteLine(mq.deQueue());
+            //Console.WriteLine(mq.deQueue());
+            //Console.WriteLine(mq.deQueue());
+            //Console.WriteLine(mq.deQueue());
+            //mq.Print();
         }
 
         private static void ArrayFunctions()

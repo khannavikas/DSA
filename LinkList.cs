@@ -44,6 +44,36 @@ namespace CCIFinalLL
 
         }
 
+        public void Sort()
+        {
+
+            var pointer1 = head;
+            var pointer2 = pointer1.next;
+
+
+            while (pointer1 != null)
+            {
+
+                if (pointer2 != null && pointer2.value < pointer1.value)
+                {
+                    int tem = pointer1.value;
+                    pointer1.value = pointer2.value;
+                    pointer2.value = tem;
+                    pointer2 = pointer2.next;
+                }
+                else if (pointer2 != null && pointer2.value > pointer1.value)
+                {
+                    pointer2 = pointer2.next;
+                }
+                else
+                {
+                    pointer1 = pointer1.next;
+                }
+
+
+            }
+        }
+
         public LinkList RemoveDuplicate()
         {
             LinkList ll = new LinkList();
