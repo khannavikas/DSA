@@ -47,6 +47,7 @@
     <Compile Include="LinkList.cs" />
     <Compile Include="LRU.cs" />
     <Compile Include="Heap.cs" />
+    <Compile Include="MyStack.cs" />
     <Compile Include="NewHeap.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
