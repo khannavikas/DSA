@@ -154,6 +154,47 @@ namespace CCIFinalLL
             head = newHead;
         }
 
+        public void InsertSortedList(int x)
+        {
+            if (head == null)
+            {
+                head = new Node(x);
+                return;
+            }
+
+            var h = head;
+
+            Node prev = null;
+
+            while (h != null && h.value <= x)
+            {
+                prev = h;
+
+                h = h.next;
+
+            }
+
+            if (h == null && prev != null)
+            {
+                prev.next = new Node(x);
+            }
+            else if(prev !=null)
+            {
+                var node = new Node(x);
+
+                node.next = prev.next;
+                prev.next = node;
+
+            }
+            else
+            {
+                var node = new Node(x);
+                node.next = head;
+                head = node;
+            }
+
+        }
+
         // Link list is palindrome
         //1) Use 2 pointers put 
         //2) Until 2nd poniter reaches null put in stack 

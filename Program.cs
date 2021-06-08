@@ -13,7 +13,7 @@ namespace CCIFinal
     {
         static void Main(string[] args)
         {
-            //LinkListFunctions();
+           // LinkListFunctions();
 
             //LRUFunction();
 
@@ -21,7 +21,58 @@ namespace CCIFinal
 
             //  ArrayFunctions();
 
-            MyQueueFunctions();
+            //MyQueueFunctions();
+
+            BinaryTreeFunctions();
+            Console.ReadLine();
+
+        }
+
+        private static void BinaryTreeFunctions()
+        {
+            BinaryTree bt = new BinaryTree();
+            bt.InsertNode(1);
+            bt.InsertNode(2);
+            bt.InsertNode(3);
+
+            bt.InsertNode(4);
+            bt.InsertNode(5);
+            bt.InsertNode(6);
+
+            // bt.InsertNode(6);
+            bt.InsertNode(7);
+            bt.InsertNode(8);
+            //    bt.InorderTraversal();
+            //bt.DeleteDeepestNode();
+            bt.InorderTraversal();
+            //Console.WriteLine("By Stack");
+            //   Console.WriteLine(bt.NthNode(3, bt.root));
+
+         //   var x = bt.NodeParentMap(bt.root, null);
+
+            var path = bt.PathFromRoot(5);
+
+            Console.WriteLine(bt.NthInorderstack(3));
+
+
+            BinaryTree bst = new BinaryTree();
+            bst.InsertNode(4);
+            bst.InsertNode(2);
+            bst.InsertNode(5);
+
+            bst.InsertNode(1);
+            bst.InsertNode(3);
+            bst.InsertNode(6);
+
+
+            Console.WriteLine("IS BST " +   bst.isBST(bst.root, int.MinValue, int.MaxValue));
+
+            // bt.Inorderstack();
+            List<int> levelNodes = new List<int>();
+            bt.PrintNodesByLevelRec(bt.root, 4, levelNodes);
+
+            //     bt.PrintLevelOrder(3);
+            //  bt.printCurrentLevel(bt.root,  bt.HeightOfTree());
 
         }
 
@@ -35,9 +86,9 @@ namespace CCIFinal
             mq.Sort();
             mq.Print();
 
-          //  mq.Reverse();
+            //  mq.Reverse();
             //mq.enQueue(4);
-          //  mq.Print();
+            //  mq.Print();
             //Console.WriteLine(mq.deQueue());
             //Console.WriteLine(mq.deQueue());
             //Console.WriteLine(mq.deQueue());
@@ -66,7 +117,7 @@ namespace CCIFinal
             // ArrayFunc.RowsTocolums(ref d2);
             //   ArrayFunc.Print2DArray(d2);
 
-            int max = ArrayFunc.MaxCountInSorted(new int[] {1,1,2,3,3,3,4 });
+            int max = ArrayFunc.MaxCountInSorted(new int[] { 1, 1, 2, 3, 3, 3, 4 });
 
             ArrayFunc.findMinSum(a, 6);
 
@@ -157,13 +208,14 @@ namespace CCIFinal
             LinkList ll = new LinkList();
             ll.AddNode(1);
             ll.AddNode(2);
-            ll.AddNode(5);
-            ll.AddNode(5);
-            ll.AddNode(2);
-          //  ll.Print();
-            ll.RemoveDuplicateNonewList();
+            ll.AddNode(3);
+            ll.AddNode(4);
+            ll.AddNode(6);
             ll.Print();
-            ll.ReverseList();
+            // ll.RemoveDuplicateNonewList();
+            //   ll.Print();
+            // ll.ReverseList();
+            ll.InsertSortedList(0);
             ll.Print();
         }
 
