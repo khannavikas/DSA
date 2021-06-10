@@ -105,6 +105,65 @@ namespace CCIFinal
         }
 
 
+        #region Tree from preorder and Inorder
+
+
+        // Store indexes of all items so that we
+        // we can quickly find later
+        static Dictionary<int, int> mp = new Dictionary<int, int>();
+        static int preIndex = 0;
+
+        /* Recursive function to construct binary of size
+        len from Inorder traversal in[] and Preorder traversal
+        pre[]. Initial values of inStrt and inEnd should be
+        0 and len -1. The function doesn't do any error
+        checking for cases where inorder and preorder
+        do not form a tree */
+        static TreeNode buildTree(int[] In, int[] pre,
+                              int inStrt, int inEnd)
+        {
+            if (inStrt > inEnd)
+            {
+                return null;
+            }
+
+            /* Pick current node from Preorder traversal using preIndex
+            and increment preIndex */
+            int curr = pre[preIndex++];
+            TreeNode tNode;
+            tNode = new TreeNode(curr);
+
+            /* If this node has no children then return */
+            if (inStrt == inEnd)
+            {
+                return tNode;
+            }
+
+            /* Else find the index of this node in Inorder traversal */
+            int inIndex = mp[curr];
+
+            /* Using index in Inorder traversal, construct left and
+            right subtress */
+            tNode.left = buildTree(In, pre, inStrt, inIndex - 1);
+            tNode.right = buildTree(In, pre, inIndex + 1, inEnd);
+            return tNode;
+        }
+
+        // This function mainly creates an unordered_map, then
+        // calls buildTree()
+        public static TreeNode buldTreeWrap(int[] In, int[] pre, int len)
+        {
+            for (int i = 0; i < len; i++)
+            {
+                mp.Add(In[i], i);
+            }
+            return buildTree(In, pre, 0, len - 1);
+        }
+
+
+        #endregion
+
+
         #region ReverseStack recursive
 
         // that inserts an element 

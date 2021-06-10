@@ -361,6 +361,10 @@ namespace CCIFinal
         #endregion
 
         Dictionary<int, TreeNode> nodeParent = new Dictionary<int, TreeNode>();
+
+        //// Can also be done by stack
+        // Push root to stack
+        //While stack not empty map parent and node (left/right) and push node left or right to stack
         public Dictionary<int, TreeNode> NodeParentMap(TreeNode node, TreeNode parent)
         {
             if (node != null && !nodeParent.ContainsKey(node.key))
@@ -376,6 +380,7 @@ namespace CCIFinal
 
         }
 
+        // Can be done by stack also, push nodes to stack rather than list, no need to reverse
         public List<int> PathFromRoot(int k)
         {
             List<int> path = new List<int>();
@@ -397,5 +402,220 @@ namespace CCIFinal
             return path.ToArray().Reverse().ToList();
         }
 
+        List<List<int>> diagonal;
+        public void diagonalPrint(TreeNode root)
+        {
+            if (root == null)
+                return;
+
+            Queue<TreeNode> q = new Queue<TreeNode>();
+            q.Enqueue(root);
+
+            while (q.Count() > 0)
+            {
+                int size = q.Count();
+                List<int> answer = new List<int>();
+
+                while (size > 0)
+                {
+                    TreeNode temp = q.Peek();
+                    q.Dequeue();
+
+                    // traversing each component;
+                    while (temp != null)
+                    {
+                        answer.Add(temp.key);
+
+                        if (temp.left != null)
+                            q.Enqueue(temp.left);
+
+                        temp = temp.right;
+                    }
+                }
+                diagonal.Add(answer);
+            }
+        }
+
+        public void MinumHeight()
+        {
+            if (root == null)
+                Console.WriteLine("MinimumHeigth is " + 0);
+            Console.WriteLine(FirstLeafNode(root, 1));
+
+        }
+
+        private int FirstLeafNode(TreeNode node, int level)
+        {
+            if (node.left == null && node.right == null)
+            {
+                return level;
+            }
+
+            if (node.left != null && node.right == null)
+                return FirstLeafNode(node.left, level + 1);
+
+            if (node.right != null && node.left == null)
+                return FirstLeafNode(node.right, level + 1);
+
+            int leftlev = FirstLeafNode(node.left, level + 1);
+            int rightLeve = FirstLeafNode(node.right, level + 1);
+
+            return Math.Min(leftlev, rightLeve);
+
+        }
+
+        public void DeepestleftNode()
+        {
+            int deepestLevelSoFar = 0;
+            int level = 0;
+            TreeNode deepestNode = root;
+            Queue<TreeNode> q = new Queue<TreeNode>();
+
+            q.Enqueue(root);
+
+            while (q.Count() > 0)
+            {
+                int size = q.Count();
+                level++;
+
+                while (size > 0)
+                {
+                    var curr = q.Dequeue();
+
+                    // TO DO Also check if current.left is a leaf
+                    if (deepestLevelSoFar != level && curr.left != null)
+                    {
+
+                        deepestLevelSoFar = level;
+
+                        deepestNode = curr.left;
+                    }
+
+                    if (curr.left != null)
+                        q.Enqueue(curr.left);
+
+                    if (curr.right != null)
+                        q.Enqueue(curr.right);
+
+                    size--;
+
+                }
+
+            }
+
+            Console.WriteLine($"Deepest left Node is {deepestNode.key} ");
+
+        }
+
+        public List<List<int>> sumPaths = new List<List<int>>();
+
+        public void PrintSumPaths(int k)
+        {
+            SumPath(root, k, new List<int>(), k);
+
+            foreach (var item in sumPaths)
+            {
+                Console.WriteLine("Path");
+                foreach (var path in item)
+                {
+                    Console.Write(path + "-->");
+                }
+            }
+        }
+
+        private void SumPath(TreeNode n, int sum, List<int> ls, int orignalSum)
+        {
+            if (n == null)
+                return;
+
+            ls.Add(n.key);
+
+            if (n.key == sum)
+            {
+                sumPaths.Add(ls);
+
+                //  SumPath(n.left, orignalSum, new List<int>(), orignalSum);
+                //  SumPath(n.right, orignalSum, new List<int>(), orignalSum);
+                // return;
+                // return true;
+            }
+
+            else
+            {
+                SumPath(n.left, sum - n.key, new List<int>(ls), orignalSum);
+                SumPath(n.right, sum - n.key, new List<int>(ls), orignalSum);
+                // return;
+            }
+
+            SumPath(n.left, orignalSum, new List<int>(), orignalSum);
+            SumPath(n.right, orignalSum, new List<int>(), orignalSum);
+
+        }
+
+        #region Largest Sum Tree
+        int maxSum = int.MinValue;
+        TreeNode maxNode = null;
+        public TreeNode LargestSumTree(TreeNode node)
+        {
+            if (node == null)
+                return maxNode;
+
+            Sum(node);
+
+           
+            return maxNode;
+        }
+
+        private int Sum(TreeNode node)
+        {
+            if (node == null)
+                return 0;
+
+            int curreSum = node.key + Sum(node.left) + Sum(node.right);
+
+            if (maxSum < curreSum)
+            {
+                maxSum = curreSum;
+
+                maxNode = node;
+            }
+
+          //  maxSum = Math.Max(curreSum, maxSum);
+
+            return curreSum;
+
+        }
+
+        #endregion
+
+        #region Diameter
+        int maxDiameter = int.MinValue;
+        public int DiameterOfBinaryTree(TreeNode node)
+        {
+
+            if (node == null)
+                return 0;
+
+            Height(node);
+            return maxDiameter;
+        }
+
+        private int Height(TreeNode node)
+        {
+            if (node == null)
+                return 0;
+
+            int leftHeight = Height(node.left);
+            int rightHeight = Height(node.right);
+
+            maxDiameter = Math.Max(maxDiameter, leftHeight + rightHeight);
+
+
+            return Math.Max(leftHeight, rightHeight) + 1;
+        }
+        #endregion
+
     }
+
 }
+

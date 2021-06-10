@@ -39,21 +39,65 @@ namespace CCIFinal
             bt.InsertNode(5);
             bt.InsertNode(6);
 
+
+            BinaryTree tree = new BinaryTree();
+            tree.root = new TreeNode(1);
+            tree.root.left = new TreeNode(2);
+            tree.root.right = new TreeNode(3);
+            tree.root.left.left = new TreeNode(4);
+            tree.root.right.left = new TreeNode(5);
+            tree.root.right.right = new TreeNode(6);
+            tree.root.right.left.right = new TreeNode(7);
+            tree.root.right.right.right = new TreeNode(8);
+            tree.root.right.left.right.left = new TreeNode(9);
+            tree.root.right.right.right.right = new TreeNode(10);
+
             // bt.InsertNode(6);
             bt.InsertNode(7);
-            bt.InsertNode(8);
+          //  bt.InsertNode(8);
             //    bt.InorderTraversal();
             //bt.DeleteDeepestNode();
             bt.InorderTraversal();
             //Console.WriteLine("By Stack");
             //   Console.WriteLine(bt.NthNode(3, bt.root));
 
-         //   var x = bt.NodeParentMap(bt.root, null);
+            //   var x = bt.NodeParentMap(bt.root, null);
 
-            var path = bt.PathFromRoot(5);
+            //  var path = bt.PathFromRoot(5);
 
-            Console.WriteLine(bt.NthInorderstack(3));
+            //  bt.MinumHeight();
 
+         //   tree.DeepestleftNode();
+            //Console.WriteLine(bt.NthInorderstack(3));
+
+
+            BinaryTree sumTree = new BinaryTree();
+            
+            TreeNode root = new TreeNode(1);
+            root.left = new TreeNode(3);
+            root.left.left = new TreeNode(2);
+            root.left.right = new TreeNode(1);
+            root.left.right.left = new TreeNode(1);
+            root.right = new TreeNode(-1);
+            root.right.left = new TreeNode(4);
+            root.right.left.left = new TreeNode(1);
+            root.right.left.right = new TreeNode(2);
+            root.right.right = new TreeNode(5);
+            root.right.right.right = new TreeNode(2);
+            sumTree.root = root;
+
+        //    sumTree.PrintSumPaths(5);
+
+            BinaryTree btmax = new BinaryTree();
+            TreeNode rootmaSum = new TreeNode(1);
+            root.left = new TreeNode(-2);
+            root.right = new TreeNode(3);
+            root.left.left = new TreeNode(4);
+            root.left.right = new TreeNode(5);
+            root.right.left = new TreeNode(-6);
+            root.right.right = new TreeNode(2);
+
+            var x = bt.LargestSumTree(root);
 
             BinaryTree bst = new BinaryTree();
             bst.InsertNode(4);
@@ -218,6 +262,9 @@ namespace CCIFinal
             ll.InsertSortedList(0);
             ll.Print();
         }
+
+
+   
 
     }
 }
