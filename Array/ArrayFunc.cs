@@ -6,7 +6,7 @@ namespace CCIFinal.Array
 {
     public class ArrayFunc
     {
-    
+
         //TO DO: Minimun swap required for sorting 
 
         public static int[] ReverseArray(int[] a)
@@ -820,8 +820,8 @@ namespace CCIFinal.Array
         }
 
 
-       // C# Program for finding out majority element in an array
-    
+        // C# Program for finding out majority element in an array
+
         #region Majority Element
         /* Function to print Majority Element */
         public static void printMajority(int[] a, int size)
@@ -875,6 +875,31 @@ namespace CCIFinal.Array
 
         #endregion  
 
+
+        public int MaxContinousSumKandane(int[] a)
+        {
+            int currSum = a[0];
+            int maxSum = a[0];
+
+            for (int i = 1; i < a.Length; i++)
+            {
+                if (currSum > 0)
+                {
+                    currSum += a[i];
+                }
+                else
+                {
+                    currSum = a[i];
+                }
+
+                if (currSum > maxSum)
+                {
+                    maxSum = currSum;
+                }
+            }
+
+            return maxSum;
+        }
 
     }
 

@@ -13,7 +13,7 @@ namespace CCIFinal
     {
         static void Main(string[] args)
         {
-           // LinkListFunctions();
+            // LinkListFunctions();
 
             //LRUFunction();
 
@@ -23,9 +23,24 @@ namespace CCIFinal
 
             //MyQueueFunctions();
 
-            BinaryTreeFunctions();
+            // BinaryTreeFunctions();
+            
+             HashFunctions();
+
             Console.ReadLine();
 
+        }
+
+        private static void HashFunctions()
+        {
+            Hash h = new Hash();
+            int p = h.LongestSubarrayDivisibleByK(new int[] { -2, 2, -5, 12, -11, -1, 7 }, 3);
+
+            int q = h.MaxLen(new int[] { 1, 2, -2 });
+
+            bool possible = h.CanAllArrayPairsDivisibleByK(new int[] { 92, 75, 65, 48, 45, 35 }, 10);
+
+            Console.WriteLine("Longest subarray is " + p);
         }
 
         private static void BinaryTreeFunctions()
@@ -54,7 +69,7 @@ namespace CCIFinal
 
             // bt.InsertNode(6);
             bt.InsertNode(7);
-          //  bt.InsertNode(8);
+            //  bt.InsertNode(8);
             //    bt.InorderTraversal();
             //bt.DeleteDeepestNode();
             bt.InorderTraversal();
@@ -67,12 +82,12 @@ namespace CCIFinal
 
             //  bt.MinumHeight();
 
-         //   tree.DeepestleftNode();
+            //   tree.DeepestleftNode();
             //Console.WriteLine(bt.NthInorderstack(3));
 
 
             BinaryTree sumTree = new BinaryTree();
-            
+
             TreeNode root = new TreeNode(1);
             root.left = new TreeNode(3);
             root.left.left = new TreeNode(2);
@@ -86,7 +101,7 @@ namespace CCIFinal
             root.right.right.right = new TreeNode(2);
             sumTree.root = root;
 
-        //    sumTree.PrintSumPaths(5);
+            //    sumTree.PrintSumPaths(5);
 
             BinaryTree btmax = new BinaryTree();
             TreeNode rootmaSum = new TreeNode(1);
@@ -109,11 +124,13 @@ namespace CCIFinal
             bst.InsertNode(6);
 
 
-            Console.WriteLine("IS BST " +   bst.isBST(bst.root, int.MinValue, int.MaxValue));
+            Console.WriteLine("IS BST " + bst.isBST(bst.root, int.MinValue, int.MaxValue));
 
             // bt.Inorderstack();
             List<int> levelNodes = new List<int>();
             bt.PrintNodesByLevelRec(bt.root, 4, levelNodes);
+
+
 
             //     bt.PrintLevelOrder(3);
             //  bt.printCurrentLevel(bt.root,  bt.HeightOfTree());
@@ -264,7 +281,7 @@ namespace CCIFinal
         }
 
 
-   
+
 
     }
 }

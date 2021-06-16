@@ -8,6 +8,8 @@ namespace CCIFinal
 {
    public  class Heap
     {
+
+  
         int _capacity = 0;
         int size = 0;
         int[] a;
@@ -195,7 +197,6 @@ namespace CCIFinal
                 Heapify(arr, n, i);
             }
         }
-
-
+      
     }
 }
