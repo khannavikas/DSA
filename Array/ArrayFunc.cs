@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CCIFinal.Array
 {
@@ -883,12 +884,15 @@ namespace CCIFinal.Array
 
             for (int i = 1; i < a.Length; i++)
             {
+
+                // No debt sum so far, so add
                 if (currSum > 0)
                 {
                     currSum += a[i];
                 }
                 else
                 {
+                    // Current sub was -ve so total will go down, so better start from here
                     currSum = a[i];
                 }
 
@@ -901,10 +905,64 @@ namespace CCIFinal.Array
             return maxSum;
         }
 
+        public static int CircleOfDeath(List<int> a, int k, int start)
+        {
+            List<int> ls = a.ToList();
+
+            if (ls.Count == 1)
+                return ls.First();
+
+            start = (start + k) % ls.Count;
+            ls.RemoveAt(start);
+
+            return CircleOfDeath(ls, k, start);
+        }
+
+        public static int CircleOfDeath(int k, int n)
+        {
+            if (n == 1)
+                return 0;
+
+            //Index is x in n-1
+            int x = CircleOfDeath(k, n - 1);
+            int y = (x + k) % n;
+            return y;
+        }
+
+
+        // This is Swap sort approach works in O(N) with O(1) space
+        public static void MissningDuplicateInN(int[] a)
+        {
+            int i = 0;
+
+            while (i <= a.Length - 1)
+            {
+                int comp = a[a[i] - 1];
+                if (a[i] != comp)
+                {
+                    Swap(a, i, a[i]-1);
+
+                }
+                else
+                {
+                    i++;
+                }
+            }
+
+            for (int j = 0; j <= a.Length - 1; j++)
+            {
+                if (a[j] != j + 1)
+                {
+                    Console.WriteLine("Duplicate number " + a[j]);
+                    Console.WriteLine("Missing number " + (j + 1));
+
+                }
+            }
+
+        }
     }
-
-
 }
+
 
 
 

@@ -74,12 +74,92 @@ namespace CCIFinal
                     maxLength = Math.Max(maxLength, i - index);
                 }
 
+               // When sum is not 0 then find currentSum - sum has occured previously ornot
+
+
+                // a) Current element is 0
+                // b) sum of elements from 0 to i is 0
+                // c) sum is already present in hash set
+                //if (arr[i] == 0
+                //    || sum == 0
+                //    || hs.Contains(sum))
+                //    return true;
+
+                //// Add sum to hash set
+                //hs.Add(sum);
+
             }
 
             return maxLength;
         }
 
-        // Anot
+        public int LongestIncreasingConsecutiveSubsequence(int[] a)
+        {
+            Dictionary<int, int> hashSequenceSoFar = new Dictionary<int, int>();
+
+            int max = 0;
+            //  hashSequenceSoFar.Add(0, -1);
+
+            for (int i = 0; i < a.Length; i++)
+            {
+                if (hashSequenceSoFar.ContainsKey(a[i] - 1))
+                {
+                    hashSequenceSoFar.Add(a[i], hashSequenceSoFar[a[i] - 1] + 1);
+                }
+                else
+                {
+                    hashSequenceSoFar.Remove(a[i]);
+                    hashSequenceSoFar.Add(a[i], 1);
+                }
+            }
+
+            foreach (int value in hashSequenceSoFar.Values)
+            {
+                max = Math.Max(max, value);
+            }
+
+            return max;
+        }
+
+        public int LongestConsecutiveSequenceNoOrder(int[] a)
+        {
+            int mx = 0;
+
+            Dictionary<int, bool> hs = new Dictionary<int, bool>();
+
+            for (int i = 0; i < a.Length; i++)
+            {
+                hs.Add(a[i], true);
+            }
+
+            for (int i = 0; i < a.Length; i++)
+            {
+                if (hs.ContainsKey(a[i] - 1))
+                    hs[a[i]] = false;
+            }
+
+            for (int i = 0; i < a.Length; i++)
+            {
+                int j = a[i];
+                int count = 0;
+
+                if (hs[j])
+                {
+                    while (hs.ContainsKey(j))
+                    {
+                        j++;
+                        count++;
+                    }
+
+                    mx = Math.Max(count, mx);
+                }
+
+            }
+
+            return mx;
+        }
+
+        // Another way sum zero 
         public int MaxLen(int[] arr)
         {
             // Creates an empty hashMap hM
@@ -129,7 +209,7 @@ namespace CCIFinal
         public bool CanAllArrayPairsDivisibleByK(int[] a, int k)
         {
             Dictionary<int, int> remainderFreq = new Dictionary<int, int>();
-          //  bool isPossible = false;
+            //  bool isPossible = false;
 
             foreach (var item in a)
             {
@@ -177,6 +257,71 @@ namespace CCIFinal
 
             return true;
 
+        }
+
+
+        #region Hasstring Unique char
+
+       public static string GetKey(String str)
+        {
+            bool[] visited = new bool[26];
+
+            // Store all unique characters of current
+            // word in key
+            for (int j = 0; j < str.Length; j++)
+                visited[str[j] - 'a'] = true;
+
+            string key = "";
+
+            // this sorts them
+            for (int j = 0; j < 26; j++)
+                if (visited[j])
+                    key = key + (char)('a' + j);
+
+            return key;
+        }
+
+        #endregion
+
+        public int MintargetSubArrayLen(int target, int[] nums)
+        {
+
+            Dictionary<int, int> sum = new Dictionary<int, int>();
+
+            int len = int.MaxValue;
+
+            int currSum = 0;
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+
+                if (nums[i] == target)
+                    return 1;
+
+                currSum += nums[i];
+
+                // If currensum - target is there then in between sum equals target
+                if (sum.ContainsKey(currSum - target))
+                {
+                    int index = sum[currSum - target];
+
+                    int newIndex = i - index;
+
+                    len = Math.Min(newIndex, len);
+                }
+
+                // is sum = taget then it is starting from 0
+                if (currSum == target)
+                {
+                    len = Math.Min(len, i + 1);
+                }
+
+                // Add sum till index i in dictionary
+                sum.Add(currSum, i);
+
+            }
+
+            return (len == int.MaxValue) ? 0 : len;
         }
     }
 }

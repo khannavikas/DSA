@@ -13,6 +13,9 @@ namespace CCIFinal
     {
         static void Main(string[] args)
         {
+            SlidingWindowFunctions();            
+          
+            //  StringHelper.PrintPermutation("abc", "");
             // LinkListFunctions();
 
             //LRUFunction();
@@ -24,16 +27,33 @@ namespace CCIFinal
             //MyQueueFunctions();
 
             // BinaryTreeFunctions();
-            
-             HashFunctions();
+
+            //  MyStack.NetGreaterElement(new int[] { 2,6,5,8,7,10});
+
+            //   HashFunctions();
 
             Console.ReadLine();
 
         }
 
+        private static void SlidingWindowFunctions()
+        {
+            SlidingWindow.LongestSubstringWithKUniqueChar("abacdefgh", 4);
+            SlidingWindow.LongestSubstringWithoutRepeatingChar("abccdefxyzwrm");
+            SlidingWindow.MaxTargetSumArray(new int[] { 4, 1, 1, 1, 1, 1, 3, 5 }, 5);
+            SlidingWindow.MaxInAllSubArrayInWindow(new int[] { 1, 2, 5, 1, 2, 0, 5 }, 3);
+            SlidingWindow.MaxSumSubArrayInKWindow(new int[] { 1, 2, 13, 4, 5, 2 }, 3);
+        }
+
         private static void HashFunctions()
         {
             Hash h = new Hash();
+
+            string x = Hash.GetKey("kghjkggh");
+            int l1 = h.LongestConsecutiveSequenceNoOrder(new int[] { 1, 9, 3, 10, 4, 20, 19, 18, 17, 16 });
+
+            int l = h.LongestIncreasingConsecutiveSubsequence(new int[] { 6, 7, 8, 3, 4, 5, 9, 10 });
+
             int p = h.LongestSubarrayDivisibleByK(new int[] { -2, 2, -5, 12, -11, -1, 7 }, 3);
 
             int q = h.MaxLen(new int[] { 1, 2, -2 });
@@ -159,9 +179,18 @@ namespace CCIFinal
 
         private static void ArrayFunctions()
         {
+            ArrayFunc.MissningDuplicateInN(new int[] { 2, 4, 1, 2, 2 });
+            char c = (char)(1 + 'a');
+
+            string s = string.Empty;
+
+            s += c;
+
+            int n = 1 + 'a';
+
             int[] a = new int[] { 6, 1, 4, 2, 7, 3, 8, 99, 39, 57, 43 }; ;
             int d = 2;
-            int n = a.Length;
+            int n1 = a.Length;
 
             ArrayFunc.QuickSort(a, 0, a.Length - 1);
             //  int pi = ArrayFunc.PivotIndex(a, 0, a.Length-1);

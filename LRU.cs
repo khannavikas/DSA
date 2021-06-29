@@ -30,6 +30,7 @@ namespace CCIFinal
         {
             this.capacity = capacity;
             map = new Dictionary<int, Node>();
+          
             head = new Node(0, 0);
             tail = new Node(0, 0);
             head.next = tail;

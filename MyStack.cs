@@ -302,5 +302,151 @@ namespace CCIFinal
 
         #endregion
 
+
+        #region NextGreaterElement
+
+        public static void NetGreaterElement(int[] a)
+        {
+            Stack<int> st = new Stack<int>();
+            int len = a.Length;
+
+            st.Push(a[len - 1]);
+
+            for (int i = len-2; i>=0; i--)
+            {
+                int curr = a[i];
+
+                while (st.Count > 0 && st.Peek() <= curr)
+                    st.Pop();
+
+                if (st.Count == 0)
+                    Console.WriteLine($"Next grater element to {curr} is -1");
+
+                if(st.Count > 0)
+                {
+                    Console.WriteLine($"Next grater element to {curr} is {st.Peek()}");
+                }
+
+                st.Push(curr);
+            }
+
+
+        }
+
+        //public static void printNGE(int[] arr, int n)
+        //{
+        //    int i = 0;
+        //    Stack s = new Stack();
+        //    s.top = -1;
+        //    int element, next;
+
+        //    /* push the first element to stack */
+        //    s.Push(arr[0]);
+
+        //    // iterate for rest of the elements
+        //    for (i = 1; i < n; i++)
+        //    {
+        //        next = arr[i];
+
+        //        if (s.Count == 0)
+        //        {
+
+        //            // if stack is not empty, then
+        //            // pop an element from stack
+        //            element = s.Pop();
+
+        //            /* If the popped element is smaller than
+        //               next, then a) print the pair b) keep
+        //               popping while elements are smaller and
+        //               stack is not empty */
+        //            while (element < next)
+        //            {
+        //                Console.WriteLine(element + " --> "
+        //                                  + next);
+        //                if (s.Count == 0)
+        //                {
+        //                    break;
+        //                }
+        //                element = s.Pop();
+        //            }
+
+        //            /* If element is greater than next, then
+        //               push the element back */
+        //            if (element > next)
+        //            {
+        //                s.Push(element);
+        //            }
+        //        }
+
+        //        /* push next to stack so that we can find next
+        //           greater for it */
+        //        s.Push(next);
+        //    }
+
+        //    /* After iterating over the loop, the remaining
+        //       elements in stack do not have the next greater
+        //       element, so print -1 for them */
+        //    while (s.Empty == false)
+        //    {
+        //        element = s.pop();
+        //        next = -1;
+        //        Console.WriteLine(element + " -- " + next);
+        //    }
+        //}
+
+        #endregion
+
+
+        #region Delete Middle Element Stack
+        public void DeleteMiddleElementOFStack(Stack<int> s)
+
+        {
+            if (s.Count == 0)
+                return;
+
+            Remove(s, s.Count / 2 + 1);
+
+        }
+
+
+        private void Remove(Stack<int> s, int n)
+        {
+            if (n == 1)
+            {
+                s.Pop();
+                return;
+            }
+
+            int tem = s.Peek();
+            s.Pop();
+            Remove(s, n - 1);
+            s.Push(tem);
+        }
+
+        #endregion
+
+        #region TOH 
+
+        public void Tower(int n, String src, String aux, String dest)
+        {
+            if (n == 0)
+            {
+                return;
+            }
+            else
+            {
+                //make recursive call to move n-1 disks to aux nail
+                Tower(n - 1, src, dest, aux);
+
+                //move the nth disc from "A" to "B"
+               Console.WriteLine("Move disc " + n + " from " + src + " to " + dest);
+
+                //Move n-1 disc from aux mail to dest tail
+                Tower(n - 1, aux, src, dest);
+            }
+        }
+
+        #endregion
+
     }
 }
