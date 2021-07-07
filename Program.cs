@@ -13,6 +13,11 @@ namespace CCIFinal
     {
         static void Main(string[] args)
         {
+            BackTracking.SolveMaze();
+            BackTracking.SudoKuSolve(9);
+           /// BackTracking.placeQueens(0, 4);
+          BackTracking.NQueen(6);
+
             SlidingWindowFunctions();            
           
             //  StringHelper.PrintPermutation("abc", "");
@@ -179,6 +184,7 @@ namespace CCIFinal
 
         private static void ArrayFunctions()
         {
+
             ArrayFunc.MissningDuplicateInN(new int[] { 2, 4, 1, 2, 2 });
             char c = (char)(1 + 'a');
 
