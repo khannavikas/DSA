@@ -937,10 +937,16 @@ namespace CCIFinal.Array
 
             while (i <= a.Length - 1)
             {
+                // Find number at index where the current element should be
+                // e.g. a[0] = 3; the comp is what number is at a[3-1], it should be 3 
+                // if a[2] is not 3 then swap; so that it is at correct position 
+                // Else move to next position, a[0] may be replaced later when we get 1 at a[i];
+
                 int comp = a[a[i] - 1];
+
                 if (a[i] != comp)
                 {
-                    Swap(a, i, a[i]-1);
+                    Swap(a, i, a[i] - 1);
 
                 }
                 else
@@ -958,6 +964,48 @@ namespace CCIFinal.Array
 
                 }
             }
+
+        }
+
+
+        static List<List<int>> result = new List<List<int>>();
+
+        public static List<List<int>> SubSetSumK(int[] a, int k)
+        {
+            SubSetSumK(a, 0, k, 0, new List<int>());
+
+            return result;
+        }
+
+        public static void SubSetSumK(int[] a, int start, int k, int sumSofar, List<int> final)
+        {
+            if (start > a.Length - 1)
+                return;
+
+            if (sumSofar + a[start] == k)
+            {
+
+                var x = new List<int>(final);
+                x.Add(a[start]);
+                result.Add(x);               
+                return;
+            }
+
+            if (a[start] + sumSofar < k)
+            {
+                var x = new List<int>(final);
+                x.Add(a[start]);
+                SubSetSumK(a, start + 1, k, sumSofar + a[start], x);
+               
+                SubSetSumK(a, start + 1, k, sumSofar, final);
+            }
+            else
+            {
+                SubSetSumK(a, start + 1, k, sumSofar, final);
+            }
+
+
+
 
         }
     }

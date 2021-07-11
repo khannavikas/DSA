@@ -1,6 +1,7 @@
 ﻿using CCIFinal.Array;
 using CCIFinalLL;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -13,6 +14,20 @@ namespace CCIFinal
     {
         static void Main(string[] args)
         {
+
+         int profit =   DynamicProgramming.KanpSackMemoization(new int[] { 2,1,3, 5, 4 }, 4, new int[] {10, 12, 2,3,5 }, 5);
+            int ways2 = Practice.NumberOfWaysToSumK(new int[] { 1, -2, 3, 4, 5, 6 },6, -1, 0);
+            int ways = Practice.DPNumberOfWaysToSumK(new int[] { 1, -2, 3, 4, 5, 6 }, 6,  -1);
+            Stack<int> st = new Stack<int>();
+            st.Push(3);
+            st.Push(4);
+            st.Push(1);
+            st.Push(10);
+            st.Push(8);
+            st.Push(13);
+            Practice.SortStack(st);
+            Practice.IsValidBST();
+          var result =  ArrayFunc.SubSetSumK(new int[] {1,2,3,4,5,6 }, 6);
             BackTracking.SolveMaze();
             BackTracking.SudoKuSolve(9);
            /// BackTracking.placeQueens(0, 4);
