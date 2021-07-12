@@ -33,7 +33,7 @@ namespace CCIFinal
             if (wt[n - 1] <= maxW)
             {
                 max = Math.Max(KnapSack(wt, maxW, value, n - 1),
-                 KnapSack(wt, maxW - wt[n - 1], value, n - 1) + value[n-1]);
+                 KnapSack(wt, maxW - wt[n - 1], value, n - 1) + value[n - 1]);
             }
 
             return max;
@@ -65,26 +65,146 @@ namespace CCIFinal
 
         private static int KnapSackMemSubProblem(int[] wt, int maxW, int[] value, int n)
         {
-            
+
             // First thing to check if value already stored from previous recusion, return it.
             if (memKnapSack[n, maxW] != -1)
                 return memKnapSack[n, maxW];
 
+            //Very Important to take n-1 and not n
             if (wt[n - 1] > maxW)
             {
                 return memKnapSack[n, maxW] = KnapSack(wt, maxW, value, n - 1);
-                 
+
             }
 
             if (wt[n - 1] <= maxW)
             {
-                 memKnapSack[n, maxW] = Math.Max(KnapSack(wt, maxW, value, n - 1),
-                 KnapSack(wt, maxW - wt[n - 1], value, n - 1) + value[n - 1]);
+                memKnapSack[n, maxW] = Math.Max(KnapSack(wt, maxW, value, n - 1),
+                KnapSack(wt, maxW - wt[n - 1], value, n - 1) + value[n - 1]);
             }
 
             return memKnapSack[n, maxW];
         }
 
         #endregion
+
+        #region KnapSack DP
+
+        public static int KnapsackDP(int[] wt, int maxW, int[] value, int n)
+        {
+            int[,] dp = new int[n + 1, maxW + 1];
+
+            for (int i = 0; i <= n; i++)
+            {
+                dp[i, 0] = 0;
+            }
+
+            for (int i = 0; i <= maxW; i++)
+            {
+                dp[0, i] = 0;
+            }
+
+            for (int i = 1; i <= n; i++)
+            {
+                for (int j = 1; j <= maxW; j++)
+                {
+                    if (wt[i - 1] > j)
+                    {
+                        dp[i, j] = dp[i - 1, j];
+                    }
+                    else
+                    {
+                        dp[i, j] = Math.Max(dp[i - 1, j], dp[i - 1, j - wt[i - 1]] + value[i - 1]);
+                    }
+                }
+            }
+
+            return dp[n, maxW];
+
+        }
+
+
+
+        #endregion
+
+
+        public static bool HasSubsetWithSumKRec(int[] a, int k, int n)
+        {
+            if (n == 0)
+                return false;
+
+            if (k == 0)
+                return true;
+
+            if (a[n - 1] > k)
+                return HasSubsetWithSumKRec(a, k, n - 1);
+
+            return HasSubsetWithSumKRec(a, k - a[n - 1], n - 1) || HasSubsetWithSumKRec(a, k, n - 1);
+        }
+
+
+        private static int ways = 0;
+
+        public static int NumberOfWaysToSumKRec(int[] a, int n, int k)
+        {
+
+            // 2nd condition handles -ve numbers
+            if (k == 0)
+                return 1;
+
+            if (n == 0)
+                return 0;
+
+            if (a[n - 1] > k)
+                return NumberOfWaysToSumKRec(a, n - 1, k);
+
+
+            return NumberOfWaysToSumKRec(a, n - 1, k) +
+             NumberOfWaysToSumKRec(a, n - 1, k - a[n - 1]);
+
+        }
+
+
+        #region Coin change Recursive
+
+        public static int NumbeOfWaysToCoinSum(int[] coins, int sum, int n)
+        {
+
+
+            if (n == 0)
+                return 0;
+
+            if (sum == 0)
+                return 1;
+
+
+            if (coins[n - 1] > sum)
+                return NumbeOfWaysToCoinSum(coins, sum, n - 1);
+
+            return NumbeOfWaysToCoinSum(coins, sum - coins[n - 1], n) + NumbeOfWaysToCoinSum(coins, sum, n - 1);
+        }
+
+        #endregion
+
+        #region Coin change min coins  Recursive
+
+        public static int MinCoinsToCoinSum(int[] coins, int sum, int n)
+        {
+            if (sum == 0)
+                return 0;
+
+
+            if (n == 0)
+                return int.MaxValue;
+
+         
+            if (coins[n - 1] > sum)
+                return MinCoinsToCoinSum(coins, sum, n - 1);
+
+            return Math.Min(1+MinCoinsToCoinSum(coins, sum - coins[n - 1], n), MinCoinsToCoinSum(coins, sum, n - 1));
+        }
+
+        #endregion
+
     }
 }

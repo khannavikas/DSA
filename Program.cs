@@ -14,10 +14,13 @@ namespace CCIFinal
     {
         static void Main(string[] args)
         {
-
-         int profit =   DynamicProgramming.KanpSackMemoization(new int[] { 2,1,3, 5, 4 }, 4, new int[] {10, 12, 2,3,5 }, 5);
-            int ways2 = Practice.NumberOfWaysToSumK(new int[] { 1, -2, 3, 4, 5, 6 },6, -1, 0);
-            int ways = Practice.DPNumberOfWaysToSumK(new int[] { 1, -2, 3, 4, 5, 6 }, 6,  -1);
+           int x = DynamicProgramming.MinCoinsToCoinSum(new int[] { 1, 2, 5 }, 8, 3);
+            BackTracking.PrintSubset(new int[] { 2, 1, 3, 5, 4 }, 5, new List<int>());
+            int p1 = DynamicProgramming.KnapsackDP(new int[] { 2, 1, 3, 5, 4 }, 4, new int[] { 10, 12, 2, 3, 5 }, 5);
+            int profit =   DynamicProgramming.KanpSackMemoization(new int[] { 2,1,3, 5, 4 }, 4, new int[] {10, 12, 2,3,5 }, 5);
+            int way3 = DynamicProgramming.NumberOfWaysToSumKRec(new int[] { 1, -2, 3, 4, 5, 6 }, 6, 6);
+            int ways2 = Practice.NumberOfWaysToSumK(new int[] { 1, -2, 3, 4, 5, 6 },6, 6, 0);
+            int ways = Practice.DPNumberOfWaysToSumK(new int[] { 1, 2, 3, 4, 5, 6 }, 6,  6);
             Stack<int> st = new Stack<int>();
             st.Push(3);
             st.Push(4);

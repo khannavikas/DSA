@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.SqlServer.Server;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -340,5 +341,33 @@ namespace CCIFinal
         }
 
         #endregion
+
+        private static int subsetCount = 0;
+        public static void PrintSubset(int[] a, int n, List<int> final)
+        {
+           
+            if (n == 0)
+            {
+                subsetCount++;
+                PrintList(final);
+                return;
+            }
+        
+            final.Add(a[n - 1]);
+            PrintSubset(a, n - 1, final);
+            final.Remove(a[n - 1]);         
+            PrintSubset(a, n - 1, final);
+
+        }
+
+        private static void PrintList(List<int> l)
+        {
+            Console.WriteLine($"Subset start {subsetCount}");
+            foreach (var item in l)
+            {
+                Console.WriteLine(item);
+            }
+           // Console.WriteLine("Subset end");
+        }
     }
 }
