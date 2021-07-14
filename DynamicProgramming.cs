@@ -142,9 +142,7 @@ namespace CCIFinal
             return HasSubsetWithSumKRec(a, k - a[n - 1], n - 1) || HasSubsetWithSumKRec(a, k, n - 1);
         }
 
-
-        private static int ways = 0;
-
+               
         public static int NumberOfWaysToSumKRec(int[] a, int n, int k)
         {
 
@@ -205,6 +203,38 @@ namespace CCIFinal
         }
 
         #endregion
+
+
+        #region Coin change min coins Dp
+
+        public static int MinCoinsToCoinSumDP(int[] coins, int sum)
+        {
+            int[] dpmincoins = new int[sum + 1];
+
+            for (int i = 0; i < dpmincoins.Length; i++)
+            {
+                dpmincoins[i] = int.MaxValue;
+            }
+           
+
+            //Zero sum can be created with Zero coins
+            dpmincoins[0] = 0;
+
+            // For each sum we need to create
+            for (int i = 0; i < dpmincoins.Length; i++)
+            {
+                 //Try each coin 
+                for (int j = 0; j < coins.Length; j++)
+                {
+                        if (coins[j] <= i)
+                            dpmincoins[i] = Math.Min(dpmincoins[i], 1 + dpmincoins[i - coins[j]]);                      
+                }
+            }
+
+            return dpmincoins[sum] == int.MaxValue ? -1 : dpmincoins[sum];
+        }
+
+        #endregion  
 
     }
 }
