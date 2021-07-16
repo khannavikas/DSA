@@ -142,7 +142,7 @@ namespace CCIFinal
             return HasSubsetWithSumKRec(a, k - a[n - 1], n - 1) || HasSubsetWithSumKRec(a, k, n - 1);
         }
 
-               
+
         public static int NumberOfWaysToSumKRec(int[] a, int n, int k)
         {
 
@@ -195,11 +195,11 @@ namespace CCIFinal
             if (n == 0)
                 return int.MaxValue;
 
-         
+
             if (coins[n - 1] > sum)
                 return MinCoinsToCoinSum(coins, sum, n - 1);
 
-            return Math.Min(1+MinCoinsToCoinSum(coins, sum - coins[n - 1], n), MinCoinsToCoinSum(coins, sum, n - 1));
+            return Math.Min(1 + MinCoinsToCoinSum(coins, sum - coins[n - 1], n), MinCoinsToCoinSum(coins, sum, n - 1));
         }
 
         #endregion
@@ -215,7 +215,7 @@ namespace CCIFinal
             {
                 dpmincoins[i] = int.MaxValue;
             }
-           
+
 
             //Zero sum can be created with Zero coins
             dpmincoins[0] = 0;
@@ -223,18 +223,27 @@ namespace CCIFinal
             // For each sum we need to create
             for (int i = 0; i < dpmincoins.Length; i++)
             {
-                 //Try each coin 
+                //Try each coin 
                 for (int j = 0; j < coins.Length; j++)
                 {
-                        if (coins[j] <= i)
-                            dpmincoins[i] = Math.Min(dpmincoins[i], 1 + dpmincoins[i - coins[j]]);                      
+                    if (coins[j] <= i)
+                        dpmincoins[i] = Math.Min(dpmincoins[i], 1 + dpmincoins[i - coins[j]]);
                 }
             }
 
             return dpmincoins[sum] == int.MaxValue ? -1 : dpmincoins[sum];
         }
 
-        #endregion  
+        #endregion
 
+
+        #region Longest common substring recursive
+
+
+       
+
+
+
+        #endregion 
     }
 }

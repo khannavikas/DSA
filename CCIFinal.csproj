@@ -46,6 +46,7 @@
     <Compile Include="Array\ArrayFunc.cs" />
     <Compile Include="BackTracking.cs" />
     <Compile Include="BinaryTree.cs" />
+    <Compile Include="DPLCS.cs" />
     <Compile Include="DynamicProgramming.cs" />
     <Compile Include="Hash.cs" />
     <Compile Include="LinkList.cs" />

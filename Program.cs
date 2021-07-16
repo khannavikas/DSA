@@ -14,6 +14,7 @@ namespace CCIFinal
     {
         static void Main(string[] args)
         {
+            int lcs = DPLCS.LongestSubstringRecursive("kaist", "vikyais", 5, 7, 0);
             int mincoins = DynamicProgramming.MinCoinsToCoinSumDP(new int[] { 1, 2, 5 }, 8);
             int x = DynamicProgramming.MinCoinsToCoinSum(new int[] { 1, 2, 5 }, 8, 3);
             BackTracking.PrintSubset(new int[] { 2, 1, 3, 5, 4 }, 5, new List<int>());
