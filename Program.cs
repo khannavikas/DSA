@@ -14,6 +14,7 @@ namespace CCIFinal
     {
         static void Main(string[] args)
         {
+            int minSwap = StringHelper.MinSwapToPalindrome("aabcb ");
             int lcs = DPLCS.LongestSubstringRecursive("kaist", "vikyais", 5, 7, 0);
             int mincoins = DynamicProgramming.MinCoinsToCoinSumDP(new int[] { 1, 2, 5 }, 8);
             int x = DynamicProgramming.MinCoinsToCoinSum(new int[] { 1, 2, 5 }, 8, 3);

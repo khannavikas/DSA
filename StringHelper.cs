@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CCIFinal
 {
-   public class StringHelper
+    public class StringHelper
     {
         public static void Permumation(string a)
         {
@@ -16,14 +16,14 @@ namespace CCIFinal
 
         public static void PrintPermutation(string s, string prefix)
         {
-            if(s.Length ==0)
+            if (s.Length == 0)
             {
                 Console.WriteLine(prefix);
                 return;
             }
             for (int i = 0; i < s.Length; i++)
             {
-                 string pre = prefix +s[i];
+                string pre = prefix + s[i];
                 var input = s.Substring(0, i) + s.Substring(i + 1);
 
                 PrintPermutation(input, pre);
@@ -44,7 +44,7 @@ namespace CCIFinal
                     str = swap(str, l, i);
                     permute(str, l + 1, r);
                     str = swap(str, l, i);
-                }   
+                }
             }
         }
 
@@ -61,6 +61,50 @@ namespace CCIFinal
         }
 
 
+
+        //  StringHelper.MinSwapToPalindrome("aabcb ");
+        public static int MinSwapToPalindrome(string s)
+        {
+            if (s.Length <= 1)
+                return 0;
+
+            int p1 = 0;
+            int p2 = s.Length - 1;
+            int count = 0;
+
+            while (p1 < p2)
+            {
+                if (s[p1] == s[p2])
+                {
+                    p1++;
+                    p2--;
+                }
+                else
+                {
+                    int i = p1;
+                    while (s[i] != s[p2])
+                    {
+                        i++;
+                        if (i > p2)
+                        {
+                            return -1;
+                        }
+                    }
+
+                    if (s[i] == s[p2])
+                    {
+                      s =  swap(s, i, p1);
+                        count++;
+                        p1++;
+                        p2--;
+
+                    }
+                }
+
+            }
+
+            return count;
+        }
 
     }
 }
