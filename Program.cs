@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using static CCIFinal.Array.ArrayFunc;
 
 namespace CCIFinal
 {
@@ -14,6 +15,7 @@ namespace CCIFinal
     {
         static void Main(string[] args)
         {
+            var t = ArrayFunc.MergeIntervals(new List<Interval>(){ new Interval{ Start= 1,End = 5 }, new Interval { Start = 3, End = 6 }, new Interval { Start = 2, End = 5 }, new Interval { Start = 4, End = 7 } });
             int minSwap = StringHelper.MinSwapToPalindrome("aabcb ");
             int lcs = DPLCS.LongestSubstringRecursive("kaist", "vikyais", 5, 7, 0);
             int mincoins = DynamicProgramming.MinCoinsToCoinSumDP(new int[] { 1, 2, 5 }, 8);

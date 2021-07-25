@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 
 namespace CCIFinal.Array
 {
@@ -987,7 +988,7 @@ namespace CCIFinal.Array
 
                 var x = new List<int>(final);
                 x.Add(a[start]);
-                result.Add(x);               
+                result.Add(x);
                 return;
             }
 
@@ -996,7 +997,7 @@ namespace CCIFinal.Array
                 var x = new List<int>(final);
                 x.Add(a[start]);
                 SubSetSumK(a, start + 1, k, sumSofar + a[start], x);
-               
+
                 SubSetSumK(a, start + 1, k, sumSofar, final);
             }
             else
@@ -1007,6 +1008,90 @@ namespace CCIFinal.Array
 
 
 
+        }
+
+
+        public static List<int[]> MergeInterval(int[][] a)
+        {
+            int[] start = new int[a.Length];
+            int[] end = new int[a.Length];
+
+            for (int k = 0; k < a.Length; k++)
+            {
+                start[k] = a[k][0];
+                end[k] = a[k][1];
+            }
+
+            List<int[]> lis = new List<int[]>();
+            System.Array.Sort(start);
+            System.Array.Sort(end);
+
+
+            for (int i = 0, j = 0; i < a.Length; i++)
+            { // j is start of interval.
+              // Compare start of next to end of previous
+              // If last start or start after next end
+                if (i == a.Length - 1 || start[i + 1] > end[i])
+                {
+                    lis.Add(new int[] { start[j], end[i] });
+                    j = i + 1;
+                }
+            }
+
+            return lis;
+        }
+
+
+        private class InvComparer : IComparer<Interval>
+        {
+            public int Compare(Interval x, Interval y)
+            {
+                if (x.Start > y.Start)
+                    return 1;
+                if (x.Start < y.Start)
+                    return -1;
+
+                return 0;
+            }
+        }
+
+        public class Interval
+        {
+            public int Start { get; set; }
+            public int End { get; set; }
+        }
+
+        public static List<int[]> MergeIntervals(List<Interval> invs)
+        {
+            invs.Sort(new InvComparer());
+
+            Stack<Interval> s = new Stack<Interval>();
+           
+            s.Push(invs.First());
+
+            for (int i = 1; i < invs.Count; i++)
+            {
+                var x = s.Peek();
+
+                if (invs[i].Start < x.End)
+                {
+                    x.End = Math.Max(x.End, invs[i].End);
+                    s.Pop();
+                    s.Push(x);
+                }
+                {
+                    s.Push(invs[i]);
+
+                }
+            }
+
+            List<int[]> ls = new List<int[]>();
+            while(s.Count >0)
+            {
+                var y = s.Pop();
+                ls.Add(new int[] {y.Start, y.End });
+            }
+            return ls;
         }
     }
 }
