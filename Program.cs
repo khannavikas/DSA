@@ -1,4 +1,5 @@
 ﻿using CCIFinal.Array;
+using CCIFinal.Practice;
 using CCIFinalLL;
 using System;
 using System.Collections;
@@ -9,41 +10,23 @@ using System.Text;
 using System.Threading.Tasks;
 using static CCIFinal.Array.ArrayFunc;
 
+
 namespace CCIFinal
 {
     class Program
     {
+        public static object PracticeHelper { get; private set; }
+
         static void Main(string[] args)
         {
-            var t = ArrayFunc.MergeIntervals(new List<Interval>(){ new Interval{ Start= 1,End = 5 }, new Interval { Start = 3, End = 6 }, new Interval { Start = 2, End = 5 }, new Interval { Start = 4, End = 7 } });
-            int minSwap = StringHelper.MinSwapToPalindrome("aabcb ");
-            int lcs = DPLCS.LongestSubstringRecursive("kaist", "vikyais", 5, 7, 0);
-            int mincoins = DynamicProgramming.MinCoinsToCoinSumDP(new int[] { 1, 2, 5 }, 8);
-            int x = DynamicProgramming.MinCoinsToCoinSum(new int[] { 1, 2, 5 }, 8, 3);
-            BackTracking.PrintSubset(new int[] { 2, 1, 3, 5, 4 }, 5, new List<int>());
-            int p1 = DynamicProgramming.KnapsackDP(new int[] { 2, 1, 3, 5, 4 }, 4, new int[] { 10, 12, 2, 3, 5 }, 5);
-            int profit =   DynamicProgramming.KanpSackMemoization(new int[] { 2,1,3, 5, 4 }, 4, new int[] {10, 12, 2,3,5 }, 5);
-            int way3 = DynamicProgramming.NumberOfWaysToSumKRec(new int[] { 1, -2, 3, 4, 5, 6 }, 6, 6);
-            int ways2 = Practice.NumberOfWaysToSumK(new int[] { 1, -2, 3, 4, 5, 6 },6, 6, 0);
-            int ways = Practice.DPNumberOfWaysToSumK(new int[] { 1, 2, 3, 4, 5, 6 }, 6,  6);
-            Stack<int> st = new Stack<int>();
-            st.Push(3);
-            st.Push(4);
-            st.Push(1);
-            st.Push(10);
-            st.Push(8);
-            st.Push(13);
-            Practice.SortStack(st);
-            Practice.IsValidBST();
-          var result =  ArrayFunc.SubSetSumK(new int[] {1,2,3,4,5,6 }, 6);
-            BackTracking.SolveMaze();
-            BackTracking.SudoKuSolve(9);
-           /// BackTracking.placeQueens(0, 4);
-          BackTracking.NQueen(6);
+            PracticeFuncations();
 
-            SlidingWindowFunctions();            
-          
-            //  StringHelper.PrintPermutation("abc", "");
+            StringFunctions();
+
+            BackTracking();
+
+            SlidingWindowFunctions();
+
             // LinkListFunctions();
 
             //LRUFunction();
@@ -62,6 +45,43 @@ namespace CCIFinal
 
             Console.ReadLine();
 
+
+        }
+
+        private static void PracticeFuncations()
+        {
+            int stairWays = DynamicProgramming.NumberOfWaysToNthStair(4);
+            bool haskdiv = DynamicProgramming.HasSubsetDivK(new int[] { 1, 7, 3, 11 }, 5 , 4, 0);
+            DPHelper.PrintNthFabonaci(6);
+            string palsub = DPHelper.LongestPalindromicSubstring("forgeeksskeegfor");
+            int lcs = DPHelper.LCSDP("ghvikas", "vikuuy", 7, 6);
+            int way3 = DynamicProgramming.NumberOfWaysToSumKRec(new int[] { 1, 2, 3, 4, 5, 6 }, 6, 6);
+            int num = DPHelper.SubSetSumDP(new int[] { 1, 2, 3, 4, 5, 6 }, 6, 6);
+            int p = DPHelper.KnapSackDP(new int[] { 2, 1, 3, 5, 4 }, new int[] { 10, 12, 2, 3, 5 }, 4, 5);
+            int profit = DynamicProgramming.KanpSackMemoization(new int[] { 2, 1, 3, 5, 4 }, 4, new int[] { 10, 12, 2, 3, 5 }, 5);
+            int p2 = DPHelper.KnapSackMemoization(new int[] { 2, 1, 3, 5, 4 }, new int[] { 10, 12, 2, 3, 5 }, 4, 5);
+            int p1 = DPHelper.KnapSackRecursive(new int[] { 2, 1, 3, 5, 4 }, new int[] { 10, 12, 2, 3, 5 }, 4, 5);
+        }
+
+        private static void DPFunctions()
+        {
+            
+            int lcs = DPLCS.LongestSubstringRecursive("kaist", "vikyais", 5, 7, 0);
+            int mincoins = DynamicProgramming.MinCoinsToCoinSumDP(new int[] { 1, 2, 5 }, 8);
+            int x = DynamicProgramming.MinCoinsToCoinSum(new int[] { 1, 2, 5 }, 8, 3);
+            CCIFinal.BackTracking.PrintSubset(new int[] { 2, 1, 3, 5, 4 }, 5, new List<int>());
+            int p1 = DynamicProgramming.KnapsackDP(new int[] { 2, 1, 3, 5, 4 }, 4, new int[] { 10, 12, 2, 3, 5 }, 5);
+            int profit = DynamicProgramming.KanpSackMemoization(new int[] { 2, 1, 3, 5, 4 }, 4, new int[] { 10, 12, 2, 3, 5 }, 5);
+            int way3 = DynamicProgramming.NumberOfWaysToSumKRec(new int[] { 1, -2, 3, 4, 5, 6 }, 6, 6);
+          
+        }
+
+        private static void BackTracking()
+        {
+            CCIFinal.BackTracking.SolveMaze();
+            CCIFinal.BackTracking.SudoKuSolve(9);
+            CCIFinal.BackTracking.placeQueens(0, 4);
+            CCIFinal.BackTracking.NQueen(6);
         }
 
         private static void SlidingWindowFunctions()
@@ -207,7 +227,9 @@ namespace CCIFinal
 
         private static void ArrayFunctions()
         {
+            var t = ArrayFunc.MergeIntervals(new List<Interval>() { new Interval { Start = 1, End = 5 }, new Interval { Start = 3, End = 6 }, new Interval { Start = 2, End = 5 }, new Interval { Start = 4, End = 7 } });
 
+            var result = ArrayFunc.SubSetSumK(new int[] { 1, 2, 3, 4, 5, 6 }, 6);
             ArrayFunc.MissningDuplicateInN(new int[] { 2, 4, 1, 2, 2 });
             char c = (char)(1 + 'a');
 
@@ -338,6 +360,12 @@ namespace CCIFinal
             ll.Print();
         }
 
+
+        private static void StringFunctions()
+        {
+            int minSwap = StringHelper.MinSwapToPalindrome("aabcb ");
+            StringHelper.PrintPermutation("abc", "");
+        }
 
 
 

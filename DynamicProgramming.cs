@@ -66,6 +66,9 @@ namespace CCIFinal
         private static int KnapSackMemSubProblem(int[] wt, int maxW, int[] value, int n)
         {
 
+            if (n == 0 || maxW == 0)
+                return 0;
+
             // First thing to check if value already stored from previous recusion, return it.
             if (memKnapSack[n, maxW] != -1)
                 return memKnapSack[n, maxW];
@@ -73,17 +76,17 @@ namespace CCIFinal
             //Very Important to take n-1 and not n
             if (wt[n - 1] > maxW)
             {
-                return memKnapSack[n, maxW] = KnapSack(wt, maxW, value, n - 1);
+                return memKnapSack[n, maxW] = KnapSackMemSubProblem(wt, maxW, value, n - 1);
 
             }
 
-            if (wt[n - 1] <= maxW)
-            {
-                memKnapSack[n, maxW] = Math.Max(KnapSack(wt, maxW, value, n - 1),
-                KnapSack(wt, maxW - wt[n - 1], value, n - 1) + value[n - 1]);
-            }
+            //if (wt[n - 1] <= maxW)
+            //{
+            return memKnapSack[n, maxW] = Math.Max(KnapSackMemSubProblem(wt, maxW, value, n - 1),
+               KnapSackMemSubProblem(wt, maxW - wt[n - 1], value, n - 1) + value[n - 1]);
+            // }
 
-            return memKnapSack[n, maxW];
+            //return memKnapSack[n, maxW];
         }
 
         #endregion
@@ -240,10 +243,74 @@ namespace CCIFinal
         #region Longest common substring recursive
 
 
-       
 
 
 
-        #endregion 
+
+        #endregion
+
+
+        // DP of this is Hard this is recursive
+        public static bool HasSubsetDivK(int[] a, int k, int n, int sumSofar)
+        {
+            if (n == 0 || k == 0)
+                return false;
+
+            if (k == 1)
+                return true;
+
+            if (a[n - 1] % k == 0 || (sumSofar + a[n - 1]) % k == 0)
+                return true;
+            else
+                return HasSubsetDivK(a, k, n - 1, sumSofar) || HasSubsetDivK(a, k, n - 1, sumSofar + a[n - 1]);
+
+        }
+
+
+        public static int NumberOfWaysToNthStair(int n)
+        {
+            int[] res = new int[n + 1];
+            res[0] = 1;
+            res[1] = 1;
+            res[2] = 2;
+
+            for (int i = 3; i <= n; i++)
+                res[i] = res[i - 1] + res[i - 2]
+                         + res[i - 3];
+
+            return res[n];
+
+        }
+
+
+        // Recursive function to find total ways to reach the n'th stair from the bottom
+        // when a person is allowed to take at most `m` steps at a time
+      public static  int totalWays(int n, int m)
+        {
+            // create an array of size `n+1` for storing solutions to the subproblems
+            int[] lookup = new int[n + 1];
+
+            // base case: 1 way (with no steps)
+            lookup[0] = 1;
+
+            // 1 way to reach the 1st stair
+            lookup[1] = 1;
+
+            // 2 ways to reach the 2nd stair
+            lookup[2] = 2;
+
+            // fill the lookup table in a bottom-up manner
+            for (int i = 3; i <= n; i++)
+            {
+                lookup[i] = 0;
+                for (int j = 1; j <= m && (i - j) >= 0; j++)
+                {
+                    lookup[i] += lookup[i - j];
+                }
+            }
+
+            return lookup[n];
+        }
+
     }
 }

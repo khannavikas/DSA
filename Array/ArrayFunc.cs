@@ -1079,6 +1079,7 @@ namespace CCIFinal.Array
                     s.Pop();
                     s.Push(x);
                 }
+                else
                 {
                     s.Push(invs[i]);
 
