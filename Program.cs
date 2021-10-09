@@ -19,13 +19,33 @@ namespace CCIFinal
 
         static void Main(string[] args)
         {
-            PracticeFuncations();
 
+            int profit = DynamicProgramming.MaxSteal(new int[] { 15, 7, 1, 20, 10, 2, 4 }, 7, 0);
+
+            int[] c = SortHelper.MergeList(new int[] { 1, 5, 9 }, new int[] { 2, 3, 6, 10 });
+            Console.WriteLine("Steps to End " + DynamicProgramming.MinStepToEnd(new int [] { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }));
+            Console.Write(DPHelper.LIS(new int[] { 7, 7, 7, 7, 7, 7 }, 6));
+         
+            Console.WriteLine(DPHelper.LCSubString("vtcky", "vtcka", 5, 5, 0));
+            Console.WriteLine(DPHelper.MinCoin(new int[] {1,2,3 }, 5, 3));
+
+            Console.WriteLine(DynamicProgramming.RodCuttingDP(new int[] { 1, 2, 3, 4, 5, 6, 7, 8 }, new int[] { 1, 5, 8, 9, 10, 17, 17, 20 }, 8, 8)
+                );
+                        DPHelper.KnapSackParent(new int[] { 2, 4, 3, 8 }, new int[] { 10, 5, 9, 6 }, 6);
+            SortingFunctions();
             StringFunctions();
+            Console.WriteLine(Getuser("@JoeBloggs yo", 1));
 
+            Console.WriteLine(fizzBuzz(9));
+            Console.WriteLine(fizzBuzz(10));
+            Console.WriteLine(fizzBuzz(15));
+            Console.WriteLine(fizzBuzz(8));
+            PracticeFuncations();
+                        
             BackTracking();
 
             SlidingWindowFunctions();
+                      
 
             // LinkListFunctions();
 
@@ -48,10 +68,17 @@ namespace CCIFinal
 
         }
 
+        private static void SortingFunctions()
+        {
+           int[] x =  SortHelper.QuickSort(new int[] { 3, 1, 2, 8, 4, 19 }, 0, 5);
+            int[] sorted = SortHelper.MergeSort(new int[] { 3, 1, 8, 4, 19, 10 }, 0, 5);
+            int[] c = SortHelper.MergeSortedArray(new int[] {1,5,9 }, new int[] {2,3,6,10 });
+        }
+
         private static void PracticeFuncations()
         {
             int stairWays = DynamicProgramming.NumberOfWaysToNthStair(4);
-            bool haskdiv = DynamicProgramming.HasSubsetDivK(new int[] { 1, 7, 3, 11 }, 5 , 4, 0);
+            bool haskdiv = DynamicProgramming.HasSubsetDivK(new int[] { 1, 7, 3, 11 }, 5, 4, 0);
             DPHelper.PrintNthFabonaci(6);
             string palsub = DPHelper.LongestPalindromicSubstring("forgeeksskeegfor");
             int lcs = DPHelper.LCSDP("ghvikas", "vikuuy", 7, 6);
@@ -65,7 +92,7 @@ namespace CCIFinal
 
         private static void DPFunctions()
         {
-            
+
             int lcs = DPLCS.LongestSubstringRecursive("kaist", "vikyais", 5, 7, 0);
             int mincoins = DynamicProgramming.MinCoinsToCoinSumDP(new int[] { 1, 2, 5 }, 8);
             int x = DynamicProgramming.MinCoinsToCoinSum(new int[] { 1, 2, 5 }, 8, 3);
@@ -73,7 +100,7 @@ namespace CCIFinal
             int p1 = DynamicProgramming.KnapsackDP(new int[] { 2, 1, 3, 5, 4 }, 4, new int[] { 10, 12, 2, 3, 5 }, 5);
             int profit = DynamicProgramming.KanpSackMemoization(new int[] { 2, 1, 3, 5, 4 }, 4, new int[] { 10, 12, 2, 3, 5 }, 5);
             int way3 = DynamicProgramming.NumberOfWaysToSumKRec(new int[] { 1, -2, 3, 4, 5, 6 }, 6, 6);
-          
+
         }
 
         private static void BackTracking()
@@ -367,6 +394,96 @@ namespace CCIFinal
             StringHelper.PrintPermutation("abc", "");
         }
 
+
+        public static string fizzBuzz(int n)
+        {
+            // ans list
+
+
+            bool divisibleBy3 = (n % 3 == 0);
+            bool divisibleBy5 = (n % 5 == 0);
+
+            string numAnsStr = "";
+
+            if (divisibleBy3)
+            {
+                // Divides by 3, add Fizz
+                numAnsStr += "Fizz";
+            }
+
+            if (divisibleBy5)
+            {
+                // Divides by 5, add Buzz
+                numAnsStr += "Buzz";
+            }
+
+
+            if (numAnsStr == "")
+            {
+                // Not divisible by 3 or 5, add the number
+                numAnsStr += Convert.ToString(n);
+            }
+
+            return numAnsStr;
+        }
+
+
+        public static string Getuser(string name, int index)
+        {
+            List<string> strName = new List<string>();
+
+            if (string.IsNullOrEmpty(name))
+                return "";
+
+            string user = string.Empty;
+
+            for (int i = 0; i < name.Length; i++)
+            {
+                if (name[i] == '@')
+                {
+                    i++;
+                    while (i < name.Length && IsValidChar(name[i]) )
+                    {
+                        user += name[i];
+                        i++;
+                    }
+
+                    if (!string.IsNullOrEmpty(user))
+                    {
+                        strName.Add(user);
+                    }
+                    user = string.Empty;
+                }
+            }
+
+            if(strName.Count >= index)
+            {
+                return strName[index-1];
+            }
+
+            return string.Empty;
+        }
+
+        private static bool IsValidChar(char x)
+        {
+            if (x >= 48 && x <= 57)
+                return true;
+
+            if (x >= 65 && x <= 90)
+                return true;
+
+            if (x >= 97 && x <= 122)
+                return true;
+
+            if (x == '-')
+                return true;
+
+            if (x == '_')
+                return true;
+
+            return false;
+
+        }
 
 
     }

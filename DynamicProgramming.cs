@@ -266,7 +266,6 @@ namespace CCIFinal
 
         }
 
-
         public static int NumberOfWaysToNthStair(int n)
         {
             int[] res = new int[n + 1];
@@ -282,10 +281,9 @@ namespace CCIFinal
 
         }
 
-
         // Recursive function to find total ways to reach the n'th stair from the bottom
         // when a person is allowed to take at most `m` steps at a time
-      public static  int totalWays(int n, int m)
+        public static int totalWays(int n, int m)
         {
             // create an array of size `n+1` for storing solutions to the subproblems
             int[] lookup = new int[n + 1];
@@ -310,6 +308,157 @@ namespace CCIFinal
             }
 
             return lookup[n];
+        }
+
+        public static int RodCuttingRecur(int[] lenArr, int[] priceArray, int rodLen, int n)
+        {
+
+            if (rodLen == 0 || n == 0)
+                return 0;
+
+            if (lenArr[n - 1] > rodLen)
+                return RodCuttingRecur(lenArr, priceArray, rodLen, n - 1);
+
+            return Math.Max(RodCuttingRecur(lenArr, priceArray, rodLen, n - 1), priceArray[n - 1] + RodCuttingRecur(lenArr, priceArray, rodLen - lenArr[n - 1], n));
+
+        }
+
+        public static int RodCuttingDP(int[] lenArr, int[] priceArray, int rodLen, int n)
+        {
+
+            int[,] profitCut = new int[lenArr.Length + 1, rodLen + 1];
+
+            for (int i = 0; i <= lenArr.Length; i++)
+            {
+                for (int j = 0; j <= rodLen; j++)
+                {
+                    if (i == 0 || j == 0)
+                    {
+                        profitCut[i, j] = 0;
+
+                    }
+                    else
+                    {
+                        if (lenArr[i - 1] <= j)
+                        {
+                            profitCut[i, j] = Math.Max(profitCut[i - 1, j], priceArray[i - 1] + profitCut[i, j - lenArr[i - 1]]);
+                        }
+                        else
+                        {
+                            profitCut[i, j] = profitCut[i - 1, j];
+                        }
+                    }
+                }
+            }
+
+            return profitCut[lenArr.Length, rodLen];
+
+
+        }
+
+        public static int MinStepToEnd(int[] a)
+        {
+            if (a.Length == 0 || a[0] == 0)
+                return -1;
+
+            int[] minStep = new int[a.Length];
+
+            for (int i = 0; i < a.Length; i++)
+            {
+                minStep[i] = int.MaxValue;
+            }
+
+            // Min step to reach 1st step = 0
+            minStep[0] = 0;
+
+            // for each element
+            for (int x = 0; x < a.Length - 1; x++)
+            {
+                // Only If steps can be taken from here
+                if (a[x] > 0)
+                {
+                    // Start from 1 to number of steps that can be taken 
+                    for (int y = 1; y <= a[x] && x + y < a.Length; y++)
+                    {
+                        minStep[x + y] = Math.Min(minStep[x + y], minStep[x] + 1);
+                    }
+
+                }
+
+            }
+
+            if (minStep[a.Length - 1] == int.MaxValue)
+                return -1;
+            else
+                return minStep[a.Length - 1];
+        }
+
+
+        public static int MaxSteal(int[] a, int n, int maxSofar)
+
+        {
+            if (n <= 0)
+                return maxSofar;
+
+
+            return Math.Max(MaxSteal(a, n - 2, maxSofar + a[n - 1]), MaxSteal(a, n - 1, maxSofar));
+
+        }
+
+
+        // Function to calculate the
+        // maximum stolen value
+        public static int MaxLoot(int[] hval, int n)
+        {
+            if (n == 0)
+                return 0;
+            if (n == 1)
+                return hval[0];
+            if (n == 2)
+                return Math.Max(hval[0], hval[1]);
+
+            // dp[i] represent the maximum value stolen
+            // so far after reaching house i.            
+            int[] dp = new int[n];
+
+            // Initialize the dp[0] and dp[1]
+            dp[0] = hval[0];
+            dp[1] = Math.Max(hval[0], hval[1]);
+
+            // Fill remaining positions
+            for (int i = 2; i < n; i++)
+                dp[i] = Math.Max(hval[i] + dp[i - 2], dp[i - 1]);
+
+            return dp[n - 1];
+        }
+
+        // Function to calculate the
+        // maximum stolen value using only 2 variables
+       public static int maxLoot(int[] hval, int n)
+        {
+            if (n == 0)
+                return 0;
+
+            int value1 = hval[0];
+            if (n == 1)
+                return value1;
+
+            int value2 = Math.Max(hval[0], hval[1]);
+            if (n == 2)
+                return value2;
+
+            // contains maximum stolen value at the end
+            int max_val = 0;
+
+            // Fill remaining positions
+            for (int i = 2; i < n; i++)
+            {
+                max_val = Math.Max(hval[i] + value1, value2);
+                value1 = value2;
+                value2 = max_val;
+            }
+
+            return max_val;
         }
 
     }

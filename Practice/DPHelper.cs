@@ -13,6 +13,39 @@ namespace CCIFinal.Practice
     public class DPHelper
     {
 
+
+        public static int max = 0;
+
+        public static int LCSubRecursive(string s1, string s2, int n1, int n2)
+        {
+
+            LCSubString(s1, s2, n1, n2, 0);
+
+            return max;
+
+        }
+
+        public static int LCSubString(string s1, string s2, int n1, int n2, int maxSofar)
+        {
+            if (n1 == 0 || n2 == 0)
+                return maxSofar;
+
+            if (s1[n1 - 1] == s2[n2 - 1])
+
+            {               
+               return  LCSubString(s1, s2, n1 - 1, n2 - 1, maxSofar + 1);
+            }
+            else
+            {
+                int max =  Math.Max(maxSofar, LCSubString(s1, s2, n1 - 1, n2, 0));
+               return Math.Max(max, LCSubString(s1, s2, n1, n2 - 1, 0));
+
+            }
+
+
+        }
+
+
         public static int KnapSackRecursive(int[] wt, int[] value, int maxAllowedWeight, int n)
         {
             if (n <= 0 || maxAllowedWeight <= 0)
@@ -43,7 +76,6 @@ namespace CCIFinal.Practice
 
 
         }
-
 
         private static int KnapSackMem(int[] wt, int[] value, int maxAllowedWeight, int n)
         {
@@ -94,7 +126,6 @@ namespace CCIFinal.Practice
             return dp[n, maxAllowedWeight];
 
         }
-
 
         public static int SubSetSumDP(int[] a, int targetSum, int n)
         {
@@ -236,8 +267,6 @@ namespace CCIFinal.Practice
             Console.WriteLine(max);
         }
 
-
-
         public static void PrintNthFabonaci(int n)
         {
 
@@ -246,12 +275,116 @@ namespace CCIFinal.Practice
             fab[0] = 0;
             fab[1] = 1;
 
-            for (int i = 2; i <n; i++)
+            for (int i = 2; i < n; i++)
             {
                 fab[i] = fab[i - 1] + fab[i - 2];
             }
 
             Console.WriteLine(fab[n - 1]);
         }
+
+        public static int[,] profit;
+
+        public static void KnapSackParent(int[] w, int[] v, int maxweight)
+        {
+            profit = new int[maxweight + 1, w.Length + 1];
+
+            for (int i = 0; i <= maxweight; i++)
+            {
+                for (int j = 0; j <= w.Length; j++)
+                {
+
+                    profit[i, j] = -1;
+                }
+
+            }
+
+            Console.WriteLine("Profit is " + KnapSack(w, v, maxweight, w.Length));
+
+        }
+
+        public static int KnapSack(int[] w, int[] v, int maxweight, int n)
+
+
+        {
+            if (n == 0 || maxweight == 0)
+                return 0;
+
+
+            if (profit[maxweight, n] != -1)
+                return profit[maxweight, n];
+
+
+            if (w[n - 1] > maxweight)
+                return KnapSack(w, v, maxweight, n - 1);
+
+
+            return profit[maxweight, n] = Math.Max(KnapSack(w, v, maxweight, n - 1), v[n - 1] + KnapSack(w, v, maxweight - w[n - 1], n - 1));
+
+        }
+
+        public static int MinCoin(int[] coins, int sum, int n)
+        {
+            if (n == 0)
+                return int.MaxValue;
+            if (sum == 0)
+                return 0;
+
+            if (coins[n - 1] > sum)
+                return MinCoin(coins, sum, n - 1);
+            else
+            {
+                return Math.Min(MinCoin(coins, sum, n - 1), 1 + MinCoin(coins, sum - coins[n - 1], n));
+            }
+
+        }
+
+
+        public static int LCSReursive(string s1, string s2, int n1, int n2)
+        {
+            if (n1 == 0 || n2 == 0)
+            {
+                return 0;
+            }
+
+            if (s1[n1 - 1] == s2[n2 - 1])
+            {
+                return 1 + LCSReursive(s1, s2, n1 - 1, n2 - 1);
+            }
+            else
+            {
+                return Math.Max(LCSReursive(s1, s2, n1, n2 - 1), LCSReursive(s1, s2, n1 - 1, n2));
+            }
+
+        }
+
+        public static int LIS(int[] ar, int n)
+        {
+            if (n == 0)
+                return 0;
+
+            if (n == 1)
+                return 1;
+
+            return LIS(ar, n , ar[n - 1]);
+        }
+
+            public static int LIS(int[] ar, int n, int maxVal)
+        {
+            if (n == 0)
+                return 0;
+
+            if (n == 1)
+                return 1;
+                       
+            if (ar[n - 2] < maxVal)
+                return 1+ LIS(ar, n - 1, ar[n-2]);
+
+            else
+
+                return Math.Max(LIS(ar, n - 1, ar[n - 2]), LIS(ar, n - 2, ar[n-1]));
+
+        }
     }
+
 }
