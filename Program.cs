@@ -19,6 +19,9 @@ namespace CCIFinal
 
         static void Main(string[] args)
         {
+           GraphFunctions();
+
+            Console.Write(StringHelper.IsMatch("abbdbb", "ab*d"));
 
             int profit = DynamicProgramming.MaxSteal(new int[] { 15, 7, 1, 20, 10, 2, 4 }, 7, 0);
 
@@ -65,6 +68,81 @@ namespace CCIFinal
 
             Console.ReadLine();
 
+
+        }
+
+        private static void GraphFunctions()
+        {
+            Graph g = new Graph(7);
+            g.AddEdge(0, 1);
+            g.AddEdge(1, 3);
+            g.AddEdge(6, 0);           
+            g.AddEdge(5, 6);
+            g.AddEdge(5, 2);
+            g.AddEdge(6, 4);
+            g.AddEdge(4, 1);
+
+            Console.WriteLine("Has Cycle " + g.HasCycle());
+
+           // g.AddEdge(3, 3);
+
+            Console.WriteLine("Has Cycle " + g.HasCycle());
+
+          //   g.ListAllPath(5, 1);
+
+            Graph g1 = new Graph(4);
+            // Construct a graph
+            g1.AddEdge(0,3);
+            g1.AddEdge(0, 1);
+            g1.AddEdge(0, 2);
+            g1.AddEdge(1, 3);
+            g1.AddEdge(2, 0);
+            g1.AddEdge(2, 1);
+
+            Console.WriteLine("Has Path " + g1.HasPath(2,3));
+
+            Graph g2 = new Graph(4);
+            
+            g2.AddEdge(0, 1);
+            g2.AddEdge(1, 2);
+            g2.AddEdge(2,3);
+           // g2.AddEdge(3, 2);
+            g2.AddEdge(0, 3);
+
+             Console.WriteLine("Has Cycle " + g2.HasCycle());
+
+            Console.WriteLine("Has Cycle Rec" + g2.HasCycleRec());
+
+            Console.WriteLine("BFS all path");
+            g1.BFSPath(2, 3);
+
+            Console.WriteLine("Mother vertex is   " + g.MotherVertex());
+
+
+            Console.Write("Following is Breadth First " +
+                          "Traversal(starting from " +
+                          "vertex 2)\n");
+
+
+            g.BFSFromNode(2);
+
+            Console.Write("Following is BFS New" +
+                         "Traversal(starting from " +
+                         "vertex 2)\n");
+
+            g.BFSNew(2);
+
+
+            Console.Write("Following is Depth First " +
+                          "Traversal(starting from " +
+                          "vertex 2)\n");
+            g.DFS(2);
+
+            Console.Write("Following is New Depth First " +
+                          "Traversal(starting from " +
+                          "vertex 2)\n");
+
+            g.DFSNew(2);
 
         }
 

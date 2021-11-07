@@ -48,6 +48,7 @@
     <Compile Include="BinaryTree.cs" />
     <Compile Include="DPLCS.cs" />
     <Compile Include="DynamicProgramming.cs" />
+    <Compile Include="Graph.cs" />
     <Compile Include="Hash.cs" />
     <Compile Include="LinkList.cs" />
     <Compile Include="LRU.cs" />
