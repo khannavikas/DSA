@@ -878,7 +878,7 @@ namespace CCIFinal.Array
         #endregion  
 
 
-        public int MaxContinousSumKandane(int[] a)
+        public static int MaxContinousSumKandane(int[] a)
         {
             int currSum = a[0];
             int maxSum = a[0];
@@ -905,6 +905,48 @@ namespace CCIFinal.Array
 
             return maxSum;
         }
+
+        public static int MaxContinousSumPract(int[] arr)
+        {
+            int maxSum = int.MinValue;
+
+            if (arr.Length == 0)
+                return maxSum;
+
+
+            int currSum = arr[0];
+            maxSum = arr[0];
+
+            int i = 1;
+
+            while (i < arr.Length)
+
+            {
+
+                currSum = currSum + arr[i];
+
+
+
+                if (currSum < arr[i])
+                {
+                    currSum = arr[i];
+
+
+
+                }
+
+                i++;
+
+                maxSum = Math.Max(currSum, maxSum);
+
+
+
+            }
+
+            return maxSum;
+
+        }
+
 
         public static int CircleOfDeath(List<int> a, int k, int start)
         {
@@ -1066,7 +1108,7 @@ namespace CCIFinal.Array
             invs.Sort(new InvComparer());
 
             Stack<Interval> s = new Stack<Interval>();
-           
+
             s.Push(invs.First());
 
             for (int i = 1; i < invs.Count; i++)
@@ -1087,13 +1129,48 @@ namespace CCIFinal.Array
             }
 
             List<int[]> ls = new List<int[]>();
-            while(s.Count >0)
+            while (s.Count > 0)
             {
                 var y = s.Pop();
-                ls.Add(new int[] {y.Start, y.End });
+                ls.Add(new int[] { y.Start, y.End });
             }
             return ls;
         }
+
+
+        public static void MovePositiveAndNegative(int[] arr)
+        {
+
+            int i = 0;
+            int j = arr.Length - 1;
+
+            while (i < j)
+            {
+                while (arr[i] >= 0)
+                {
+                    i++;
+
+                }
+
+                while (arr[j] < 0)
+                {
+                    j--;
+                }
+
+                if (i < j)
+                {
+                    int tem = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = tem;
+
+
+                }
+
+            }
+
+        }
+
+
     }
 }
 

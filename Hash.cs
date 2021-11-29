@@ -32,7 +32,8 @@ namespace CCIFinal
 
                 int rem = sum % k;
 
-                if (rem < k)
+                // If remainder is -ve make it positive
+                if (rem < 0)
                     rem = rem + k;
 
                 if (remainderIndex.ContainsKey(rem))
@@ -54,7 +55,6 @@ namespace CCIFinal
 
         public int LongestSubarrayWithSumZero(int[] a)
         {
-
             //  int ans = 0;
             int sum = 0;
             int maxLength = 0;
@@ -91,6 +91,43 @@ namespace CCIFinal
             }
 
             return maxLength;
+        }
+
+
+
+        public static int PracticeLongestIncreasingSubarray(int[] array)
+        {
+            int sindex = 0;
+            int currIndex = 0;
+            int len = int.MinValue;
+
+            if (array.Length == 1)
+                return 1;
+
+            currIndex = 1;
+            while (currIndex < array.Length)
+            {
+
+                if (array[currIndex] < array[currIndex-1])
+                {
+
+                    len = Math.Max(len, currIndex - sindex );
+
+                    sindex = currIndex;
+                   
+
+                }
+               
+               
+                currIndex++;
+
+            }
+
+
+            len = Math.Max(len, currIndex - sindex );
+
+            return len;
+
         }
 
         public int LongestIncreasingConsecutiveSubsequence(int[] a)
@@ -253,7 +290,6 @@ namespace CCIFinal
                 }
 
             }
-
 
             return true;
 

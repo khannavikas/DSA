@@ -19,22 +19,41 @@ namespace CCIFinal
 
         static void Main(string[] args)
         {
-           GraphFunctions();
 
-            Console.Write(StringHelper.IsMatch("abbdbb", "ab*d"));
+            int k = ArrayFunc.MaxContinousSumPract(new int[] { -2, -3, 4, -1, -2, 1, 5, -3 }
+);
+
+            int bn = ArrayFunc.MaxContinousSumKandane(new int[] { -2, -3, 4, -1, -2, 1, 5, -3 });
+            ArrayFunc.MovePositiveAndNegative(new int[] { 1, 2, -3, 0, -8, 6, 7, -9, 10, -7 });
+
+            char[] str1 = "Geeksforgeeks".ToCharArray();
+            char[] str2 = "1forgeeksgeeks".ToCharArray();
+
+            // Function call
+            if (StringHelper.areAnagram(str1, str2))
+                Console.Write("The two strings are " +
+                              "anagram of each other");
+            else
+                Console.Write("The two strings are " +
+                              "not anagram of each other");
+
+
+            HashFunctions();
+            SlidingWindowFunctions();
+            GraphFunctions();
 
             int profit = DynamicProgramming.MaxSteal(new int[] { 15, 7, 1, 20, 10, 2, 4 }, 7, 0);
 
             int[] c = SortHelper.MergeList(new int[] { 1, 5, 9 }, new int[] { 2, 3, 6, 10 });
-            Console.WriteLine("Steps to End " + DynamicProgramming.MinStepToEnd(new int [] { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }));
+            Console.WriteLine("Steps to End " + DynamicProgramming.MinStepToEnd(new int[] { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }));
             Console.Write(DPHelper.LIS(new int[] { 7, 7, 7, 7, 7, 7 }, 6));
-         
+
             Console.WriteLine(DPHelper.LCSubString("vtcky", "vtcka", 5, 5, 0));
-            Console.WriteLine(DPHelper.MinCoin(new int[] {1,2,3 }, 5, 3));
+            Console.WriteLine(DPHelper.MinCoin(new int[] { 1, 2, 3 }, 5, 3));
 
             Console.WriteLine(DynamicProgramming.RodCuttingDP(new int[] { 1, 2, 3, 4, 5, 6, 7, 8 }, new int[] { 1, 5, 8, 9, 10, 17, 17, 20 }, 8, 8)
                 );
-                        DPHelper.KnapSackParent(new int[] { 2, 4, 3, 8 }, new int[] { 10, 5, 9, 6 }, 6);
+            DPHelper.KnapSackParent(new int[] { 2, 4, 3, 8 }, new int[] { 10, 5, 9, 6 }, 6);
             SortingFunctions();
             StringFunctions();
             Console.WriteLine(Getuser("@JoeBloggs yo", 1));
@@ -44,11 +63,11 @@ namespace CCIFinal
             Console.WriteLine(fizzBuzz(15));
             Console.WriteLine(fizzBuzz(8));
             PracticeFuncations();
-                        
+
             BackTracking();
 
-            SlidingWindowFunctions();
-                      
+
+
 
             // LinkListFunctions();
 
@@ -74,42 +93,58 @@ namespace CCIFinal
         private static void GraphFunctions()
         {
             Graph g = new Graph(7);
+            //  g.PrintDijkastra();
             g.AddEdge(0, 1);
             g.AddEdge(1, 3);
-            g.AddEdge(6, 0);           
+            g.AddEdge(6, 0);
             g.AddEdge(5, 6);
             g.AddEdge(5, 2);
             g.AddEdge(6, 4);
             g.AddEdge(4, 1);
+            g.AddEdge(3, 0);
 
-            Console.WriteLine("Has Cycle " + g.HasCycle());
 
-           // g.AddEdge(3, 3);
+            // g.ListAllPath(5, 1);
+            //Console.WriteLine("Num Island " + g.NumIsland());
 
-            Console.WriteLine("Has Cycle " + g.HasCycle());
+            Console.WriteLine("Has Cycle " + g.isCyclic());
 
-          //   g.ListAllPath(5, 1);
+            Graph graph = new Graph(4);
+            graph.AddEdge(0, 1);
+            graph.AddEdge(1, 2);
+            graph.AddEdge(2, 3);
+            graph.AddEdge(3, 1);
+
+            Console.WriteLine("Has Cycle " + graph.IsCycleDirectedGraph());
+
+
+
+            // g.AddEdge(3, 3);
+
+            Console.WriteLine("Has Cycle " + g.isCyclic());
+
+
 
             Graph g1 = new Graph(4);
             // Construct a graph
-            g1.AddEdge(0,3);
+            g1.AddEdge(0, 3);
             g1.AddEdge(0, 1);
             g1.AddEdge(0, 2);
             g1.AddEdge(1, 3);
             g1.AddEdge(2, 0);
             g1.AddEdge(2, 1);
 
-            Console.WriteLine("Has Path " + g1.HasPath(2,3));
+            Console.WriteLine("Has Path " + g1.HasPath(2, 3));
 
             Graph g2 = new Graph(4);
-            
+
             g2.AddEdge(0, 1);
             g2.AddEdge(1, 2);
-            g2.AddEdge(2,3);
-           // g2.AddEdge(3, 2);
+            g2.AddEdge(2, 3);
+            // g2.AddEdge(3, 2);
             g2.AddEdge(0, 3);
 
-             Console.WriteLine("Has Cycle " + g2.HasCycle());
+            Console.WriteLine("Has Cycle " + g2.HasCycle());
 
             Console.WriteLine("Has Cycle Rec" + g2.HasCycleRec());
 
@@ -148,9 +183,9 @@ namespace CCIFinal
 
         private static void SortingFunctions()
         {
-           int[] x =  SortHelper.QuickSort(new int[] { 3, 1, 2, 8, 4, 19 }, 0, 5);
+            int[] x = SortHelper.QuickSort(new int[] { 3, 1, 2, 8, 4, 19 }, 0, 5);
             int[] sorted = SortHelper.MergeSort(new int[] { 3, 1, 8, 4, 19, 10 }, 0, 5);
-            int[] c = SortHelper.MergeSortedArray(new int[] {1,5,9 }, new int[] {2,3,6,10 });
+            int[] c = SortHelper.MergeSortedArray(new int[] { 1, 5, 9 }, new int[] { 2, 3, 6, 10 });
         }
 
         private static void PracticeFuncations()
@@ -192,10 +227,15 @@ namespace CCIFinal
         private static void SlidingWindowFunctions()
         {
             SlidingWindow.LongestSubstringWithKUniqueChar("abacdefgh", 4);
-            SlidingWindow.LongestSubstringWithoutRepeatingChar("abccdefxyzwrm");
+            SlidingWindow.LongestSubStringKUniqueChar("abacdefgh", 4);
+
+            SlidingWindow.LongestSubstringWithoutRepeatingChar("abcbdebfxyzwrm");
+
+            SlidingWindow.PracticeLongestSubstringWithoutRepeatingChar("abcbdebfxyzwrm");
             SlidingWindow.MaxTargetSumArray(new int[] { 4, 1, 1, 1, 1, 1, 3, 5 }, 5);
             SlidingWindow.MaxInAllSubArrayInWindow(new int[] { 1, 2, 5, 1, 2, 0, 5 }, 3);
             SlidingWindow.MaxSumSubArrayInKWindow(new int[] { 1, 2, 13, 4, 5, 2 }, 3);
+            SlidingWindow.MaxSubArraySumInKWindow(new int[] { 1, 2, 13, 4, 5, 2 }, 3);
         }
 
         private static void HashFunctions()
@@ -205,7 +245,10 @@ namespace CCIFinal
             string x = Hash.GetKey("kghjkggh");
             int l1 = h.LongestConsecutiveSequenceNoOrder(new int[] { 1, 9, 3, 10, 4, 20, 19, 18, 17, 16 });
 
-            int l = h.LongestIncreasingConsecutiveSubsequence(new int[] { 6, 7, 8, 3, 4, 5, 9, 10 });
+            // no need to use hash for subarray
+            int m = Hash.PracticeLongestIncreasingSubarray(new int[] { 2, 6, 7, 8, 3, 4, 5, 9, 10 });
+
+            int l = h.LongestIncreasingConsecutiveSubsequence(new int[] { 2, 6, 7, 8, 3, 4, 5, 9, 10 });
 
             int p = h.LongestSubarrayDivisibleByK(new int[] { -2, 2, -5, 12, -11, -1, 7 }, 3);
 
@@ -520,7 +563,7 @@ namespace CCIFinal
                 if (name[i] == '@')
                 {
                     i++;
-                    while (i < name.Length && IsValidChar(name[i]) )
+                    while (i < name.Length && IsValidChar(name[i]))
                     {
                         user += name[i];
                         i++;
@@ -534,9 +577,9 @@ namespace CCIFinal
                 }
             }
 
-            if(strName.Count >= index)
+            if (strName.Count >= index)
             {
-                return strName[index-1];
+                return strName[index - 1];
             }
 
             return string.Empty;

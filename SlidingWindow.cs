@@ -42,6 +42,37 @@ namespace CCIFinal
         //    j++;
         //}
 
+        public static void MaxSubArraySumInKWindow(int[] arr, int winsize)
+        {
+
+            int maxSum;
+            int currSum = 0;
+
+            int i = 0;
+            int j = 0;
+
+            while (j < winsize && j < arr.Length)
+            {
+                currSum += arr[j];
+
+                j++;
+            }
+
+            maxSum = currSum;
+
+            while (j < arr.Length)
+            {
+                currSum = currSum + arr[j] - arr[i];
+                i++;
+                j++;
+                maxSum = Math.Max(currSum, maxSum);
+
+            }
+
+            Console.WriteLine(maxSum);
+        }
+
+
         // Max target Sum array is done with hash, here we do not have target but window
         public static void MaxSumSubArrayInKWindow(int[] a, int k)
         {
@@ -119,7 +150,7 @@ namespace CCIFinal
 
 
         // Sliding window with variable window
-        // This does not handle -ve need to use hashmap, see in hash class  
+        // This does not handle -ve, need to use hashmap, see in hash class  
         public static void MaxTargetSumArray(int[] a, int targetsum)
         {
             int i = 0;
@@ -159,13 +190,64 @@ namespace CCIFinal
 
         }
 
+        public static string PracticeLongestSubstringWithoutRepeatingChar(string s)
+        {
+            int strIndex = 0;
+            int currIndex = 0;
+            Dictionary<char, char> dic = new Dictionary<char, char>();
+            string result = string.Empty;
+
+            while (currIndex < s.Length)
+            {
+                if (!dic.Keys.Contains(s[currIndex]))
+
+                {
+                    dic.Add(s[currIndex], s[currIndex]);
+                }
+                else
+                {
+                    string temp1 = s.Substring(strIndex, currIndex - strIndex );
+
+                    if (temp1.Length > result.Length)
+                    {
+
+                        result = temp1;
+                    }
+
+                    while (s[strIndex] != s[currIndex])
+                    {
+                        strIndex++;
+                    }
+
+                    strIndex++;
+
+                }
+
+
+                currIndex++;
+
+            }
+
+            string temp = s.Substring(strIndex, currIndex - strIndex);
+
+            if (temp.Length > result.Length)
+            {
+
+                result = temp;
+            }
+
+            Console.WriteLine(result);
+            return result;
+
+        }
+
 
         public static void LongestSubstringWithoutRepeatingChar(string s)
 
         {
             int maxLen = int.MinValue;
 
-            int i = 0;
+           // int i = 0;
             int j = 0;
             string newstring = string.Empty;
             string lcs = null;
@@ -181,7 +263,7 @@ namespace CCIFinal
                     int index = newstring.IndexOf(c);
                     newstring = newstring.Remove(0, index + 1);
 
-                    i = i + index;
+                  //  i = i + index;
 
                     newstring += c;
                 }
@@ -202,6 +284,79 @@ namespace CCIFinal
             }
 
             Console.WriteLine($"Longest Unique char substring {lcs } has length " + maxLen);
+        }
+
+        public static void LongestSubStringKUniqueChar(string inputString, int num)
+        {
+            int uniqueChar = 0;
+            int startIndex = 0;
+            int endIndex = 0;
+            int i = 0;
+            int length;
+
+            Dictionary<char, int> charCount = new Dictionary<char, int>();
+
+            while (i < inputString.Length && uniqueChar < num)
+            {
+                if (charCount.ContainsKey(inputString[i]))
+
+                {
+                    charCount[inputString[i]]++;
+
+                }
+                else
+                {
+                    charCount.Add(inputString[i], 1);
+                }
+
+                uniqueChar = charCount.Keys.Count();
+
+                endIndex = i;
+                i++;
+
+            }
+
+
+            length = endIndex - startIndex + 1;
+
+            while (i < inputString.Length)
+            {
+
+                if (charCount.ContainsKey(inputString[i]))
+
+                {
+                    charCount[inputString[i]]++;
+
+                }
+                else
+                {
+
+                    while (charCount.Keys.Count() > num)
+                    {
+
+                        charCount[inputString[startIndex]]--;
+
+                        if (charCount[inputString[startIndex]] == 0)
+                            charCount.Remove(inputString[startIndex]);
+
+
+                        startIndex++;
+                    }
+
+                    charCount.Add(inputString[i], 1);
+
+                }
+
+
+                endIndex = i;
+                i++;
+                length = Math.Max(length, startIndex - endIndex + 1);
+
+            }
+
+            Console.WriteLine(length);
+
+
         }
 
         public static void LongestSubstringWithKUniqueChar(string s, int k)
@@ -229,10 +384,10 @@ namespace CCIFinal
                 if (dc.Keys.Count == k)
                 {
                     int total = 0;
-                  
-                    maxLen = Math.Max(maxLen, j-i+1);
 
-                    if (maxLen == j-i+1)
+                    maxLen = Math.Max(maxLen, j - i + 1);
+
+                    if (maxLen == j - i + 1)
                     {
                         ans = s.Substring(i, j + 1);
                     }

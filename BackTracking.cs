@@ -1,11 +1,5 @@
-﻿using Microsoft.SqlServer.Server;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CCIFinal
 {
@@ -34,7 +28,6 @@ namespace CCIFinal
         //               }
         //return false; // tried all choices, no soln found
         //           }
-
 
         public static void NQueen(int a)
         {
@@ -144,6 +137,7 @@ namespace CCIFinal
             }
             return true;
         }
+
         public static void placeQueens(int row, int size)
         {
             for (int col = 0; col < size; col++)

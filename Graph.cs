@@ -20,6 +20,7 @@ namespace CCIFinal
         {
             nodes = n;
             graph = new LinkedList<int>[n];
+
             visited = new bool[nodes];
             childCount = new Dictionary<int, int>();
 
@@ -32,6 +33,7 @@ namespace CCIFinal
         public void AddEdge(int u, int v)
         {
             graph[u].AddLast(v);
+          // graph[v].AddLast(u);
         }
 
         public void BFSFromNode(int x)
@@ -77,6 +79,21 @@ namespace CCIFinal
                     DFSNew(p);
             }
 
+        }
+
+        int count = 0;
+        public int NumIsland()
+        {
+
+            for (int i = 0; i < nodes; i++)
+            {
+                if (!visited[i])
+                {
+                    count++;
+                    DFSNew(i);
+                }
+            }
+            return count;
         }
 
         public void DFS(int x)
@@ -203,35 +220,40 @@ namespace CCIFinal
 
         public void ListAllPath(int u, int v)
         {
+            visited[u] = true;
             PrintPath(u, v, new List<int>());
         }
 
         public void PrintPath(int u, int v, List<int> nodes)
         {
-
-            foreach (var item in graph[u])
+            if (u == v)
             {
-                if (u == v)
-                {
-                    Console.WriteLine();
+                Console.WriteLine();
 
-                    foreach (var noe in nodes)
-                    {
-                        Console.Write(noe + "-->");
-                    }
-
-                    Console.Write(u);
-                }
-                else
+                foreach (var noe in nodes)
                 {
-                    nodes.Add(u);
-                    PrintPath(item, v, nodes);
-                    nodes.Remove(u);
+                    Console.Write(noe + "-->");
                 }
 
+                Console.Write(u);
+                return;
             }
 
-            // return false;
+            visited[u] = true;
+            nodes.Add(u);
+
+            foreach (var item in graph[u])
+            {                              
+                    if (!visited[item])
+                    {                       
+                        PrintPath(item, v, nodes);               
+                    }
+                
+            }
+
+            visited[u] = false;
+            nodes.Remove(u);
+
 
         }
 
@@ -371,9 +393,9 @@ namespace CCIFinal
         public bool HasCycleRec()
         {
             for (int i = 0; i < nodes; i++)
-            {                
-                    if (HasCycle(i, new List<int>()))
-                        return true;              
+            {
+                if (HasCycle(i, new List<int>()))
+                    return true;
             }
 
             return false;
@@ -422,6 +444,7 @@ namespace CCIFinal
                 // If an adjacent is visited and
                 // not parent of current vertex,
                 // then there is a cycle.
+                // In case of undirected graph x-->y and Y-->X but this is not cycle.
                 else if (i != parent)
                     return true;
             }
@@ -430,7 +453,7 @@ namespace CCIFinal
 
         // Returns true if the graph contains
         // a cycle, else false.
-       public bool isCyclic()
+        public bool isCyclic()
         {
             // Mark all the vertices as not visited
             // and not part of recursion stack
@@ -453,6 +476,149 @@ namespace CCIFinal
 
 
 
+        public bool IsCycleDirectedGraph()
+        {
+
+            for (int i = 0; i < nodes; i++)
+            {
+                visited[i] = true;
+                if (CheckCycle(i))
+                    return true;
+                visited[i] = false;
+            }
+
+            return false;
+
+        }
+
+
+
+        private bool CheckCycle(int src)
+        {
+
+            foreach (int node in graph[src])
+            {
+                if (visited[node])
+                    return true;
+                visited[node] = true;
+                if (CheckCycle(node))
+                    return true;
+                visited[node] = false;
+
+            }
+
+
+            return false;
+
+        }
+
+
+        public void PrintDijkastra()
+        {
+            int[,] minDisGraph = new int[,] { { 0, 4, 0, 0, 0, 0, 0, 8, 0 },
+                                      { 4, 0, 8, 0, 0, 0, 0, 11, 0 },
+                                      { 0, 8, 0, 7, 0, 4, 0, 0, 2 },
+                                      { 0, 0, 7, 0, 9, 14, 0, 0, 0 },
+                                      { 0, 0, 0, 9, 0, 10, 0, 0, 0 },
+                                      { 0, 0, 4, 14, 10, 0, 2, 0, 0 },
+                                      { 0, 0, 0, 0, 0, 2, 0, 1, 6 },
+                                      { 8, 11, 0, 0, 0, 0, 1, 0, 7 },
+                                      { 0, 0, 2, 0, 0, 0, 6, 7, 0 } };
+
+            int[] dis = new int[minDisGraph.GetLength(0)];
+
+            for (int i = 0; i < dis.Length; i++)
+            {
+                dis[i] = int.MaxValue;
+
+            }
+
+            dis[0] = 0;
+            List<int> nodesPath = new List<int>();
+            ShortestPath(0, minDisGraph, dis, nodesPath);
+
+            foreach (var item in dis)
+            {
+                Console.WriteLine(item);
+            }
+
+        }
+
+        private void ShortestPath(int x, int[,] minGraph, int[] dis, List<int> path)
+        {
+            bool[] visit = new bool[dis.Length];
+            visit[x] = true;
+
+            for (int i = 0; i < dis.Length; i++)
+            {
+                if (!visit[i] && minGraph[x, i] > 0)
+                {
+                    visit[i] = true;
+
+                    dis[i] = Math.Min(dis[i], minGraph[x, i] + dis[x]);
+
+                }
+
+            }
+
+            path.Add(x);
+
+            int index = GetMin(dis, path);
+
+            if (index > -1)
+            {
+                ShortestPath(index, minGraph, dis, path);
+            }
+
+        }
+
+        private int GetMin(int[] dis, List<int> path)
+        {
+            int min = int.MaxValue;
+            int index = -1;
+
+            for (int i = 0; i < dis.Length; i++)
+            {
+                if (dis[i] < min && !path.Contains(i))
+                {
+                    min = dis[i];
+                    index = i;
+                }
+            }
+
+            return index;
+        }
+
+
+        int min = int.MaxValue;
+        List<int> shortPath = new List<int>();
+
+        public void Path(int u, int v, int k, List<int> path, int costSoFar)
+        {
+
+            if (u == v && k == 0)
+            {
+                min = Math.Min(min, costSoFar);
+                shortPath = path;
+                return;
+            }
+
+            if (k < 0)
+                return;
+
+            visited[u] = true;
+
+            foreach (int x in graph[u])
+            {
+
+                //Path(x, v, k - 1, path.Add(x), costSoFar + graph[u]);
+
+                 path.Remove(x);
+            }
+
+            visited[u] = false;
+
+        }
 
     }
 
