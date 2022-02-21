@@ -1088,6 +1088,7 @@ namespace CCIFinal.Array
         {
             public int Compare(Interval x, Interval y)
             {
+                // Ascending order
                 if (x.Start > y.Start)
                     return 1;
                 if (x.Start < y.Start)
@@ -1170,9 +1171,634 @@ namespace CCIFinal.Array
 
         }
 
+        public static int FindKthLargest(int[] nums, int k)
+        {
 
+            if (nums.Length == 0 || k > nums.Length)
+            {
+                return -1;
+            }
+
+
+            int partitionindex = Partition(nums, 0, nums.Length - 1);
+
+            while (true)
+            {
+                if (partitionindex == nums.Length - k)
+                    return nums[partitionindex];
+
+                if (partitionindex > nums.Length - k)
+                {
+                    partitionindex = Partition(nums, 0, partitionindex);
+                }
+                else
+                {
+                    partitionindex = Partition(nums, partitionindex + 1, nums.Length - 1);
+                }
+
+            }
+
+
+        }
+
+        private static int Partition(int[] nums, int l, int r)
+        {
+            int el = nums[l];
+
+            while (true)
+            {
+                if (nums[l] < el)
+                {
+                    l++;
+                }
+
+                if (nums[r] > el)
+                {
+                    r--;
+                }
+
+
+                if (l < r)
+                {
+
+                    int temp = nums[l];
+                    nums[l] = nums[r];
+                    nums[r] = temp;
+
+                }
+                else
+                {
+                    return r;
+                }
+            }
+
+        }
+
+
+        private static Dictionary<int, int> dic = new Dictionary<int, int>();
+
+        public static int[] TopKFrequent(int[] nums, int k)
+        {
+
+
+            foreach (int a in nums)
+            {
+                if (dic.Keys.Contains(a))
+                {
+                    dic[a]++;
+                }
+                else
+                {
+                    dic.Add(a, 1);
+                }
+            }
+
+            int[] freq = dic.Keys.ToArray();
+
+            int len = freq.Length;
+
+            int l = 0;
+            int r = len - 1;
+
+
+            int partition = 0;
+
+            while (true)
+            {
+                int pivot = l;
+                partition = PartitionFre(freq, l, r);
+
+                if (partition == len - k)
+                {
+                    break;
+                }
+
+                if (partition > len - k)
+                {
+                    r = partition - 1;
+                    partition = PartitionFre(freq, l, partition - 1);
+                }
+
+
+                else if (partition < len - k)
+                {
+                    l = partition + 1;
+                    partition = PartitionFre(freq, l, r);
+                }
+
+            }
+
+            List<int> result = new List<int>();
+
+            for (int i = partition; i < len; i++)
+            {
+                result.Add(freq[i]);
+            }
+
+            return result.ToArray<int>();
+        }
+
+        public static int PartitionFre(int[] nums, int l, int r)
+        {
+            int pivot = l;
+
+            while (l <= r)
+            {
+                while (l <= r && dic[nums[l]] <= dic[nums[pivot]]) l++;
+                while (l <= r && dic[nums[r]] > dic[nums[pivot]]) r--;
+
+                if (l > r) break;
+
+                int temp = nums[r];
+                nums[r] = nums[l];
+                nums[l] = temp;
+            }
+
+            int tem = nums[pivot];
+            nums[pivot] = nums[r];
+            nums[r] = tem;
+
+            return r;
+        }
+
+
+        public class Log
+        {
+            public string id;
+            public int time;
+            public int childtime;
+        }
+
+        public static int[] ExclusiveTime(int n, IList<string> logs)
+        {
+
+            Stack<Log> stk = new Stack<Log>();
+            int[] result = new int[n];
+            foreach (string s in logs)
+            {
+
+                string[] split = s.Split(':');
+
+                if (split[1] == "start")
+                {
+                    stk.Push(new Log() { id = split[0], time = Convert.ToInt32(split[2]) });
+
+                }
+                else
+                {
+
+                    var p = stk.Pop();
+                    result[Convert.ToInt32(split[0])] = Convert.ToInt32(split[2]) - p.time - p.childtime + 1;
+                    int t = result[Convert.ToInt32(split[0])];
+                    string preid = p.id;
+
+                    if (stk.Count > 0)
+                    {
+                        p = stk.Pop();
+
+                        if (p.id != preid)
+                        {
+                            p.childtime += t;
+                        }
+                        stk.Push(p);
+                    }
+                }
+
+            }
+
+            return result;
+
+        }
+
+
+        public static void MergeSortedArrays(int[] nums1, int m, int[] nums2, int n)
+        {
+            if (n == 0)
+                return;
+
+            if (m == 0)
+            {
+                for (int i = 0; i < n; i++)
+                {
+                    nums1[i] = nums2[i];
+
+                }
+
+                return;
+            }
+
+            int j = 0;
+            int k = 0;
+            int sizem = m;
+
+
+            while (m > 0)
+            {
+                if (nums1[j] <= nums2[k])
+                {
+                    m--;
+                    j++;
+                }
+                else
+                {
+                    int tem = nums1[j];
+                    nums1[j] = nums2[k];
+                    nums2[k] = tem;
+
+                    int loop = k;
+
+
+                    if (loop + 1 < n && nums2[loop] > nums2[loop + 1])
+                    {
+                        int tem1 = nums2[loop];
+                        nums2[loop] = nums2[loop + 1];
+                        nums2[loop + 1] = tem1;
+                    }
+                    m--;
+                    j++;
+                }
+
+            }
+
+
+            while (n > 0)
+            {
+                nums1[sizem - 1] = nums2[k];
+                k++;
+                n--;
+                sizem++;
+            }
+
+
+
+        }
+
+
+        //Find First and Last Position of Element in Sorted Array
+        public static int[] SearchFirstLastInSortedArray(int[] nums, int target)
+        {
+
+            if (nums.Length == 0)
+                return new int[] { -1, -1 };
+
+            if (nums.Length == 1 && nums[0] == target)
+                return new int[] { 0, 0 };
+
+            int start = 0;
+            int end = nums.Length - 1;
+
+            int firstIndex = Search(nums, start, end, target);
+
+            if (firstIndex == int.MaxValue)
+                return new int[] { -1, -1 };
+
+            int lastIndex = firstIndex;
+
+            while (firstIndex - 1 >= 0 && nums[firstIndex - 1] == target)
+            {
+                firstIndex = Math.Min(Search(nums, start, firstIndex - 1, target), firstIndex);
+            }
+
+
+            while (lastIndex + 1 < nums.Length && nums[lastIndex + 1] == target)
+            {
+                int rigthlastIndex = Search(nums, firstIndex + 1, end, target);
+                lastIndex = rigthlastIndex == int.MaxValue ? lastIndex : rigthlastIndex;
+            }
+
+            return new int[] { firstIndex, lastIndex };
+        }
+
+        public static int Search(int[] num, int start, int end, int target)
+        {
+            while (start <= end)
+            {
+                int mid = (start + end) / 2;
+
+                if (num[mid] == target)
+                {
+                    return mid;
+                }
+                else if (num[mid] > target)
+                {
+                    end = mid - 1;
+                }
+                else
+                {
+                    start = mid + 1;
+                }
+
+            }
+
+            return int.MaxValue;
+        }
+
+
+        ///Merge 3 arrays
+        ///
+        //    vector<int> merge3Arrays(vector<int>& a, vector<int>& b, vector<int>& c)
+        //    {
+        //        vector<int> res;
+        //        for (int ai = 0, bi = 0, ci = 0; ai < a.size() || bi < b.size() || ci < c.size();)
+        //        {
+        //            int m = min({ ai < a.size() ? a[ai] : INT_MAX, bi < b.size() ? b[bi] : INT_MAX, ci < c.size() ? c[ci] : INT_MAX});
+        //        if (res.empty() || res.back() != m) res.push_back(m);
+        //        if (a[ai] == m) ++ai;
+        //        if (b[bi] == m) ++bi;
+        //        if (c[ci] == m) ++ci;
+        //    }
+        //    return res;
+        //}
+
+
+        //Interview Tip: Whenever you're trying to solve an array problem in-place, 
+        //always consider the possibility of iterating backwards instead of forwards through the array. 
+        //It can completely change the problem, and make it a lot easier.
+
+        //88. Merge Sorted Array
+        public static void Merge2SortedArraysInPlace(int[] nums1, int m, int[] nums2, int n)
+        {
+            int p1 = m - 1, p2 = n - 1, p = nums1.Length - 1;
+            while (p > -1)
+            {
+                int cand1 = p1 > -1 ? nums1[p1] : int.MinValue;
+                int cand2 = p2 > -1 ? nums2[p2] : int.MinValue;
+                if (cand1 > cand2)
+                {
+                    nums1[p] = cand1;
+                    p1--;
+                }
+                else
+                {
+                    nums1[p] = cand2;
+                    p2--;
+                }
+                p--;
+            }
+        }
+
+
+
+        public static bool CheckSubarraySumDivisibleByK(int[] nums, int k)
+        {
+
+            int[] sum = new int[nums.Length];
+
+            if (nums.Length < 1)
+                return false;
+
+            sum[0] = nums[0];
+
+            for (int i = 1; i < nums.Length; i++)
+            {
+                sum[i] = nums[i] + sum[i - 1];
+
+                if (sum[i] % k == 0)
+                    return true;
+
+                if (sum[i] > k)
+                {
+                    int remainder = sum[i] % k;
+
+                    int m = i - 1;
+                    while (m > 0)
+                    {
+                        if (sum[m] == remainder)
+                            return true;
+
+                        m--;
+                    }
+                }
+
+            }
+
+            return false;
+
+        }
+
+        //227. Basic Calculator II - Leetcode
+        //Otherway to do is stack
+        public static int BasicCalculator(string s)
+        {
+            if (string.IsNullOrEmpty(s)) return 0;
+
+            int length = s.Length;
+
+            int currentNumber = 0, lastNumber = 0, result = 0;
+            char operation = '+';
+            for (int i = 0; i < length; i++)
+            {
+                char currentChar = s[i];
+                if (IsDigit(currentChar))
+                {
+                    currentNumber = (currentNumber * 10) + (currentChar - '0');
+                }
+                if (!IsDigit(currentChar) && currentChar != ' ' || i == length - 1)
+                {
+                    if (operation == '+' || operation == '-')
+                    {
+                        result += lastNumber;
+                        lastNumber = (operation == '+') ? currentNumber : -currentNumber;
+                    }
+                    else if (operation == '*')
+                    {
+                        lastNumber = lastNumber * currentNumber;
+                    }
+                    else if (operation == '/')
+                    {
+                        lastNumber = lastNumber / currentNumber;
+                    }
+                    operation = currentChar;
+                    currentNumber = 0;
+                }
+            }
+            result += lastNumber;
+            return result;
+        }
+
+
+        private static bool IsDigit(char c)
+        {
+            if (c - '0' >= 0 && c - '0' <= 9)
+                return true;
+
+            return false;
+        }
+
+
+        /// <summary>
+        ///  How many binary searchable numbers
+        ///  Same as how many number greater on left and less than on right 
+        ///  https://leetcode.com/discuss/interview-question/352743
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public static int HowManyBinarySearchable(int[] input)
+        {
+            int n = input.Length;
+            if (n == 0)
+            {
+                return 0;
+            }
+
+            int[] maxLeft = new int[n];
+            int[] minRight = new int[n];
+
+            int maxTillNow = int.MinValue;
+            for (int i = 0; i < n; i++)
+            {
+                maxLeft[i] = maxTillNow;
+                maxTillNow = Math.Max(input[i], maxTillNow);
+            }
+
+            int minTillNow = int.MaxValue;
+            for (int i = n - 1; i >= 0; i--)
+            {
+                minRight[i] = minTillNow;
+                minTillNow = Math.Min(input[i], minTillNow);
+            }
+
+            int count = 0;
+            for (int i = 0; i < n; i++)
+            {
+                if (input[i] > maxLeft[i] && input[i] < minRight[i])
+                {
+                    count++;
+                }
+            }
+
+            return count;
+        }
+
+
+        private class Emp
+        {
+            public string Name;
+            public int Id;
+            public int managerId;
+        }
+
+        public static void PrintOrgChart()
+        {
+            List<Emp> emps = new List<Emp>();
+            emps.Add(new Emp() { Name = "Name1", Id = 1, managerId = -1 });
+            emps.Add(new Emp() { Name = "Name2", Id = 2, managerId = 1 });
+            emps.Add(new Emp() { Name = "Name3", Id = 3, managerId = 2 });
+            emps.Add(new Emp() { Name = "Name4", Id = 4, managerId = 1 });
+
+            Dictionary<int, List<Emp>> reportees = new Dictionary<int, List<Emp>>();
+
+
+            foreach (var item in emps)
+            {
+
+                if (!reportees.Keys.Contains(item.Id))
+                {
+                    reportees.Add(item.Id, new List<Emp>());
+                }
+
+                if (!reportees.Keys.Contains(item.managerId))
+                {
+                    reportees.Add(item.managerId, new List<Emp>());
+                }
+
+                reportees[item.managerId].Add(item);
+            }
+
+            foreach (var item in emps.Where(x => x.managerId == -1))
+            {
+                PrintEmp(item.Id, 0, reportees, emps);
+            }
+
+        }
+
+        private static void PrintEmp(int empid, int level, Dictionary<int, List<Emp>> reportees, List<Emp> emps)
+        {
+
+
+            Console.WriteLine();
+            for (int i = 0; i < level; i++)
+            {
+                Console.Write("-");
+            }
+            Console.Write(emps.First(x => x.Id == empid).Name);
+
+            foreach (var item in reportees[empid])
+            {
+                PrintEmp(item.Id, level + 1, reportees, emps);
+            }
+
+        }
+
+
+        public static int[] Merge3Arrays(int[] a1, int[] a2, int[] a3)
+        {
+            int[] merge = new int[a1.Length + a2.Length + a3.Length];
+
+
+            int p1 = 0;
+            int p2 = 0;
+            int p3 = 0;
+            int index = 0;
+
+            while (p1 < a1.Length || p2 < a2.Length || p3 < a3.Length)
+            {
+                int a = p1 < a1.Length ? a1[p1] : int.MaxValue;
+                int b = p2 < a2.Length ? a2[p2] : int.MaxValue;
+                int c = p3 < a3.Length ? a3[p3] : int.MaxValue;
+
+                int min = Math.Min(a, b);
+                min = Math.Min(min, c);
+
+                if (a == min)
+                {
+                    merge[index] = a1[p1];
+                    index++;
+                    p1++;
+                }
+
+                if (b == min)
+                {
+                    merge[index] = a2[p2];
+                    index++;
+                    p2++;
+                }
+
+                if (c == min)
+                {
+                    merge[index] = a3[p3];
+                    index++;
+                    p3++;
+                }
+
+
+            }
+
+            return merge;
+
+
+        }
+
+        public static int[] MergeKArrays(List<int[]> arrays, int left, int right)
+        {
+            List<int> merge = new List<int>();
+
+
+            if (left == right)
+                return arrays[left];
+
+            int mid = left + (right - left) / 2;
+
+            int[] leftmerge = MergeKArrays(arrays, 0, mid);
+
+            int[] rightmerge = MergeKArrays(arrays, mid + 1, right);
+
+            return SortHelper.MergeSortedArray(leftmerge, rightmerge);
+           
+        }
     }
 }
+
 
 
 

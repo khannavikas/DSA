@@ -154,6 +154,31 @@ namespace CCIFinalLL
             head = newHead;
         }
 
+
+        public void ReverseLinkList()
+        {
+
+            Node prev = null;
+
+            Node curr = head;
+
+            while (curr != null)
+            {
+                Node n = curr;
+                Node temp = n.next;
+
+                n.next = prev;
+                prev = n;
+                curr = temp;
+
+            }
+
+            head = prev;
+        }
+
+
+
+
         public void InsertSortedList(int x)
         {
             if (head == null)
@@ -178,7 +203,7 @@ namespace CCIFinalLL
             {
                 prev.next = new Node(x);
             }
-            else if(prev !=null)
+            else if (prev != null)
             {
                 var node = new Node(x);
 

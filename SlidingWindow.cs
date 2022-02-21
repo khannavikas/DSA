@@ -206,7 +206,7 @@ namespace CCIFinal
                 }
                 else
                 {
-                    string temp1 = s.Substring(strIndex, currIndex - strIndex );
+                    string temp1 = s.Substring(strIndex, currIndex - strIndex);
 
                     if (temp1.Length > result.Length)
                     {
@@ -247,7 +247,7 @@ namespace CCIFinal
         {
             int maxLen = int.MinValue;
 
-           // int i = 0;
+            // int i = 0;
             int j = 0;
             string newstring = string.Empty;
             string lcs = null;
@@ -263,7 +263,7 @@ namespace CCIFinal
                     int index = newstring.IndexOf(c);
                     newstring = newstring.Remove(0, index + 1);
 
-                  //  i = i + index;
+                    //  i = i + index;
 
                     newstring += c;
                 }
@@ -412,6 +412,84 @@ namespace CCIFinal
 
             Console.WriteLine(ans);
         }
+        public static int ShareCandies(int[] candies, int k)
+        {
+
+            if (candies.Length == 0)
+                return 0;
+
+            if (candies.Length == k)
+                return 0;
+
+            int i = 0;
+            int j = 0;
+            int n = candies.Length;
+
+            Dictionary<int, int> dic = new Dictionary<int, int>();
+
+            while (j < n)
+            {
+                if (dic.Keys.Contains(candies[j]))
+                {
+                    dic[candies[j]]++;
+                }
+                else
+                {
+                    dic.Add(candies[j], 1);
+                }
+
+                j++;
+            }
+
+            j = 0;
+
+            int uniqueCandies = dic.Keys.Count();
+           
+            while (j < k)
+            {
+                dic[candies[j]]--;
+
+                if (dic[candies[j]] == 0)
+                {
+                    uniqueCandies--;
+                }
+
+                j++;
+            }
+
+            int result = uniqueCandies;
+
+            while (j < n)
+            {
+                dic[candies[j]]--;
+
+                if (dic[candies[j]] == 0)
+                {
+                    uniqueCandies--;
+                }
+
+                j++;
+
+
+                if (dic[candies[i]] == 0)
+                {
+                    uniqueCandies++;
+                }
+
+                dic[candies[i]]++;
+                i++;
+
+                result = Math.Max(uniqueCandies, result);
+            }
+
+            return result;
+
+        }
+
+
+
+
+
     }
 
 

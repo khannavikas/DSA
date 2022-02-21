@@ -23,7 +23,7 @@ namespace CCIFinal
 
             visited = new bool[nodes];
             childCount = new Dictionary<int, int>();
-
+         
             for (int i = 0; i < n; i++)
             {
                 graph[i] = new LinkedList<int>();
@@ -290,6 +290,8 @@ namespace CCIFinal
 
         public int WaysToReach(int u, int v)
         {
+          
+
             int count = 0;
 
             if (u == v)
@@ -423,6 +425,8 @@ namespace CCIFinal
         // A recursive function that uses visited[]
         // and parent to detect cycle in subgraph
         // reachable from vertex v.
+
+
         bool isCyclicUtil(int v, bool[] visited,
                              int parent)
         {
@@ -619,6 +623,105 @@ namespace CCIFinal
             visited[u] = false;
 
         }
+
+
+        public static int ShortestPathBinaryMatrix(int[][] grid)
+        {
+
+
+            int rows = grid.Length;
+            int cols = grid[0].Length;
+
+            if (rows == 0)
+                return -1;
+
+            if (cols == 0)
+                return -1;
+
+
+            if (grid[rows - 1][cols - 1] != 0 || grid[0][0] != 0)
+                return -1;
+
+            List<int[]> directions = new List<int[]>
+                                    {
+                                            new int[]{1,0},
+                                            new int[]{0,1},
+                                            new int[]{-1, 0},
+                                            new int[]{0, -1},
+                                            new int[]{1,1},
+                                            new int[]{1,-1},
+                                            new int[]{-1,1},
+                                            new int[]{-1,-1}
+                                     };
+
+            return GetLength(grid, directions, rows, cols);
+
+        }
+
+
+        private static int GetLength(int[][] grid, List<int[]> directions, int lastrow, int lastcol)
+        {
+            Queue<int[]> q = new Queue<int[]>();
+
+            q.Enqueue(new int[] { 0, 0 });
+
+            grid[0][0] = 1;
+
+            while (q.Count > 0)
+            {
+                int[] item = q.Dequeue();
+
+                int r = item[0];
+                int c = item[1];
+
+                int dis = grid[r][c];
+
+                if (r == lastrow && c == lastcol)
+                    return dis;
+
+                foreach (var dir in directions)
+                {
+
+                    int row = r + dir[0];
+                    int col = c + dir[1];
+
+                    if ( row < 0 || col < 0 ||  row >= grid.Length || col >= grid[0].Length || grid[row][col] != 0 )
+                        continue;
+
+                    q.Enqueue(new int[] { row, col });
+
+                    grid[row][col] = dis + 1;
+
+                }
+
+
+            }
+
+            return -1;
+        }
+
+        public static int[] ShortestToChar(String S, char C)
+        {
+            int N = S.Length;
+            int[] ans = new int[N];
+            int prev = int.MinValue / 2;
+
+            for (int i = 0; i < N; ++i)
+            {
+                if (S[i] == C) prev = i;
+                ans[i] = i - prev;
+            }
+
+            prev = int.MaxValue / 2;
+            for (int i = N - 1; i >= 0; --i)
+            {
+                if (S[i] == C) prev = i;
+                ans[i] = Math.Min(ans[i], prev - i);
+            }
+
+            return ans;
+        }
+
 
     }
 

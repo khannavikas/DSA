@@ -9,16 +9,106 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using static CCIFinal.Array.ArrayFunc;
-
+using static CCIFinal.StringHelper;
 
 namespace CCIFinal
 {
     class Program
     {
+
+
         public static object PracticeHelper { get; private set; }
 
         static void Main(string[] args)
         {
+            var xmer = ArrayFunc.MergeKArrays(new List<int[]> { new int[] { 2, 4, 8 }, new int[] { 1, 3, 5 }, new int[] { 2, 5, 8, 9 } }, 0,2);
+            
+            ArrayFunc.PrintOrgChart();
+            ArrayFunc.Search(new int[] { 1, 2, 3, 4, 5, 6 }, 0, 5, 2);
+
+            //   "kpygkivtlqoockpygkivtlqoocssnextkqzjpycbylkaondsskpygkpygkivtlqoocssnextkqzjpkpygkivtlqoocssnextkqzjpycbylkaondsycbylkaondskivtlqoocssnextkqzjpycbylkaondssnextkqzjpycbylkaondshijzgaovndkjiiuwjtcpdpbkrfsi"
+            //    kpygkivtlqoocskpygkpygkivtlqoocssnextkqzjpkpygkivtlqoocssnextkqzjpycbylkaondsycbylkaondskivtlqoocssnextkqzjpycbylkaondssnextkqzjpycbylkaondshijzgaovndkjiiuwjtcpdpbkrfsi
+
+            StringHelper.RemoveOccurrences("kpygkivtlqoockpygkivtlqoocssnextkqzjpycbylkaondsskpygkpygkivtlqoocssnextkqzjpkpygkivtlqoocssnextkqzjpycbylkaondsycbylkaondskivtlqoocssnextkqzjpycbylkaondssnextkqzjpycbylkaondshijzgaovndkjiiuwjtcpdpbkrfsi",
+"kpygkivtlqoocssnextkqzjpycbylkaonds");
+            StringHelper.RemoveDuplicates("ddaaadb", 3);
+
+
+            StringHelper.IsPalindromeSenetence("Marge, let's \"[went].\" I await {news} telegram.");
+            StringHelper.GroupAnagrams(new string[] { "eat", "tea", "tan", "ate", "nat", "bat" });
+            var pos = Graph.ShortestToChar("loveleetcode", 'e');
+
+            Graph.ShortestPathBinaryMatrix(new int[][] { new int[] { 0, 1 }, new int[] { 1, 0 } });
+
+
+
+
+            string po = StringHelper.AddStrings("6913259244",
+"71103343");
+            int j7 = StringHelper.GetNumber("123");
+            StringHelper.CustomSortString("cba", "abcd");
+            int r = ArrayFunc.BasicCalculator("2+4*5+7");
+            var t1 = ArrayFunc.CheckSubarraySumDivisibleByK(new int[] { 0, 1, 0, 3, 0, 4, 0, 4, 0 }, 5);
+
+            ArrayFunc.MergeSortedArrays(new int[] { 1, 2, 3, 0, 0, 0 }, 3, new int[] { 2, 5, 6 }, 3);
+            var time = ArrayFunc.ExclusiveTime(1, new List<string>() { "0:start:0", "0:start:2", "0:end:5", "0:start:6", "0:end:6", "0:end:7" });
+            var topk = ArrayFunc.TopKFrequent(new int[] { 3, 0, 1, 0 }, 1);
+            int[][] ans = SortHelper.KClosest(new int[][] { new int[] { 1, 0 }, new int[] { 0, 1 } }, 2);
+
+            var qu = SortHelper.QuickSort(new int[] { 3, 2, 1, 3, 4, 5 }, 0, 5);
+
+            int p = ArrayFunc.FindKthLargest(new int[] { 3, 2, 3, 1, 2, 4, 5, 5, 6, 4 }, 4);
+            IList<int> l = new List<int>();
+
+            var c6 = StringHelper.ValidWordAbbreviation("abbreviation", "a10n");
+            // List<List<int>> lst = new List<List<int>>();
+            List<IList<int>> lst = new List<IList<int>>();
+
+            //int nu = 8 / 3;
+
+            var st = StringHelper.MinRemoveToMakeValid("(((((");
+            //   string m = StringHelper.DiverseString(1, 3, 1, "", 2);
+            // var has=   StringHelper.PrintWithSpace("", "ABC");
+            int kt = CCIFinal.BackTracking.NumWaysPaint(3, 2);
+
+            Random rnd = new Random();
+
+            for (int j = 0; j < 4; j++)
+            {
+                Console.WriteLine(rnd.Next(10)); // returns random integers >= 10 and < 19
+            }
+
+            SlidingWindow.ShareCandies(new int[] { 1, 2, 2, 3, 4, 3 }, 3);
+
+
+            StringHelper.PrintAllStringsKLength("ab".ToCharArray().ToList(), "", 3);
+
+            //    StringHelper.PrintAllStringsKLengthWithoutRepetion("geksfor".ToCharArray().ToList(), "", 3, new List<char>());
+
+
+            Console.WriteLine(StringHelper.total);
+            var t = StringHelper.Subsequnece("abc");
+
+            StringHelper.PrintAllSubsequence("abc", "");
+
+            StringHelper.AllCombination("abc".ToArray(), 1, "", 3, new Dictionary<char, int>());
+
+            StringHelper.PremutationBackTracking("abc", "", new List<char>());
+
+            bool x = StringHelper.IsPalindrome("bdkdb");
+            string merge = StringHelper.Merge("VK", "NZM");
+
+            StringHelper.UnMerge("", "", merge, merge);
+
+
+            Console.WriteLine(StringHelper.wordA);
+            Console.WriteLine(StringHelper.wordB);
+
+            StringHelper.PrintAllSubsequence("abc", "");
+
+            int minSwap = StringHelper.MinSwapsToPalindrome("aabcb");
+
+            LinkListFunctions();
 
             int k = ArrayFunc.MaxContinousSumPract(new int[] { -2, -3, 4, -1, -2, 1, 5, -3 }
 );
@@ -503,9 +593,11 @@ namespace CCIFinal
             ll.Print();
             // ll.RemoveDuplicateNonewList();
             //   ll.Print();
-            // ll.ReverseList();
-            ll.InsertSortedList(0);
+            ll.ReverseLinkList();
+            //  ll.InsertSortedList(0);
             ll.Print();
+
+
         }
 
 

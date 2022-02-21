@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CCIFinal
 {
@@ -28,6 +29,19 @@ namespace CCIFinal
         //               }
         //return false; // tried all choices, no soln found
         //           }
+
+
+   //    BackTracking(input a)
+            // if goal reached
+            // add to result 
+            // return 
+
+            // for each choice
+            //if(choice is valid)
+            // choose choice
+            //Backtrack 
+            //undo choice
+
 
         public static void NQueen(int a)
         {
@@ -362,6 +376,67 @@ namespace CCIFinal
                 Console.WriteLine(item);
             }
            // Console.WriteLine("Subset end");
+        }
+
+        static int  totalways = 0;
+        public static int NumWaysPaint(int n, int k)
+        {
+
+            NumWays(n, k, new string[n]);
+
+            return totalways;
+
+        }
+
+
+        private static void NumWays(int n, int k, string[] colors)
+        {            
+
+            if (colors[0]!=null)//.Any(x=>string.IsNullOrEmpty(x)))
+            {
+                totalways += 1;
+                return;
+            }
+
+            if (n == 0 || k == 0)
+                return;
+
+            for (int i = n - 1; i >= 0; i--)
+            {
+                for (int j = 0; j < k; j++)
+                {
+                    if (isValidColor(i, 2, colors, "c" + j))
+                    {
+                        colors[i] = "c" + j;
+                        NumWays(n - 1, k, colors);
+                        colors[i] = null;
+                    }
+
+                }
+
+            }
+        }
+
+        private static bool isValidColor(int i, int maxConsecutive, string[] colors, string j)
+        {
+
+            while (maxConsecutive > 0 && i+1 < colors.Length)
+            {
+                if (colors[i + 1] == null)
+                    return false;
+                if (colors[i+1] == j)
+                    maxConsecutive--;
+                else
+                    break;
+
+                i++;
+            }
+
+            if (maxConsecutive == 0)
+                return false;
+            else
+                return true;
+
         }
     }
 }
