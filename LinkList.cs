@@ -16,7 +16,7 @@ namespace CCIFinalLL
 
     public class LinkList
     {
-        Node head;
+       public Node head;
 
         public void AddNode(int n, LinkList ll = null)
         {
@@ -46,32 +46,8 @@ namespace CCIFinalLL
 
         public void Sort()
         {
-
-            var pointer1 = head;
-            var pointer2 = pointer1.next;
-
-
-            while (pointer1 != null)
-            {
-
-                if (pointer2 != null && pointer2.value < pointer1.value)
-                {
-                    int tem = pointer1.value;
-                    pointer1.value = pointer2.value;
-                    pointer2.value = tem;
-                    pointer2 = pointer2.next;
-                }
-                else if (pointer2 != null && pointer2.value > pointer1.value)
-                {
-                    pointer2 = pointer2.next;
-                }
-                else
-                {
-                    pointer1 = pointer1.next;
-                }
-
-
-            }
+            // Use Merge sort
+         
         }
 
         public LinkList RemoveDuplicate()
@@ -226,5 +202,49 @@ namespace CCIFinalLL
         //3) Based on odd increase fast one more time
         //4) Now pop stack and increment 1st pointer to check 
 
+
+
+        public Node MergeTwoLists(Node list1, Node list2)
+        {
+
+            Node head = new Node(0);
+            Node ptr = head;
+
+            while (list1 != null && list2 != null)
+            {
+
+                if (list1.value < list2.value)
+                {
+                    ptr.next = list1;
+                    list1 = list1.next;
+                    ptr = ptr.next;
+                }
+                else
+                {
+                    ptr.next = list2;
+                    list2 = list2.next;
+                    ptr = ptr.next;
+                }
+
+            }
+
+
+            if (list1 != null)
+            {
+                ptr.next = list1;
+            }
+
+            if (list2 != null)
+            {
+                ptr.next = list2;
+            }
+
+            // Important part
+            return head.next;
+        }
+
+
+
+        // Clone a list
     }
 }

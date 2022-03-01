@@ -80,51 +80,7 @@ namespace CCIFinal.Array
             return s;
         }
 
-        public static int binarySearch(int[] arr, int l, int r, int x)
-        {
-            while (l <= r)
-            {
-                int m = (l + r) / 2;
-
-
-
-                // Check if x is present at mid
-                if (arr[m] == x)
-                    return m;
-                // If x greater, ignore left half
-                else if (arr[m] > x)
-                    r = m - 1;
-
-                // If x is smaller, ignore right half
-                else
-                    l = m + 1;
-            }
-
-            // if we reach here, then element was
-            // not present
-            return -1;
-        }
-
-        public static int binarySearch2(int[] a, int low, int high, int key)
-        {
-            while (low <= high)
-            {
-                int mid = (low + high) / 2;
-                if (a[mid] < key)
-                {
-                    low = mid + 1;
-                }
-                else if (a[mid] > key)
-                {
-                    high = mid - 1;
-                }
-                else
-                {
-                    return mid;
-                }
-            }
-            return -1;                //key not found
-        }
+       
 
         public static int[] MovePositiveNegative(int[] a)
         {
@@ -1010,7 +966,6 @@ namespace CCIFinal.Array
 
         }
 
-
         static List<List<int>> result = new List<List<int>>();
 
         public static List<List<int>> SubSetSumK(int[] a, int k)
@@ -1052,91 +1007,6 @@ namespace CCIFinal.Array
 
         }
 
-
-        public static List<int[]> MergeInterval(int[][] a)
-        {
-            int[] start = new int[a.Length];
-            int[] end = new int[a.Length];
-
-            for (int k = 0; k < a.Length; k++)
-            {
-                start[k] = a[k][0];
-                end[k] = a[k][1];
-            }
-
-            List<int[]> lis = new List<int[]>();
-            System.Array.Sort(start);
-            System.Array.Sort(end);
-
-
-            for (int i = 0, j = 0; i < a.Length; i++)
-            { // j is start of interval.
-              // Compare start of next to end of previous
-              // If last start or start after next end
-                if (i == a.Length - 1 || start[i + 1] > end[i])
-                {
-                    lis.Add(new int[] { start[j], end[i] });
-                    j = i + 1;
-                }
-            }
-
-            return lis;
-        }
-
-
-        private class InvComparer : IComparer<Interval>
-        {
-            public int Compare(Interval x, Interval y)
-            {
-                // Ascending order
-                if (x.Start > y.Start)
-                    return 1;
-                if (x.Start < y.Start)
-                    return -1;
-
-                return 0;
-            }
-        }
-
-        public class Interval
-        {
-            public int Start { get; set; }
-            public int End { get; set; }
-        }
-
-        public static List<int[]> MergeIntervals(List<Interval> invs)
-        {
-            invs.Sort(new InvComparer());
-
-            Stack<Interval> s = new Stack<Interval>();
-
-            s.Push(invs.First());
-
-            for (int i = 1; i < invs.Count; i++)
-            {
-                var x = s.Peek();
-
-                if (invs[i].Start < x.End)
-                {
-                    x.End = Math.Max(x.End, invs[i].End);
-                    s.Pop();
-                    s.Push(x);
-                }
-                else
-                {
-                    s.Push(invs[i]);
-
-                }
-            }
-
-            List<int[]> ls = new List<int[]>();
-            while (s.Count > 0)
-            {
-                var y = s.Pop();
-                ls.Add(new int[] { y.Start, y.End });
-            }
-            return ls;
-        }
 
 
         public static void MovePositiveAndNegative(int[] arr)
@@ -1320,57 +1190,7 @@ namespace CCIFinal.Array
 
             return r;
         }
-
-
-        public class Log
-        {
-            public string id;
-            public int time;
-            public int childtime;
-        }
-
-        public static int[] ExclusiveTime(int n, IList<string> logs)
-        {
-
-            Stack<Log> stk = new Stack<Log>();
-            int[] result = new int[n];
-            foreach (string s in logs)
-            {
-
-                string[] split = s.Split(':');
-
-                if (split[1] == "start")
-                {
-                    stk.Push(new Log() { id = split[0], time = Convert.ToInt32(split[2]) });
-
-                }
-                else
-                {
-
-                    var p = stk.Pop();
-                    result[Convert.ToInt32(split[0])] = Convert.ToInt32(split[2]) - p.time - p.childtime + 1;
-                    int t = result[Convert.ToInt32(split[0])];
-                    string preid = p.id;
-
-                    if (stk.Count > 0)
-                    {
-                        p = stk.Pop();
-
-                        if (p.id != preid)
-                        {
-                            p.childtime += t;
-                        }
-                        stk.Push(p);
-                    }
-                }
-
-            }
-
-            return result;
-
-        }
-
-
+        
         public static void MergeSortedArrays(int[] nums1, int m, int[] nums2, int n)
         {
             if (n == 0)
@@ -1428,71 +1248,7 @@ namespace CCIFinal.Array
                 n--;
                 sizem++;
             }
-
-
-
         }
-
-
-        //Find First and Last Position of Element in Sorted Array
-        public static int[] SearchFirstLastInSortedArray(int[] nums, int target)
-        {
-
-            if (nums.Length == 0)
-                return new int[] { -1, -1 };
-
-            if (nums.Length == 1 && nums[0] == target)
-                return new int[] { 0, 0 };
-
-            int start = 0;
-            int end = nums.Length - 1;
-
-            int firstIndex = Search(nums, start, end, target);
-
-            if (firstIndex == int.MaxValue)
-                return new int[] { -1, -1 };
-
-            int lastIndex = firstIndex;
-
-            while (firstIndex - 1 >= 0 && nums[firstIndex - 1] == target)
-            {
-                firstIndex = Math.Min(Search(nums, start, firstIndex - 1, target), firstIndex);
-            }
-
-
-            while (lastIndex + 1 < nums.Length && nums[lastIndex + 1] == target)
-            {
-                int rigthlastIndex = Search(nums, firstIndex + 1, end, target);
-                lastIndex = rigthlastIndex == int.MaxValue ? lastIndex : rigthlastIndex;
-            }
-
-            return new int[] { firstIndex, lastIndex };
-        }
-
-        public static int Search(int[] num, int start, int end, int target)
-        {
-            while (start <= end)
-            {
-                int mid = (start + end) / 2;
-
-                if (num[mid] == target)
-                {
-                    return mid;
-                }
-                else if (num[mid] > target)
-                {
-                    end = mid - 1;
-                }
-                else
-                {
-                    start = mid + 1;
-                }
-
-            }
-
-            return int.MaxValue;
-        }
-
 
         ///Merge 3 arrays
         ///
@@ -1616,7 +1372,6 @@ namespace CCIFinal.Array
             return result;
         }
 
-
         private static bool IsDigit(char c)
         {
             if (c - '0' >= 0 && c - '0' <= 9)
@@ -1624,52 +1379,6 @@ namespace CCIFinal.Array
 
             return false;
         }
-
-
-        /// <summary>
-        ///  How many binary searchable numbers
-        ///  Same as how many number greater on left and less than on right 
-        ///  https://leetcode.com/discuss/interview-question/352743
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
-        public static int HowManyBinarySearchable(int[] input)
-        {
-            int n = input.Length;
-            if (n == 0)
-            {
-                return 0;
-            }
-
-            int[] maxLeft = new int[n];
-            int[] minRight = new int[n];
-
-            int maxTillNow = int.MinValue;
-            for (int i = 0; i < n; i++)
-            {
-                maxLeft[i] = maxTillNow;
-                maxTillNow = Math.Max(input[i], maxTillNow);
-            }
-
-            int minTillNow = int.MaxValue;
-            for (int i = n - 1; i >= 0; i--)
-            {
-                minRight[i] = minTillNow;
-                minTillNow = Math.Min(input[i], minTillNow);
-            }
-
-            int count = 0;
-            for (int i = 0; i < n; i++)
-            {
-                if (input[i] > maxLeft[i] && input[i] < minRight[i])
-                {
-                    count++;
-                }
-            }
-
-            return count;
-        }
-
 
         private class Emp
         {
@@ -1796,6 +1505,11 @@ namespace CCIFinal.Array
             return SortHelper.MergeSortedArray(leftmerge, rightmerge);
            
         }
+
+
+       
+
+       
     }
 }
 

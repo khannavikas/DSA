@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using static CCIFinal.Array.ArrayFunc;
+using static CCIFinal.IntervalHelper;
 using static CCIFinal.StringHelper;
 
 namespace CCIFinal
@@ -21,10 +22,34 @@ namespace CCIFinal
 
         static void Main(string[] args)
         {
+
+            int nu = BinarySearchHelper.NumberOfTimesSortedArrayIsRotate(new int[] {5,6,7,1,2,3 });
+
+            String sd = StringHelper.Decode("3[a]2[bc]d");
+
+            LinkList ll = new LinkList();
+            ll.AddNode(4);
+            ll.AddNode(6);
+
+            ll.AddNode(5);
+            ll.AddNode(1);
+
+            ll.Sort();
+            
+
+
+            LinkList l2 = new LinkList();
+            l2.AddNode(1);
+            l2.AddNode(7);
+
+            l2.MergeTwoLists(ll.head, l2.head);
+          
+
+            BinarySearchHelper.IsMajorityElement(new int[] { 10, 100, 101, 101 }, 101 );
             var xmer = ArrayFunc.MergeKArrays(new List<int[]> { new int[] { 2, 4, 8 }, new int[] { 1, 3, 5 }, new int[] { 2, 5, 8, 9 } }, 0,2);
             
             ArrayFunc.PrintOrgChart();
-            ArrayFunc.Search(new int[] { 1, 2, 3, 4, 5, 6 }, 0, 5, 2);
+            BinarySearchHelper.Search(new int[] { 1, 2, 3, 4, 5, 6 }, 0, 5, 2);
 
             //   "kpygkivtlqoockpygkivtlqoocssnextkqzjpycbylkaondsskpygkpygkivtlqoocssnextkqzjpkpygkivtlqoocssnextkqzjpycbylkaondsycbylkaondskivtlqoocssnextkqzjpycbylkaondssnextkqzjpycbylkaondshijzgaovndkjiiuwjtcpdpbkrfsi"
             //    kpygkivtlqoocskpygkpygkivtlqoocssnextkqzjpkpygkivtlqoocssnextkqzjpycbylkaondsycbylkaondskivtlqoocssnextkqzjpycbylkaondssnextkqzjpycbylkaondshijzgaovndkjiiuwjtcpdpbkrfsi
@@ -51,7 +76,7 @@ namespace CCIFinal
             var t1 = ArrayFunc.CheckSubarraySumDivisibleByK(new int[] { 0, 1, 0, 3, 0, 4, 0, 4, 0 }, 5);
 
             ArrayFunc.MergeSortedArrays(new int[] { 1, 2, 3, 0, 0, 0 }, 3, new int[] { 2, 5, 6 }, 3);
-            var time = ArrayFunc.ExclusiveTime(1, new List<string>() { "0:start:0", "0:start:2", "0:end:5", "0:start:6", "0:end:6", "0:end:7" });
+            var time = IntervalHelper.ExclusiveTime(1, new List<string>() { "0:start:0", "0:start:2", "0:end:5", "0:start:6", "0:end:6", "0:end:7" });
             var topk = ArrayFunc.TopKFrequent(new int[] { 3, 0, 1, 0 }, 1);
             int[][] ans = SortHelper.KClosest(new int[][] { new int[] { 1, 0 }, new int[] { 0, 1 } }, 2);
 
@@ -465,7 +490,9 @@ namespace CCIFinal
 
         private static void ArrayFunctions()
         {
-            var t = ArrayFunc.MergeIntervals(new List<Interval>() { new Interval { Start = 1, End = 5 }, new Interval { Start = 3, End = 6 }, new Interval { Start = 2, End = 5 }, new Interval { Start = 4, End = 7 } });
+           
+
+            var t = IntervalHelper.MergeIntervals(new List<Interval>() { new Interval { Start = 1, End = 5 }, new Interval { Start = 3, End = 6 }, new Interval { Start = 2, End = 5 }, new Interval { Start = 4, End = 7 } });
 
             var result = ArrayFunc.SubSetSumK(new int[] { 1, 2, 3, 4, 5, 6 }, 6);
             ArrayFunc.MissningDuplicateInN(new int[] { 2, 4, 1, 2, 2 });

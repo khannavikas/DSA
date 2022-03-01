@@ -45,11 +45,14 @@
   <ItemGroup>
     <Compile Include="Array\ArrayFunc.cs" />
     <Compile Include="BackTracking.cs" />
+    <Compile Include="BinarySearchHelper.cs" />
     <Compile Include="BinaryTree.cs" />
     <Compile Include="DPLCS.cs" />
     <Compile Include="DynamicProgramming.cs" />
     <Compile Include="Graph.cs" />
     <Compile Include="Hash.cs" />
+    <Compile Include="ImportantConcept.cs" />
+    <Compile Include="IntervalHelper.cs" />
     <Compile Include="LinkList.cs" />
     <Compile Include="LRU.cs" />
     <Compile Include="Heap.cs" />

@@ -1137,7 +1137,7 @@ namespace CCIFinal
 
                         for (int i = 0; i < p.Length; i++)
                         {
-                            sb.Remove(p1-1, 1);
+                            sb.Remove(p1 - 1, 1);
                             p1--;
                         }
 
@@ -1152,7 +1152,7 @@ namespace CCIFinal
                     {
                         p1++;
                     }
-                    
+
                     p2 = 0;
 
                 }
@@ -1163,6 +1163,52 @@ namespace CCIFinal
 
         }
 
+
+        // Leet code 88
+        // StringHelper.Decode("3[a]2[bc]d");
+        public static string Decode(string s)
+        {
+            Stack<int> number = new Stack<int>();
+            Stack<string> bracket = new Stack<string>();
+            string currentString = string.Empty;
+            int k = 0;
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (s[i] - 48 > 0 && s[i] - 48 < 10)
+                {
+                    k = k * 10 + s[i] - '0';
+                }
+                else if (s[i] == '[')
+                {
+                    bracket.Push(currentString);
+                    number.Push(k);
+                    k = 0;
+                    currentString = string.Empty;
+                }
+                else if (s[i] == ']')
+                {
+                    string decode = bracket.Pop();
+                    int count = number.Pop();
+
+                    for (int l = 0; l < count; l++)
+                    {
+                        decode += currentString;
+                    }
+
+                    currentString = decode;
+                }
+                else
+                {
+                    currentString += s[i];
+                }
+
+
+            }
+
+            return currentString;
+
+        }
 
     }
 }

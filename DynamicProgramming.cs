@@ -384,7 +384,6 @@ namespace CCIFinal
                     }
 
                 }
-
             }
 
             if (minStep[a.Length - 1] == int.MaxValue)
@@ -434,7 +433,7 @@ namespace CCIFinal
 
         // Function to calculate the
         // maximum stolen value using only 2 variables
-       public static int maxLoot(int[] hval, int n)
+        public static int maxLoot(int[] hval, int n)
         {
             if (n == 0)
                 return 0;
