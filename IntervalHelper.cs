@@ -23,6 +23,7 @@ namespace CCIFinal
                 int st = Math.Max(firstList[l1][0], secondList[l2][0]);
                 int end = Math.Min(firstList[l1][1], secondList[l2][1]);
 
+                // Important
                 if (st <= end)
                     lst.Add(new int[] { st, end });
 
@@ -166,6 +167,8 @@ namespace CCIFinal
                 else res.Add(B[j++]);
             }
             return res;
+
+           
         }
 
 
@@ -217,5 +220,59 @@ namespace CCIFinal
             return result;
 
         }
+
+        // 253. Meeting Rooms II - This is same as minimum number of platforms required for trains
+
+        public static int MinMeetingRooms(int[][] intervals)
+        {
+
+            int[] starttimes = new int[intervals.Length];
+            int[] endtimes = new int[intervals.Length];
+
+
+            for (int i = 0; i < intervals.Length; i++)
+            {
+                starttimes[i] = intervals[i][0];
+                endtimes[i] = intervals[i][1];
+            }
+
+
+            System.Array.Sort(starttimes);
+            System.Array.Sort(endtimes);
+
+
+            int strt = 0;
+            int end = 0;
+            int numrooms = 0;
+
+            while (strt < intervals.Length)
+            {
+                // Start is Greater or equal to last end, so vacate a room and move to next end
+                if (starttimes[strt] >= endtimes[end])
+                {
+                    numrooms--;
+                    end++;
+                }
+
+                // Always increase room for each meeting 
+                numrooms++;
+                strt++;
+
+            }
+
+            return numrooms;
+        }
+
+
+        //Important how to merge sort on List of List 
+        public static List<Interval> MergeSort(List<List<Interval>> schedule, int l, int r)
+        {
+            if (l == r) return schedule[l];
+            int mid = (l + r) / 2;
+            List<Interval> left = MergeSort(schedule, l, mid);
+            List<Interval> right = MergeSort(schedule, mid + 1, r);
+            return MergeSortedIntervalList(left, right);
+        }
+
     }
 }

@@ -80,19 +80,23 @@ namespace CCIFinal
 
         private static bool isValidPlace(int[,] a, int row, int col)
         {
-            // Not in columns
+            // Not in columns with in same row
             for (int i = 0; i < a.GetLength(0); i++)
             {
                 if (a[row, i] == 1)
                     return false;
             }
 
+            // Not in any row within same column, only UP side
             for (int r = row - 1; r >= 0; r--)
             {
                 if (a[r, col] == 1)
                     return false;
             }
 
+
+            // Check diagonal left up,
+            // no need to check down as we have not reached those rows
             for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--)
             {
                 if (a[i, j] == 1)
@@ -100,7 +104,7 @@ namespace CCIFinal
 
             }
 
-
+            // Check diagonal right up 
             for (int i = row - 1, j = col + 1; i >= 0 && j < a.GetLength(0); i--, j++)
             {
                 if (a[i, j] == 1)
@@ -258,8 +262,9 @@ namespace CCIFinal
                     return false;
             }
 
-            int smi = 3 * (row / 3);
-            int smj = 3 * (col / 3);
+            // Important this is 3 by 3 matrix
+            int smi = 3 * (row / 3); // submatrix start
+            int smj = 3 * (col / 3); // submatrix end 
 
             for (int i = 0; i < 3; i++)
             {
@@ -351,6 +356,8 @@ namespace CCIFinal
         #endregion
 
         private static int subsetCount = 0;
+
+
         public static void PrintSubset(int[] a, int n, List<int> final)
         {
            
@@ -366,6 +373,25 @@ namespace CCIFinal
             final.Remove(a[n - 1]);         
             PrintSubset(a, n - 1, final);
 
+
+
+        }
+
+        public static void PrintSubsetSum(int[] a, int n, int sum)
+        {
+
+            if (n == 0)
+            {
+                subsetCount++;
+                Console.WriteLine(sum);
+                return;
+            }
+
+            PrintSubsetSum(a, n - 1, sum);
+
+            PrintSubsetSum(a, n - 1, sum+a[n-1]);
+              
+            
         }
 
         private static void PrintList(List<int> l)
@@ -438,5 +464,38 @@ namespace CCIFinal
                 return true;
 
         }
+
+
+        public static IList<IList<int>> Subsets(int[] nums)
+        {
+
+            List<IList<int>> lst = new List<IList<int>>();
+
+            GetList(nums, new List<int>(), lst, 0);
+
+            return lst;
+
+        }
+
+
+        private static void GetList(int[] nums, List<int> result, List<IList<int>> lst, int index)
+        {
+            if (index == nums.Length)
+            {
+                lst.Add(new List<int>(result));
+                return;
+            }
+
+
+            result.Add(nums[index]);
+            GetList(nums, result, lst, index + 1);
+            result.Remove(result.Count - 1);
+            GetList(nums, result, lst, index + 1);
+
+        }
+
+
+
+
     }
 }

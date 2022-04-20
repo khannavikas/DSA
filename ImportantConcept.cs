@@ -59,7 +59,7 @@ namespace CCIFinal
         //next = indexer+1%N 
         //    if index == 7, then 7+1=8, 8%8 = 0, goes back to ist element
 
-        // orevious = index +N -1%N  if index 0, then 0-1=-1 then -1+8=7 and 7%8 
+        // orevious = (index -1 +N)%N  if index 0, then 0-1=-1 then -1+8=7 and 7%8 
         // will again be 7 that is last element of array
 
 }

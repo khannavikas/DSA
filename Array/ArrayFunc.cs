@@ -28,36 +28,6 @@ namespace CCIFinal.Array
             return a;
         }
 
-        public static int SearchSortedRotatedArray(int[] a, int search)
-        {
-            int start = 0;
-            int end = a.Length - 1;
-
-            // 5671234
-
-            while (start < end)
-            {
-                int mid = start + end / 2;
-                if (a[mid] == search)
-                {
-                    return mid;
-                }
-
-                if (a[mid] > search && a[start] < a[mid])
-                {
-                    start = mid + 1;
-                }
-                else
-                {
-                    end = mid - 1;
-                }
-
-
-            }
-
-            return -1;
-        }
-
         public static int[] Rotate(int[] s, int d)
         {
             int x = 0;
@@ -79,8 +49,6 @@ namespace CCIFinal.Array
 
             return s;
         }
-
-       
 
         public static int[] MovePositiveNegative(int[] a)
         {
@@ -224,6 +192,29 @@ namespace CCIFinal.Array
                     sm2 = a[i];
 
                 }
+            }
+
+            Console.WriteLine(sm1);
+            Console.WriteLine(sm2);
+        }
+
+
+        public static void Print2SmallestNumber(int[] a)
+        {
+            if (a.Length <= 2)
+                return;
+
+            int sm1 = int.MaxValue;
+            int sm2 = int.MaxValue;
+
+            for (int i = 0; i < a.Length; i++)
+            {
+                if (a[i] < sm1 || a[i] < sm2)
+                {
+                    sm2 = Math.Min(sm1, sm2);
+                    sm1 = a[i];
+                }
+
             }
 
             Console.WriteLine(sm1);
@@ -585,7 +576,6 @@ namespace CCIFinal.Array
 
         }
 
-
         public class EmpComparer : IComparer<NumberFreq>
         {
             public int Compare(NumberFreq x, NumberFreq y)
@@ -688,6 +678,7 @@ namespace CCIFinal.Array
             return mid;
         }
 
+        //Important
         public static void QuickSort(int[] a, int l, int h)
         {
             //  { 6, 1, 4, 2,7,3,8}
@@ -833,7 +824,7 @@ namespace CCIFinal.Array
 
         #endregion  
 
-
+        //Important Kandane
         public static int MaxContinousSumKandane(int[] a)
         {
             int currSum = a[0];
@@ -863,6 +854,7 @@ namespace CCIFinal.Array
         }
 
         public static int MaxContinousSumPract(int[] arr)
+
         {
             int maxSum = int.MinValue;
 
@@ -1041,6 +1033,7 @@ namespace CCIFinal.Array
 
         }
 
+        // Very Important
         public static int FindKthLargest(int[] nums, int k)
         {
 
@@ -1059,7 +1052,7 @@ namespace CCIFinal.Array
 
                 if (partitionindex > nums.Length - k)
                 {
-                    partitionindex = Partition(nums, 0, partitionindex);
+                    partitionindex = Partition(nums, 0, partitionindex-1);
                 }
                 else
                 {
@@ -1107,10 +1100,9 @@ namespace CCIFinal.Array
 
         private static Dictionary<int, int> dic = new Dictionary<int, int>();
 
+        // Important 
         public static int[] TopKFrequent(int[] nums, int k)
         {
-
-
             foreach (int a in nums)
             {
                 if (dic.Keys.Contains(a))
@@ -1122,7 +1114,7 @@ namespace CCIFinal.Array
                     dic.Add(a, 1);
                 }
             }
-
+            
             int[] freq = dic.Keys.ToArray();
 
             int len = freq.Length;
@@ -1174,6 +1166,7 @@ namespace CCIFinal.Array
 
             while (l <= r)
             {
+                // Very Important, partitioning with dictionary that is frequency not actual array
                 while (l <= r && dic[nums[l]] <= dic[nums[pivot]]) l++;
                 while (l <= r && dic[nums[r]] > dic[nums[pivot]]) r--;
 
@@ -1190,7 +1183,7 @@ namespace CCIFinal.Array
 
             return r;
         }
-        
+
         public static void MergeSortedArrays(int[] nums1, int m, int[] nums2, int n)
         {
             if (n == 0)
@@ -1503,13 +1496,86 @@ namespace CCIFinal.Array
             int[] rightmerge = MergeKArrays(arrays, mid + 1, right);
 
             return SortHelper.MergeSortedArray(leftmerge, rightmerge);
-           
+
+        }
+
+        public class Frequency
+        {
+            public int fre;
+            public int value;
         }
 
 
-       
+        public class FrequencyComaparer : IComparer<Frequency>
+        {
 
-       
+            public int Compare(Frequency f1, Frequency f2)
+            {
+                if (f1.fre == f2.fre)
+                    return 0;
+
+                if (f1.fre < f2.fre)
+                    return -1;
+
+                return 1;
+            }
+
+        }
+
+
+        public static List<int> GetKFrequentElements(int[] arr, int k)
+        {
+            List<int> result = new List<int>();
+
+            if (k <= 0 || arr.Length == 0)
+                return result;
+
+
+            Dictionary<int, List<int>> freValue = new Dictionary<int, List<int>>();
+
+            Dictionary<int, int> fre = new Dictionary<int, int>();
+
+            for (int i = 0; i < arr.Length; i++)
+            {
+
+                if (fre.ContainsKey(arr[i]))
+                {
+                    fre[arr[i]]++;
+
+                }
+                else
+                {
+                    fre.Add(arr[i], 1);
+                }
+            }
+
+
+            List<Frequency> frequencies = new List<Frequency>();
+
+            foreach (int key in fre.Keys)
+            {
+
+                frequencies.Add(new Frequency() { fre = fre[key], value = key });
+            }
+
+            frequencies.Sort(new FrequencyComaparer());
+
+            int count = frequencies.Count;
+
+            while (k > 0 && count > 0)
+            {
+                result.Add(frequencies[count - 1].value);
+                count--;
+                k--;
+            }
+
+
+            return result;
+
+        }
+
+
+
     }
 }
 

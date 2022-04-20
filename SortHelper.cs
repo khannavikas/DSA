@@ -219,12 +219,13 @@ namespace CCIFinal
             }
         }
 
-
+        //Important 
         private static int PartitionDuplicates(int[] nums, int start, int end)
         {
             int pivot = start, temp;
             while (start <= end)
             {
+                //Important we used equal for start and Pivot comparision
                 while (start <= end && nums[start] <= nums[pivot]) start++;
                 while (start <= end && nums[end] > nums[pivot]) end--;
                 if (start > end) break;

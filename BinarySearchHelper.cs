@@ -27,11 +27,12 @@ namespace CCIFinal
         //https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/discuss/769698/Python-Clear-explanation-Powerful-Ultimate-Binary-Search-Template.-Solved-many-problems.
 
 
-        //1060. LeetCode Missing Element in Sorted Array
+        //1060. LeetCode Missing Element in Sorted Array, 
         //Input: nums = [4,7,9,10], k = 3
         //Output: 8
         //Explanation: The missing numbers are[5, 6, 8, ...], hence the third missing number is 8.
         // TODO: Binary Search
+        // Only works when consecutive numbers
         public static int MissingNumber(int[] nums, int k)
         {
             int n = nums.Length, diff = 0;
@@ -52,9 +53,42 @@ namespace CCIFinal
             return nums[n - 1] + k;
         }
 
+        // 1228. Missing Number In Arithmetic Progression
+        public static int MissingNumberBinarySearch(int[] arr)
+        {
+            int n = arr.Length;
+
+            // 1. Get the difference `difference`.
+            int difference = (arr[n - 1] - arr[0]) / n;
+            int lo = 0;
+            int hi = n - 1;
+
+            // Basic binary search template.
+            while (lo < hi)
+            {
+                int mid = (lo + hi) / 2;
+
+                // All numbers upto `mid` have no missing number, so search on the right side.
+                if (arr[mid] == arr[0] + mid * difference)
+                {
+                    lo = mid + 1;
+                }
+
+                // A number is missing before `mid` inclusive of `mid` itself.
+                else
+                {
+                    hi = mid;
+                }
+            }
+
+            // Index `lo` will be the position with the first incorrect number.
+            // Return the value that was supposed to be at this index.
+            return arr[0] + difference * lo;
+
+
+        }
 
         // 1011. Capacity To Ship Packages Within D Days
-
         public static int ShipWithinDays(int[] weights, int days)
         {
             int minCap = weights.Max();
@@ -104,14 +138,12 @@ namespace CCIFinal
 
         }
 
-
         // Return how many numbers are missing until nums[idx]
-        // Important
+        // Important - Only when difference is 1
         private static int MissingNumbersTillIndex(int idx, int[] nums)
         {
             return nums[idx] - nums[0] - idx;
         }
-
 
         public static bool IsMajorityElement(int[] nums, int target)
         {
@@ -165,7 +197,6 @@ namespace CCIFinal
 
         }
 
-
         public static int FindLastIndex(int[] nums, int target, int l, int r)
         {
             if (l == r && nums[l] == target)
@@ -197,8 +228,6 @@ namespace CCIFinal
             return result;
 
         }
-
-
 
         /// <summary>
         ///  How many binary searchable numbers
@@ -243,7 +272,6 @@ namespace CCIFinal
 
             return count;
         }
-
 
 
         //Find First and Last Position of Element in Sorted Array
@@ -305,7 +333,6 @@ namespace CCIFinal
             return int.MaxValue;
         }
 
-
         public static int binarySearch(int[] arr, int l, int r, int x)
         {
             while (l <= r)
@@ -331,7 +358,6 @@ namespace CCIFinal
             return -1;
         }
 
-
         public static int NumberOfTimesSortedArrayIsRotate(int[] arr)
         {
             int str = 0;
@@ -353,8 +379,8 @@ namespace CCIFinal
                     pivot = mid;
                     break;
                 }
-              
-                // Improtant if we change order of if else it does NOT work
+
+                // Important, if we change order of if else it does NOT work
                 if (arr[mid] <= arr[end])
                 {
                     end = mid - 1;
@@ -370,12 +396,12 @@ namespace CCIFinal
         }
 
         //Leetcode 33. Search in Rotated Sorted Array
-        public static int SearchInSortedArray(int[] nums, int target)
+        public static int SearchInRotatedSortedArray(int[] nums, int target)
         {
 
             int left = 0;
             int right = nums.Length - 1;
-         
+
             while (left <= right)
             {
 
@@ -404,6 +430,39 @@ namespace CCIFinal
 
 
             return -1;
+
+        }
+
+        // 1891. Cutting K Ribbons of possible maximum size
+        public static int MaxLength(int[] ribbons, int k)
+        {
+
+            int minLength = 1;
+            System.Array.Sort(ribbons);
+            int maxLength = ribbons[ribbons.Length - 1];
+
+            while (minLength <= maxLength)
+            {
+                int mid = minLength + (maxLength - minLength) / 2;
+                int numberOfRibbons = 0;
+
+                for (int i = 0; i < ribbons.Length; i++)
+                {
+                    numberOfRibbons += ribbons[i] / mid;
+
+                }
+
+                if (numberOfRibbons < k)
+                {
+                    maxLength = mid - 1;
+                }
+                else
+                {
+                    minLength = mid + 1;
+                }
+            }
+
+            return minLength - 1;
 
         }
     }

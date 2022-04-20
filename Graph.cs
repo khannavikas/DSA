@@ -251,6 +251,7 @@ namespace CCIFinal
                 
             }
 
+            //Back Tracking
             visited[u] = false;
             nodes.Remove(u);
 
@@ -400,7 +401,12 @@ namespace CCIFinal
                     return true;
             }
 
-            return false;
+           // int i = Math.Sqrt(8);
+            for (int i = 2; i < Math.Sqrt(8); i++)
+            {
+
+            }
+                return false;
         }
 
         private bool HasCycle(int v, List<int> parents)

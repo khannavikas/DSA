@@ -47,25 +47,31 @@
     <Compile Include="BackTracking.cs" />
     <Compile Include="BinarySearchHelper.cs" />
     <Compile Include="BinaryTree.cs" />
+    <Compile Include="Design\HashMap.cs" />
+    <Compile Include="Design\HitCount.cs" />
+    <Compile Include="Design\TinyUrl.cs" />
     <Compile Include="DPLCS.cs" />
     <Compile Include="DynamicProgramming.cs" />
     <Compile Include="Graph.cs" />
     <Compile Include="Hash.cs" />
     <Compile Include="ImportantConcept.cs" />
     <Compile Include="IntervalHelper.cs" />
+    <Compile Include="Design\LFU.cs" />
     <Compile Include="LinkList.cs" />
-    <Compile Include="LRU.cs" />
+    <Compile Include="Design\LRU.cs" />
     <Compile Include="Heap.cs" />
     <Compile Include="MyQueue.cs" />
     <Compile Include="MyStack.cs" />
     <Compile Include="NewHeap.cs" />
     <Compile Include="Practice\DPHelper.cs" />
+    <Compile Include="Practice\GraphHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecursionHelper.cs" />
     <Compile Include="SlidingWindow.cs" />
     <Compile Include="SortHelper.cs" />
     <Compile Include="StringHelper.cs" />
+    <Compile Include="Trie.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

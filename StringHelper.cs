@@ -508,22 +508,45 @@ namespace CCIFinal
             for (int i = 0; i < s.Length; i++)
             {
                 // Valid choice Char not used already
-                if (!used.Contains(s[i]))
+                if (!perm.Contains(s[i]))
                 {
+                    perm += s[i];
                     // Make a choice
                     used.Add(s[i]);
 
-                    // Recurse againg
-                    PremutationBackTracking(s, perm + s[i], used);
+                    // Recurse again
+                    PremutationBackTracking(s, perm, used);
 
                     // Undo choice
-                    used.Remove(s[i]);
+                    perm = perm.Substring(0, perm.Length - 1);
                 }
 
             }
 
         }
 
+
+        public static void PermutationVikas(string s, string prefix)
+
+        {
+
+            if (s.Length == 0 && prefix != "")
+            {
+                Console.WriteLine(prefix);
+                return;
+            }
+
+            for (int i = 0; i < s.Length; i++)
+            {
+
+                prefix = prefix + s[i];
+
+                PermutationVikas(s.Substring(0,i) + s.Substring(i + 1), prefix);
+
+                prefix = prefix.Substring(0, prefix.Length - 1);
+
+            }           
+        }
 
         // Google question 
         // Find all words that we can make 
@@ -602,6 +625,25 @@ namespace CCIFinal
                 PrintAllStringsKLength(lst, s + item, k);
             }
 
+        }
+
+        public static void PrintAllStringKLengthVikas(List<char> list, string s, int k)
+        {
+            if (s.Length == k)
+            {
+                Console.WriteLine(s);
+               // total++;
+                return;
+            }
+
+
+            for (int i = 0; i < lst.Count; i++)
+                {
+                PrintAllStringKLengthVikas(list, s +list[i], k);
+              //  PrintAllStringKLengthVikas(list, s, k);
+
+
+                }
         }
 
         public static int total = 0;
@@ -1209,6 +1251,64 @@ namespace CCIFinal
             return currentString;
 
         }
+
+        // Important
+        public static bool IsPalindromeNumber(int num)
+        {
+            if (num < 0) return false;
+            int reversed = 0, remainder, original = num;
+            while (num != 0)
+            {
+                remainder = num % 10; // reversed integer is stored in variable
+                reversed = reversed * 10 + remainder; //multiply reversed by 10 then add the remainder so it gets stored at next decimal place.
+                num /= 10;  //the last digit is removed from num after division by 10.
+            }
+            // palindrome if original and reversed are equal
+            return original == reversed;
+        }
+
+
+
+
+        public static void PrintALlWords(char[] chars, string prefix, int index)
+        {
+
+            if (index == chars.Length)
+            {
+                if (prefix.Length > 0)
+                {
+                    Console.WriteLine(prefix);
+                }
+                return;
+
+            }
+
+            PrintALlWords(chars, prefix + chars[index], index + 1);
+            PrintALlWords(chars, prefix, index + 1);
+        }
+
+
+        public static void PrintALlWordsKLenWithoutRep(char[] chars, string prefix, int k)
+        {
+
+            if (prefix.Length == k)
+            {
+                Console.WriteLine(prefix);
+                return;
+            }
+
+            foreach (var item in chars)
+            {
+                if (!prefix.Contains(item))
+                {
+                    PrintALlWordsKLenWithoutRep(chars, prefix + item, k);
+                }
+               
+            }
+           
+        }
+
+
 
     }
 }

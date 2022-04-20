@@ -1,4 +1,5 @@
 ﻿using CCIFinal.Array;
+using CCIFinal.Design;
 using CCIFinal.Practice;
 using CCIFinalLL;
 using System;
@@ -19,10 +20,53 @@ namespace CCIFinal
 
 
         public static object PracticeHelper { get; private set; }
-
+            
         static void Main(string[] args)
         {
+            StringHelper.PrintAllStringKLengthVikas(new List<char>() { 'a', 'b' },"", 2);
+            StringHelper.PermutationVikas("abc", "");
+            BinaryTreeFunctions();
+            double i1 = Math.Sqrt(8);
 
+            
+            GraphFunctions();
+
+          List<int> a =  ArrayFunc.GetKFrequentElements(new int[] {1,1,1,2,2,3,3,3,3 }, 2);
+
+            List<int> ls = new List<int>();
+            Dictionary<int, int> dic = new Dictionary<int, int>();
+            dic.Keys.Contains(2);
+
+
+            HitCount hitCounter = new HitCount();
+            hitCounter.Hit(1);       // hit at timestamp 1.
+            hitCounter.Hit(2);       // hit at timestamp 2.
+            hitCounter.Hit(3);       // hit at timestamp 3.
+            hitCounter.getHits(4);
+            hitCounter.Hit(300);
+            hitCounter.getHits(300);
+            hitCounter.getHits(301);
+
+
+            CCIFinal.BackTracking.Subsets(new int[] { 1, 2 });
+            StringHelper.PrintAllStringsKLengthWithoutRepetion(new List<char>() { 'a', 'b', 'c' }, "", 2, new List<char>());
+            Console.WriteLine("Next");
+            StringHelper.PrintALlWordsKLenWithoutRep(new char[] { 'a', 'b', 'c' }, "", 2);
+
+
+            CCIFinal.BackTracking.PrintSubset(new int[] { 2, 1, 3, 5, 4 }, 5, new List<int>());
+            StringHelper.PremutationBackTracking("abc", "", new List<char>());
+            StringHelper.PrintAllStringsKLength("ab".ToCharArray().ToList(), "", 3);
+            var topk = ArrayFunc.TopKFrequent(new int[] { 3, 0, 1, 0 }, 1);
+            int p = ArrayFunc.FindKthLargest(new int[] { 3, 2, 3, 1, 2, 4, 5, 5, 6, 4 }, 4);
+            ArrayFunc.Print2SmallestNumber(new int[] { 15, 6, 17, 11, 22, 43 });
+
+
+            int index1 = BinarySearchHelper.SearchInRotatedSortedArray(new int[] { 5, 6, 7, 1, 2, 3 }, 1);
+
+            CCIFinal.BackTracking.PrintSubsetSum(new int[] { 2, 4, 5,  }, 3, 0);
+           
+            
             int nu = BinarySearchHelper.NumberOfTimesSortedArrayIsRotate(new int[] {5,6,7,1,2,3 });
 
             String sd = StringHelper.Decode("3[a]2[bc]d");
@@ -77,12 +121,12 @@ namespace CCIFinal
 
             ArrayFunc.MergeSortedArrays(new int[] { 1, 2, 3, 0, 0, 0 }, 3, new int[] { 2, 5, 6 }, 3);
             var time = IntervalHelper.ExclusiveTime(1, new List<string>() { "0:start:0", "0:start:2", "0:end:5", "0:start:6", "0:end:6", "0:end:7" });
-            var topk = ArrayFunc.TopKFrequent(new int[] { 3, 0, 1, 0 }, 1);
+         
             int[][] ans = SortHelper.KClosest(new int[][] { new int[] { 1, 0 }, new int[] { 0, 1 } }, 2);
 
             var qu = SortHelper.QuickSort(new int[] { 3, 2, 1, 3, 4, 5 }, 0, 5);
 
-            int p = ArrayFunc.FindKthLargest(new int[] { 3, 2, 3, 1, 2, 4, 5, 5, 6, 4 }, 4);
+            
             IList<int> l = new List<int>();
 
             var c6 = StringHelper.ValidWordAbbreviation("abbreviation", "a10n");
@@ -106,7 +150,7 @@ namespace CCIFinal
             SlidingWindow.ShareCandies(new int[] { 1, 2, 2, 3, 4, 3 }, 3);
 
 
-            StringHelper.PrintAllStringsKLength("ab".ToCharArray().ToList(), "", 3);
+          
 
             //    StringHelper.PrintAllStringsKLengthWithoutRepetion("geksfor".ToCharArray().ToList(), "", 3, new List<char>());
 
@@ -218,6 +262,26 @@ namespace CCIFinal
             g.AddEdge(4, 1);
             g.AddEdge(3, 0);
 
+            g.BFSFromNode(0);
+            Console.WriteLine("BFS New");
+
+            Console.WriteLine("Island "+ g.NumIsland());
+            GraphHelper.Graph gh = new GraphHelper.Graph(4, true);
+            gh.AddEdge(0, 1);
+            gh.AddEdge(0, 2);
+            gh.AddEdge(1, 2);
+            gh.AddEdge(2, 0);
+            gh.AddEdge(2, 3);
+            gh.AddEdge(3, 3);
+            
+            
+            
+            bool hasPath = gh.HasPathDFSGraph(1, 1);
+
+
+            gh.BFSFromNode(0);
+
+           Console.WriteLine("Island " +gh.NumberOfIsland());
 
             // g.ListAllPath(5, 1);
             //Console.WriteLine("Num Island " + g.NumIsland());
@@ -409,7 +473,9 @@ namespace CCIFinal
 
             //   var x = bt.NodeParentMap(bt.root, null);
 
-            //  var path = bt.PathFromRoot(5);
+             var path = bt.PathFromRoot(5);
+
+            bt.Haspath(5);
 
             //  bt.MinumHeight();
 

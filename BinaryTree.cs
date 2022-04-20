@@ -56,7 +56,6 @@ namespace CCIFinal
 
             Stack<TreeNode> s = new Stack<TreeNode>();
             TreeNode curr = root;
-
             // traverse the tree
             while (curr != null || s.Count > 0)
             {
@@ -380,7 +379,8 @@ namespace CCIFinal
 
         }
 
-        // Can be done by stack also, push nodes to stack rather than list, no need to reverse
+        // Can be done by stack also, push nodes to stack rather than lis
+        // t, no need to reverse
         public List<int> PathFromRoot(int k)
         {
             List<int> path = new List<int>();
@@ -658,6 +658,37 @@ namespace CCIFinal
             return (left_lca != null) ? left_lca : right_lca;
         }
 
+
+      public void  Haspath(int k)
+        {
+            List<int> ls = new List<int>();
+
+          var ex=  FindPath(root, k, ls);
+        }
+
+
+
+        private bool FindPath(TreeNode x, int v, List<int> path)
+        {
+            if (x == null)
+                return false;
+
+            path.Add(x.key);
+
+            if (x.key == v)
+            {
+              //  path.Add(v);
+                return true;
+
+            }
+
+
+            if (FindPath(x.left, v, (path)) || (FindPath(x.right, v, (path))))
+                return true;
+
+            path.Remove(x.key);
+            return false;
+}
 
         #endregion
 
