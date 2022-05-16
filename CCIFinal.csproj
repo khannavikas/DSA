@@ -64,6 +64,7 @@
     <Compile Include="MyStack.cs" />
     <Compile Include="NewHeap.cs" />
     <Compile Include="Practice\DPHelper.cs" />
+    <Compile Include="Practice\GarphAgain.cs" />
     <Compile Include="Practice\GraphHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -23,7 +23,7 @@ namespace CCIFinal
 
             visited = new bool[nodes];
             childCount = new Dictionary<int, int>();
-         
+
             for (int i = 0; i < n; i++)
             {
                 graph[i] = new LinkedList<int>();
@@ -33,7 +33,7 @@ namespace CCIFinal
         public void AddEdge(int u, int v)
         {
             graph[u].AddLast(v);
-          // graph[v].AddLast(u);
+            // graph[v].AddLast(u);
         }
 
         public void BFSFromNode(int x)
@@ -190,6 +190,7 @@ namespace CCIFinal
             return -1;
         }
 
+        // Only for directed graph with no cycle
         public bool HasPath(int u, int v)
         {
             if (u == v)
@@ -243,12 +244,12 @@ namespace CCIFinal
             nodes.Add(u);
 
             foreach (var item in graph[u])
-            {                              
-                    if (!visited[item])
-                    {                       
-                        PrintPath(item, v, nodes);               
-                    }
-                
+            {
+                if (!visited[item])
+                {
+                    PrintPath(item, v, nodes);
+                }
+
             }
 
             //Back Tracking
@@ -291,7 +292,7 @@ namespace CCIFinal
 
         public int WaysToReach(int u, int v)
         {
-          
+
 
             int count = 0;
 
@@ -401,12 +402,12 @@ namespace CCIFinal
                     return true;
             }
 
-           // int i = Math.Sqrt(8);
+            // int i = Math.Sqrt(8);
             for (int i = 2; i < Math.Sqrt(8); i++)
             {
 
             }
-                return false;
+            return false;
         }
 
         private bool HasCycle(int v, List<int> parents)
@@ -502,7 +503,6 @@ namespace CCIFinal
         }
 
 
-
         private bool CheckCycle(int src)
         {
 
@@ -521,7 +521,6 @@ namespace CCIFinal
             return false;
 
         }
-
 
         public void PrintDijkastra()
         {
@@ -623,13 +622,12 @@ namespace CCIFinal
 
                 //Path(x, v, k - 1, path.Add(x), costSoFar + graph[u]);
 
-                 path.Remove(x);
+                path.Remove(x);
             }
 
             visited[u] = false;
 
         }
-
 
         public static int ShortestPathBinaryMatrix(int[][] grid)
         {
@@ -664,11 +662,10 @@ namespace CCIFinal
 
         }
 
-
         private static int GetLength(int[][] grid, List<int[]> directions, int lastrow, int lastcol)
         {
             Queue<int[]> q = new Queue<int[]>();
-
+       
             q.Enqueue(new int[] { 0, 0 });
 
             grid[0][0] = 1;
@@ -691,7 +688,7 @@ namespace CCIFinal
                     int row = r + dir[0];
                     int col = c + dir[1];
 
-                    if ( row < 0 || col < 0 ||  row >= grid.Length || col >= grid[0].Length || grid[row][col] != 0 )
+                    if (row < 0 || col < 0 || row >= grid.Length || col >= grid[0].Length || grid[row][col] != 0)
                         continue;
 
                     q.Enqueue(new int[] { row, col });
@@ -726,6 +723,118 @@ namespace CCIFinal
             }
 
             return ans;
+        }
+
+        // Important
+        public List<int> ShortestPathBFSUndirectedGraph(int src, int des)
+        {
+            List<int> path = new List<int>();
+
+            path.Add(src);
+
+            // Maintains list of all paths traversed so far 
+            //  [0],[0,1],[0,3], [0,1,2] [0,3,4]
+            Queue<List<int>> paths = new Queue<List<int>>();
+
+            paths.Enqueue(path);
+
+            while (path.Count > 0)
+            {
+                List<int> currPath = paths.Dequeue();
+
+                // Check the last node of path so far if it is same as desc
+                if (currPath[currPath.Count - 1] == des)
+                {
+                    // for finding all paths keep adding to a list and first will be
+                    // Shortest
+                    return currPath;
+                }
+
+                // All adjacents nodes of last node of the  current path
+                foreach (var item in graph[currPath[currPath.Count - 1]])
+                {
+                    if (!visited[item])
+                    {
+                        List<int> newPath = new List<int>(currPath);
+                        newPath.Add(item);
+                        visited[item] = true;
+                        paths.Enqueue(newPath);
+                    }
+                }
+            }
+
+            return path;
+
+        }
+
+        //542. 01 Matrix
+        //Given an m x n binary matrix mat, return the distance of the nearest 0 for each cell.
+        //The distance between two adjacent cells is 1.
+        // Input [[0,0,0],[0,1,0],[0,0,0]]
+        public int[][] UpdateMatrix(int[][] mat)
+        {
+
+            int rows = mat.Length;
+            int cols = mat[0].Length;
+
+            // All the directions up, left, down and right
+            List<int[]> dir = new List<int[]> { new int[] { -1, 0 }, new int[] { 1, 0 }, new int[] { 0, -1 }, new int[] { 0, 1 } };
+
+            Queue<int[]> q = new Queue<int[]>();
+
+            int[][] dis = new int[rows][];
+
+            // Initialise jagged array 2nd dimension
+            for (int j = 0; j < dis.Length; j++)
+            {
+                dis[j] = new int[cols];
+            }
+
+            for (int r = 0; r < rows; r++)
+            {
+                for (int c = 0; c < cols; c++)
+                {
+                    // All 0 cells to be queued
+                    if (mat[r][c] == 0)
+                    {
+                        q.Enqueue(new int[] { r, c });
+                        dis[r][c] = 0;
+                    }
+                    else
+                    {
+                        dis[r][c] = int.MaxValue;
+                    }
+                }
+
+            }
+
+            while (q.Count > 0)
+            {
+                int[] curr = q.Dequeue();
+                int x = curr[0];
+                int y = curr[1];
+
+                foreach (var d in dir)
+                {
+                    int newx = x + d[0];
+                    int newy = y + d[1];
+
+                    if (newx >= 0 && newx < rows && newy >= 0 && newy < cols)
+                    {
+                        if (dis[newx][newy] > dis[x][y] + 1)
+                        {
+                            dis[newx][newy] = dis[x][y] + 1;
+
+                            // Put in queue to recaluate neighbours 
+                            q.Enqueue(new int[] { newx, newy });
+                        }
+                    }
+                }
+
+            }
+
+            return dis;
+
         }
 
 

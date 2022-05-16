@@ -205,6 +205,7 @@ namespace CCIFinal.Practice
                     }
                     else
                     {
+                        // Already visited node but not parent 
                         // Child node is not parent of currentNode x
                         // because x->c and c->x but not a cycle
                         if (childNode != parent)

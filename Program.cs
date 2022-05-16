@@ -23,6 +23,40 @@ namespace CCIFinal
             
         static void Main(string[] args)
         {
+
+            Graph graph = new Graph(6);
+            graph.AddEdge(0, 1);
+            graph.AddEdge(1, 2);
+            graph.AddEdge(2, 3);
+            graph.AddEdge(3,0);
+            graph.AddEdge(0, 4);
+            graph.AddEdge(3, 4);
+            graph.AddEdge( 5,4);
+            graph.AddEdge(3, 5);
+
+            var shortestPath = graph.ShortestPathBFSUndirectedGraph(0, 5);
+
+
+
+            GarphAgain ga = new GarphAgain(4, false);
+
+            ga.AddEdge(0, 1);
+            ga.AddEdge(1, 2);
+           // ga.AddEdge(2, 1);
+           // ga.AddEdge(2, 0);
+          ga.AddEdge(2, 3);
+          // ga.AddEdge(0, 0);
+
+            bool cycle = ga.HasCycleUnDirected();
+
+            ga.AllPaths(2, 3, new List<int>() { 2 }, new bool[4]);
+            var paths = ga.allPaths;
+            bool haspath = ga.HasPath(0, 2, new bool[4]);
+            //ga.AddEdge(4, 4);
+
+            Console.WriteLine(ga.NumberOfIsland());
+           // ga.DFS(0);
+
             StringHelper.PrintAllStringKLengthVikas(new List<char>() { 'a', 'b' },"", 2);
             StringHelper.PermutationVikas("abc", "");
             BinaryTreeFunctions();
