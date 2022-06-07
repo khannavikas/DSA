@@ -63,6 +63,8 @@
     <Compile Include="MyQueue.cs" />
     <Compile Include="MyStack.cs" />
     <Compile Include="NewHeap.cs" />
+    <Compile Include="Practice\BinaryTree.cs" />
+    <Compile Include="Practice\BinSearch.cs" />
     <Compile Include="Practice\DPHelper.cs" />
     <Compile Include="Practice\GarphAgain.cs" />
     <Compile Include="Practice\GraphHelper.cs" />

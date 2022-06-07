@@ -465,5 +465,79 @@ namespace CCIFinal
             return minLength - 1;
 
         }
+
+        public static int KokoEatingBannana(int[] banannas, int h)
+        {
+            int min = 1;
+            int max = banannas.Max();
+
+            while (min < max)
+            {
+                int hours = 0;
+                int mid = min + (max - min) / 2;
+
+                foreach (var item in banannas)
+                {
+                    hours += item / mid;
+
+                    if (item % mid != 0)
+                    {
+                        hours++;
+                    }
+                }
+
+                // Number of hours taken more
+                if (hours > h)
+                {
+                    // Eat more bannana to finish within h hours
+                    min = mid + 1;
+                }
+                else
+                {
+                    // Eat less bannana or will finish much earlier than h
+                    max = mid;
+                }
+            }
+
+            return min;
+        }
+
+        // Idea here is to maintain max and min on left and right side
+        static public int howMany(int[] input)
+        {
+            int n = input.Length;
+            if (n == 0)
+            {
+                return 0;
+            }
+
+            int[] maxLeft = new int[n];
+            int[] minRight = new int[n];
+
+            int maxTillNow = int.MinValue;
+            for (int i = 0; i < n; i++)
+            {
+                maxLeft[i] = maxTillNow;
+                maxTillNow = Math.Max(input[i], maxTillNow);
+            }
+
+            int minTillNow = int.MaxValue;
+            for (int i = n - 1; i >= 0; i--)
+            {
+                minRight[i] = minTillNow;
+                minTillNow = Math.Min(input[i], minTillNow);
+            }
+
+            int count = 0;
+            for (int i = 0; i < n; i++)
+            {
+                if (input[i] > maxLeft[i] && input[i] < minRight[i])
+                {
+                    count++;
+                }
+            }
+
+            return count;
+        }
     }
 }

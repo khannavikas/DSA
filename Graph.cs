@@ -33,7 +33,7 @@ namespace CCIFinal
         public void AddEdge(int u, int v)
         {
             graph[u].AddLast(v);
-            // graph[v].AddLast(u);
+             graph[v].AddLast(u);
         }
 
         public void BFSFromNode(int x)
@@ -484,9 +484,6 @@ namespace CCIFinal
             return false;
         }
 
-
-
-
         public bool IsCycleDirectedGraph()
         {
 
@@ -501,7 +498,6 @@ namespace CCIFinal
             return false;
 
         }
-
 
         private bool CheckCycle(int src)
         {
@@ -665,7 +661,7 @@ namespace CCIFinal
         private static int GetLength(int[][] grid, List<int[]> directions, int lastrow, int lastcol)
         {
             Queue<int[]> q = new Queue<int[]>();
-       
+
             q.Enqueue(new int[] { 0, 0 });
 
             grid[0][0] = 1;
@@ -837,7 +833,170 @@ namespace CCIFinal
 
         }
 
+        List<List<int>> paths = new List<List<int>>();
+        public List<List<int>> AllPaths(int src, int des)
+        {
+            FindAllPath(src, des, new List<int>() { });
 
+            return paths;
+        }
+
+        private void FindAllPath(int src, int des, List<int> currPath)
+        {
+            if (src == des)
+            {
+                paths.Add(currPath);
+            }
+
+            visited[src] = true;
+            currPath.Add(src);
+            foreach (var item in graph[src])
+            {
+                if (!visited[item])
+                {
+                    FindAllPath(item, des, new List<int>(currPath));
+                }
+            }
+
+            visited[src] = false;
+            currPath.Remove(src);
+        }
+
+        public List<List<int>> AllPathsBFS(int src, int des)
+        {
+
+            paths.Clear();
+            visited = new bool[nodes];
+
+            Queue<List<int>> q = new Queue<List<int>>();
+
+            q.Enqueue(new List<int> { src });
+
+            while (q.Count > 0)
+            {
+                var path = q.Dequeue();
+                int lastNode = path[path.Count - 1];
+      
+                if (lastNode == des)
+                {
+                    paths.Add(path);
+                }
+
+                foreach (var item in graph[lastNode])
+                {
+                    if(!path.Contains(item))
+                    {                      
+                        path.Add(item);
+                        q.Enqueue(new List<int>(path));
+                        path.Remove(item);                        
+                    }
+                }
+            }
+
+            return paths;
+
+        }
+
+        //Must go through this 
+        /// <summary>
+        /// https://www.geeksforgeeks.org/single-source-shortest-path-between-two-cities
+        /// </summary>
+        public static void PrintDijkistraPath()
+        {
+            int[][] minDisGraph = new int[9][];
+
+
+            for (int i = 0; i < 9; i++)
+            {
+                minDisGraph[i] = new int[9];
+            }
+
+
+            minDisGraph[0] = new int[] { 0, 4, 0, 0, 0, 0, 0, 8, 0 };
+            minDisGraph[1] = new int[] { 4, 0, 8, 0, 0, 0, 0, 11, 0 };
+            minDisGraph[2] = new int[] { 0, 8, 0, 7, 0, 4, 0, 0, 2 };
+            minDisGraph[3] = new int[] { 0, 0, 7, 0, 9, 14, 0, 0, 0 };
+            minDisGraph[4] = new int[] { 0, 0, 0, 9, 0, 10, 0, 0, 0 };
+            minDisGraph[5] = new int[] { 0, 0, 4, 14, 10, 0, 2, 0, 0 };
+            minDisGraph[6] = new int[] { 0, 0, 0, 0, 0, 2, 0, 1, 6 };
+            minDisGraph[7] = new int[] { 8, 11, 0, 0, 0, 0, 1, 0, 7 };
+            minDisGraph[8] = new int[] { 0, 0, 2, 0, 0, 0, 6, 7, 0 };
+
+
+            int[] dis = new int[minDisGraph.GetLength(0)];
+
+            for (int i = 0; i < dis.Length; i++)
+            {
+                dis[i] = int.MaxValue;
+            }
+
+            // distance from source to itself
+            dis[0] = 0;
+
+            List<int> path = new List<int>();
+
+            // Path is a queue
+            path.Add(0);
+            int[] minPaths = GetShortestPath(minDisGraph, dis, path);
+        }
+
+        private static int[] GetShortestPath(int[][] graph, int[] dis, List<int> path)
+        {
+            int v = graph.GetLength(0);
+
+            // If queue is not empty
+            while (path.Count > 0)
+            {
+                for (int i = 0; i < v; i++)
+                {
+                    // Get minimum from the queue
+                    int minIndex = GetMinNew(dis, path);
+
+                    if (minIndex != -1)
+                    {
+                        // Remove item from the queue
+                        path.Remove(minIndex);
+
+                        // For all nodes
+                        for (int j = 0; j < v; j++)
+                        {
+                            // If this is adjacent node and it's current distance is greater than curr node + edge
+                            if (graph[minIndex][j] != 0 && dis[j] > graph[minIndex][j] + dis[minIndex])
+                            {
+                                // Re-add this node to queue as we found a better path
+                                // Helps to revaluate path to adjacent nodes
+                                path.Add(j);
+
+                                dis[j] = graph[minIndex][j] + dis[minIndex];
+                            }
+                        }
+                    }
+                }
+            }
+
+            return dis;
+        }
+
+        private static int GetMinNew(int[] dis, List<int> path)
+        {
+            int minIndex = -1;
+            int min = int.MaxValue;
+
+            for (int i = 0; i < dis.Length; i++)
+            {
+                // Min index from the queue
+                if (min >= dis[i] && path.Contains(i))
+                {
+                    min = dis[i];
+                    minIndex = i;
+                }
+            }
+
+
+            return minIndex;
+        }
     }
 
 }
+
+

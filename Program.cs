@@ -20,21 +20,50 @@ namespace CCIFinal
 
 
         public static object PracticeHelper { get; private set; }
-            
+
         static void Main(string[] args)
         {
 
-            Graph graph = new Graph(6);
+            int v1 = BinarySearchHelper.KokoEatingBannana(new int[] { 30, 11, 23, 4, 20 }, 6);
+            CCIFinal.Practice.BinaryTree bt = new Practice.BinaryTree();
+
+            Practice.BinaryTree.Node n = new Practice.BinaryTree.Node(10);
+            var ro = Practice.BinaryTree.InsertNode(n, new Practice.BinaryTree.Node(11));
+            var r1 = Practice.BinaryTree.InsertNode(n, new Practice.BinaryTree.Node(9));
+            Practice.BinaryTree.InsertNode(n, new Practice.BinaryTree.Node(19));
+            Practice.BinaryTree.InsertNode(n, new Practice.BinaryTree.Node(23));
+            Practice.BinaryTree.InsertNode(n, new Practice.BinaryTree.Node(18));
+
+            Practice.BinaryTree.InsertNode(n, new Practice.BinaryTree.Node(3));
+
+
+            var paths1 = Practice.BinaryTree.PrintSumPath(n, 58);
+            int n1 = Practice.BinaryTree.HeightOfTree(n);
+
+
+            //  n.right = new Practice.BinaryTree.Node(16);
+
+            var v = Practice.BinaryTree.IsBst(n);
+
+            Graph.PrintDijkistraPath();
+            Graph graph = new Graph(5);
             graph.AddEdge(0, 1);
             graph.AddEdge(1, 2);
             graph.AddEdge(2, 3);
-            graph.AddEdge(3,0);
+            //   graph.AddEdge(3,0);
             graph.AddEdge(0, 4);
             graph.AddEdge(3, 4);
-            graph.AddEdge( 5,4);
-            graph.AddEdge(3, 5);
+            graph.AddEdge(4, 2);
+            //  graph.AddEdge(3, 5);
 
-            var shortestPath = graph.ShortestPathBFSUndirectedGraph(0, 5);
+            //  var shortestPath = graph.ShortestPathBFSUndirectedGraph(0, 5);
+
+            //  graph.ListAllPath(0, 3);
+            var allPaths = graph.AllPaths(0, 3);
+
+            var allpathsBFS = graph.AllPathsBFS(0, 3);
+
+
 
 
 
@@ -42,10 +71,10 @@ namespace CCIFinal
 
             ga.AddEdge(0, 1);
             ga.AddEdge(1, 2);
-           // ga.AddEdge(2, 1);
-           // ga.AddEdge(2, 0);
-          ga.AddEdge(2, 3);
-          // ga.AddEdge(0, 0);
+            // ga.AddEdge(2, 1);
+            // ga.AddEdge(2, 0);
+            ga.AddEdge(2, 3);
+            // ga.AddEdge(0, 0);
 
             bool cycle = ga.HasCycleUnDirected();
 
@@ -55,17 +84,17 @@ namespace CCIFinal
             //ga.AddEdge(4, 4);
 
             Console.WriteLine(ga.NumberOfIsland());
-           // ga.DFS(0);
+            // ga.DFS(0);
 
-            StringHelper.PrintAllStringKLengthVikas(new List<char>() { 'a', 'b' },"", 2);
+            StringHelper.PrintAllStringKLengthVikas(new List<char>() { 'a', 'b' }, "", 2);
             StringHelper.PermutationVikas("abc", "");
             BinaryTreeFunctions();
             double i1 = Math.Sqrt(8);
 
-            
+
             GraphFunctions();
 
-          List<int> a =  ArrayFunc.GetKFrequentElements(new int[] {1,1,1,2,2,3,3,3,3 }, 2);
+            List<int> a = ArrayFunc.GetKFrequentElements(new int[] { 1, 1, 1, 2, 2, 3, 3, 3, 3 }, 2);
 
             List<int> ls = new List<int>();
             Dictionary<int, int> dic = new Dictionary<int, int>();
@@ -98,10 +127,10 @@ namespace CCIFinal
 
             int index1 = BinarySearchHelper.SearchInRotatedSortedArray(new int[] { 5, 6, 7, 1, 2, 3 }, 1);
 
-            CCIFinal.BackTracking.PrintSubsetSum(new int[] { 2, 4, 5,  }, 3, 0);
-           
-            
-            int nu = BinarySearchHelper.NumberOfTimesSortedArrayIsRotate(new int[] {5,6,7,1,2,3 });
+            CCIFinal.BackTracking.PrintSubsetSum(new int[] { 2, 4, 5, }, 3, 0);
+
+
+            int nu = BinarySearchHelper.NumberOfTimesSortedArrayIsRotate(new int[] { 5, 6, 7, 1, 2, 3 });
 
             String sd = StringHelper.Decode("3[a]2[bc]d");
 
@@ -113,7 +142,7 @@ namespace CCIFinal
             ll.AddNode(1);
 
             ll.Sort();
-            
+
 
 
             LinkList l2 = new LinkList();
@@ -121,11 +150,11 @@ namespace CCIFinal
             l2.AddNode(7);
 
             l2.MergeTwoLists(ll.head, l2.head);
-          
 
-            BinarySearchHelper.IsMajorityElement(new int[] { 10, 100, 101, 101 }, 101 );
-            var xmer = ArrayFunc.MergeKArrays(new List<int[]> { new int[] { 2, 4, 8 }, new int[] { 1, 3, 5 }, new int[] { 2, 5, 8, 9 } }, 0,2);
-            
+
+            BinarySearchHelper.IsMajorityElement(new int[] { 10, 100, 101, 101 }, 101);
+            var xmer = ArrayFunc.MergeKArrays(new List<int[]> { new int[] { 2, 4, 8 }, new int[] { 1, 3, 5 }, new int[] { 2, 5, 8, 9 } }, 0, 2);
+
             ArrayFunc.PrintOrgChart();
             BinarySearchHelper.Search(new int[] { 1, 2, 3, 4, 5, 6 }, 0, 5, 2);
 
@@ -155,12 +184,12 @@ namespace CCIFinal
 
             ArrayFunc.MergeSortedArrays(new int[] { 1, 2, 3, 0, 0, 0 }, 3, new int[] { 2, 5, 6 }, 3);
             var time = IntervalHelper.ExclusiveTime(1, new List<string>() { "0:start:0", "0:start:2", "0:end:5", "0:start:6", "0:end:6", "0:end:7" });
-         
+
             int[][] ans = SortHelper.KClosest(new int[][] { new int[] { 1, 0 }, new int[] { 0, 1 } }, 2);
 
             var qu = SortHelper.QuickSort(new int[] { 3, 2, 1, 3, 4, 5 }, 0, 5);
 
-            
+
             IList<int> l = new List<int>();
 
             var c6 = StringHelper.ValidWordAbbreviation("abbreviation", "a10n");
@@ -184,7 +213,7 @@ namespace CCIFinal
             SlidingWindow.ShareCandies(new int[] { 1, 2, 2, 3, 4, 3 }, 3);
 
 
-          
+
 
             //    StringHelper.PrintAllStringsKLengthWithoutRepetion("geksfor".ToCharArray().ToList(), "", 3, new List<char>());
 
@@ -299,7 +328,7 @@ namespace CCIFinal
             g.BFSFromNode(0);
             Console.WriteLine("BFS New");
 
-            Console.WriteLine("Island "+ g.NumIsland());
+            Console.WriteLine("Island " + g.NumIsland());
             GraphHelper.Graph gh = new GraphHelper.Graph(4, true);
             gh.AddEdge(0, 1);
             gh.AddEdge(0, 2);
@@ -307,15 +336,15 @@ namespace CCIFinal
             gh.AddEdge(2, 0);
             gh.AddEdge(2, 3);
             gh.AddEdge(3, 3);
-            
-            
-            
+
+
+
             bool hasPath = gh.HasPathDFSGraph(1, 1);
 
 
             gh.BFSFromNode(0);
 
-           Console.WriteLine("Island " +gh.NumberOfIsland());
+            Console.WriteLine("Island " + gh.NumberOfIsland());
 
             // g.ListAllPath(5, 1);
             //Console.WriteLine("Num Island " + g.NumIsland());
@@ -507,7 +536,7 @@ namespace CCIFinal
 
             //   var x = bt.NodeParentMap(bt.root, null);
 
-             var path = bt.PathFromRoot(5);
+            var path = bt.PathFromRoot(5);
 
             bt.Haspath(5);
 
@@ -590,7 +619,7 @@ namespace CCIFinal
 
         private static void ArrayFunctions()
         {
-           
+
 
             var t = IntervalHelper.MergeIntervals(new List<Interval>() { new Interval { Start = 1, End = 5 }, new Interval { Start = 3, End = 6 }, new Interval { Start = 2, End = 5 }, new Interval { Start = 4, End = 7 } });
 
